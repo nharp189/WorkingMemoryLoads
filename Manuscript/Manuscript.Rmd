@@ -1,0 +1,376 @@
+---
+title             : "Domain-specific working memory loads selectively increase negative interpertations of surprised facial expressions"
+shorttitle        : "DOMAIN-SPECIFIC WORKING MEMORY AND SURPRISED EXPRESSIONS"
+
+author: 
+  - name          : "Nicholas R. Harp"
+    affiliation   : "1"
+    corresponding : yes    # Define only one corresponding author
+    address       : "Postal address"
+    email         : "nharp@huskers.unl.edu"
+  - name          : "Maital Neta"
+    affiliation   : "1"
+
+affiliation:
+  - id            : "1"
+    institution   : "University of Nebraska-Lincoln"
+
+authornote: |
+  Nicholas R. Harp, Department of Psychology, Center for Brain, Biology, and Behavior, University of Nebraska-Lincoln
+  Maital Neta, Department of Psychology, Center for Brain, Biology, and Behavior, University of Nebraska-Lincoln
+
+abstract: |
+  Individual differences in interpretations of emotional ambiguity are a useful tool for measuring affective biases. 
+  
+  While trait-like, these biases are also susceptible to experimental manipulations. In the present study, we capitalize on this malleability to expand on previous research suggesting that
+  subjective interpretations are stable independently of cognitive load. 
+  
+  We tested the effects of working memory loads containing either neutral or emotional content on concurrent interpretations of surprised facial expressions.
+  
+  Here we show that interpretations of surprise are more negative during maintenance of working memory loads with emotional content compared to those with neutral content.
+  
+  Two or three sentences explaining what the **main result** reveals in direct comparison to what was thought to be the case previously, or how the  main result adds to previous knowledge.
+  
+  One or two sentences to put the results into a more **general context**.
+  
+  Two or three sentences to provide a **broader perspective**, readily comprehensible to a scientist in any discipline.
+  
+  <!-- https://tinyurl.com/ybremelq -->
+  
+keywords          : "ambiguity, working memory, bias"
+wordcount         : "X"
+
+bibliography      : ["CANLab_UNL.bib"]
+
+floatsintext      : no
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+linenumbers       : yes
+mask              : no
+draft             : no
+
+documentclass     : "apa6"
+classoption       : "man"
+output            : papaja::apa6_pdf
+---
+
+```{r setup, include = FALSE}
+library("papaja")
+```
+
+```{r analysis-preferences}
+# Seed for random number generation
+set.seed(42)
+knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
+### import z score updated function ###
+source("~/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/wilcox_test.R")
+### code edits taken from : https://stats.stackexchange.com/questions/306841/z-score-on-wilcoxon-signed-ranks-test ###
+
+### load necessary libraries ###
+library(readxl)
+library(tidyverse)
+library(openxlsx)
+library(Rmisc)
+library(broom)
+```
+# Introduction
+Facial expressions are rich with affective information, and correctly interpreting these social cues is critical for successfully navigating the social world. In fact, facial expressions are seen across cultures [@ekman_constants_1971] and some evidence suggests expressions are innate (cite). Often, facial expressions serve as a clear social signal, but this is not always the case. While a smile from a friend likely expresses a positive affective state, other cues are not so clear. For instance, a surprised facial expression could signal either a positive (e.g., winning the lottery) or negative (e.g., a snake in the woods) affective state. In the absence of a larger context, individuals differ in their tendency to interpret surprised facial expressions as either positive or negative. Importantly, this affective bias extends beyond facial expressions, as individuals often show a similar bias to both surprised faces and ambiguous scenes [@neta_neural_2013]. This bias towards positive or negative interpretations is known as one's valence bias. 
+Interpreting facial expressions requires both bottom-up (e.g., perceptual input) and top-down (e.g., emotion regulation strategies) processes. A growing body of work suggests that the initial interpretation of emotionally ambiguous stimuli is negative and driven by bottom-up processes, and that arriving at a positive interpretation requires additional, top-down regulatory processes. For example, participants reliably rate surprise as negative faster than positive [@neta_dont_2016]. In fact, forcing participants to slow their responding during interpretations of ambiguous images shifts individuals' biases towards positivity [@neta_its_2018]. Perceptual input also contributes to valence bias. In one recent study, Neta and colleagues [-@neta_all_2017] showed that faster intial fixation, as well as longer overall fixation, on the mouth is related to more positive interpretations of surprised faces and that forcing gaze patterns to match those of modulated interpretations of surprised expressions. In short,  
+Despite the trait-like nature of this bias [@neta_corrugator_2009], valence bias may be shifted, at least temporarily, by a number of experimental manipulations. As mentioned above, simple manipulations like slowing response times will shift bias [@neta_its_2018]. Additional work has shown that increases in salivary cortisol after a stressor relate to more negative interpretations of surprised faces from baseline to post-stressor [@brown_cortisol_2017]. Similarly, participants with positive biases at baseline will interpret surprise as more negative under threat of shock [@neta_impact_2017], suggesting that taxing cognitive resources, in this case attention, reduces the ability of individuals to interpret surprised faces as positive. 
+
+
+Understanding the influences on decision making under ambiguous contexts sheds light on the mechanisms responsible for these individual differences. in the present study we aim to better understand how concurrent task demands (i.e., working memory load) may influence the cognitive resources used to arrive at more top-down driven interpetations of ambiguity, specifically in an emotional context.  
+  Recent work suggests that ambiguity resolution in this context requires more cognitive resources/processing compared to clearly valenced faces [@mattek_differential_2016; @neta_dont_2016]. 
+The valence bias is trait-like [@neta_corrugator_2009] and generalizes to non-face stimuli [@neta_neural_2013]; however, it is also malleable and may differ depenending on experimental manipulations, including stress inductions or instructions to slow responding [@brown_cortisol_2017; @neta_dont_2016]. Importantly, the valence bias relates to behavior outside of the laboratory; specifically, it is known to relate to depressive symptomology [@petro_initial_2018], at least in children. Chronic negativity biases are common in numerous psychopathologies, including depression and anxiety [@matthews_cognitive_2005]. 
+
+Distractors and task irrelevant stimuli often have detrimental effects on performance in a variety of tasks [; cite, cite]. Further, domain-specific interference may further exacerbate these effects compared to domain-general stimuli [@gruber_effects_2001]. This effect holds up in the emotional domain; for example, the Stroop task [@stroop_studies_1935] has been modified by some researchers to include emotional stimuli [@whalen_emotional_2006] which has pronounced effects when the emotional words are population specific (e.g., trauma words in a PTSD sample). Indeed, neuroimaging work supports the idea that separate systems handle attentional biasing for domain-specific (emotional vs. non-emotional) task relevancy [@egner_dissociable_2008].
+Given that a regulatory mechanism likely contributes to positive interpretations of surprised facial expressions, domain-specific interference may cause more negative interpretations of ambiguity compared to a more domain-general interference. Mattek and colleagues [-@mattek_differential_2016] recently showed that different levels of cognitive load (i.e., holding either a single or seven digit number in working memory) does not affect subjective interpretations of surprised facial expressions, but that high cognitive loads do mitigate mouse trajectories. While the authors interpret this as a distinction between trait-like biases and dynamic cognitive-motor processes, there may be more domain-specific processes (e.g., emotional components) that span across these two measures of valence bias. Given the task irrelevance of the numeric distractors in Mattek and colleagues' [-@mattek_differential_2016] work, it follows that the resources required for interpreting ambiguity as positive [@neta_corrugator_2009] may not have been recruited for working memory maintenance, and thus no change in subjective ratings was observed. 
+In the present study, we aim to test the effects of low and high working memory loads in both emotional and neutral domains. We expect that trials in which participants are maintaining an emotional working memory load will be more negative than neutral trials. Further, we predict that higher working memory laod trials, specifically in the emotional domain, will result in even more exaggerated negative interpretations. 
+<!-- Even simple tasks (e.g., remembering a phone number) reveal the limits of  human cognition. In fact, many researchers believe that there is a magic number of the amount of information able to be held in working memory (7 +- 2 paper). Others have focused on the limits of working memory and successful task performance to inform industrial and organizational policies [@sweller_cognitive_1998]. Despite the large amount of research around working memory and cognitive control, much controversy remains around the mechanisms through which attention to perceptually salient stimuli affect attentional processes and subsequent cognitive control [@lavie_load_2004]. Specifically, there is a divide amongst researchers that believe cognitive loads either inhibit perceptions of non-relevant stimuli -->
+
+<!-- Notes: Allie showed that depletion doesn't affect ratings, but we thought that there may be an effect of specific domains of depletion (i.e., neutral vs. emotional) on ratings. Focus on EMO > NEU ratings and POS > NEG MDs. MT analyses could be supplementary material, but you'll be going down the rabbit hole.  -->
+<!-- Recently, others have suggested a dynamic social trait space model for judgments of faces [@stolier_dynamic_2018], and it may be important to consider additional components of the categorization process, such as domain-specific loads.  -->
+
+# Methods
+## Participants
+58 subjects were recruited from the University of Nebraska-Lincoln. All subjects provided written informed consent in accordance with the Declaration of Helsinki and all procedures were approved by the local Institutional Review Board (Approval #20141014670EP). The data from eight subjects were excluded due to technical difficulties or an error in the experiment script. This left 50 individuals in the final sample. 
+
+## Material
+### Stimuli
+``` {r stimulus_t.test, include = FALSE}
+stim.data <- read.xlsx("~/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/IAPS_Stim_List.xlsx")
+shapiro.test(subset(stim.data, Condition == "POS")$Aro_Mn)
+shapiro.test(subset(stim.data, Condition == "NEG")$Aro_Mn)
+stim.t.test <- wilcox_test(subset(stim.data, Condition == "POS")$Aro_Mn, subset(stim.data, Condition == "NEG")$Aro_Mn)
+```
+The stimuli included faces taken from the NimStim [@tottenham_nimstim_2009] and Karolinska Directed Emotional Faces [@lundqvist_karolinska_1998] stimuli sets. The faces consisted of 34 unique identities including 11 angry, 12 happy, and 24 surprised expressions organized pseudorandomly. The scenes were taken from the International Affective Picture System [@lang_international_2008]. A total of 288 scenes (72 positive, 72 negative, and 144 neutral) were selected for the image matrices. The positive and negative images did not differ on arousal (Z = `r printnum(stim.t.test$z_val)`, p = `r printnum(stim.t.test$p.value)`). The scenes were organized into low (two images) and high (six images) cognitive load of either neutral or emotional (equal number of positive and negative) images (Figure 1). 
+
+### Software
+The task was completed in MouseTracker [@freeman_mousetracker:_2010] and participants used a mouse to click the appropriate response for the face ratings (i.e., "POSITIVE" or "NEGATIVE") and the memory probe (i.e., "YES" or "NO"). 
+
+## Procedure
+Participants were randomly assigned to complete one of the task versions. The tasks included 144 [^1] trials split between working memory probe and face rating trials. On each trial, participants first viewed an image matrix of either neutral or emotional images, which the participants were instructed to remember for the duration of the trial.  The image matrix was presented for four seconds and the images were swapped from low and high load matrices across versions of the task. After the image matrix a happy, angry, or surprised face appeared for one second and the participants rated the face by clicking on either the positive or negative response option. After the face rating, a single image probe appeared, and participants indicated whether or not the image probe was present in the previous image matrix. 
+
+[^1]: Some versions of the task only included 142 trials due to a programming error. 
+
+## Data analysis
+We used `r cite_r("r-references.bib")` for all our analyses. Data preprocessing was completed in R using the mousetrap package [@kieslich_mouse-tracking_inpress]. First, percent negative ratings were calculated for happy, angry, and surprised faces across all trial types, as well as a percent correct score for the memory probe trials. After, trials were screened for RT outliers. Any trials that were greater than three standard deviations from the mean were removed from the analyses. Additionally, we removed the preceding face rating trial for any incorrect memory probe trials, as these trials can be considered a manipulation failure. 
+
+Prior to completing the analyses, the data were assessed for normality using the Shapiro-Wilks test. Data that met the normality assumption were submitted to repeated measures ANOVA, while data that failed to meet this assumption was analyzed using non-parametric tests. We tested for differences in valence bias among the different working memory load conditions. Friedman's test was used to assess overall differences and pairwise comparisons were completed using Wilcoxon signed rank tests using Bonferroni correction. The same analysis strategy was also used to assess differences in reaction times, collapsed across both positive and negative interpretations of surprised facial expressions. Finally, we checked for differences between reaction times for both positive and negative ratings of surprise in each working memory load condition. Due to a large amount of missing data (almost 50% of the subjects), as a result of some subjects only choosing the positive or negative response option in a given working memory load condition, we were unable to analyze these data with Friedman's test. Thus, we conducted a series of Wilcoxon signed rank tests for each of the four conditions with Bonferroni correction. 
+
+# Results
+## Subjective ratings
+```{r import data and analyze ratings, include = FALSE, echo = TRUE}
+data <- read.csv("~/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/Final.Data.csv_2019-08-01_12-38-57.csv")
+### remove psych disorders ### Ask maital?
+# data <- data[-c(4, 33, 37, 38, 41, 47),]
+
+### assess normality ###
+shapiro.test(data$lo.neu.sur_rate)
+shapiro.test(data$hi.neu.sur_rate)
+shapiro.test(data$lo.emo.sur_rate)
+shapiro.test(data$hi.emo.sur_rate)
+
+### make data long ###
+friedman.data <- gather(data, key = "Condition", value = "Percent Negative Ratings",
+       lo.neu.sur_rate, hi.neu.sur_rate, lo.emo.sur_rate, hi.emo.sur_rate)
+
+### run Friedman's test and store results ###
+friedman.results <- friedman.test(`Percent Negative Ratings` ~ Condition|subjID, data = friedman.data)
+
+### Follow up wilcoxon tests ###
+lo.emo.v.lo.neu <- wilcox_test(data$lo.emo.sur_rate, data$lo.neu.sur_rate, paired = TRUE, conf.int = TRUE)
+lo.emo.v.hi.neu <- wilcox_test(data$lo.emo.sur_rate, data$hi.neu.sur_rate, paired = TRUE, conf.int = TRUE)
+lo.emo.v.hi.emo <- wilcox_test(data$lo.emo.sur_rate, data$hi.emo.sur_rate, paired = TRUE, conf.int = TRUE)
+hi.emo.v.lo.neu <- wilcox_test(data$hi.emo.sur_rate, data$lo.neu.sur_rate, paired = TRUE, conf.int = TRUE)
+hi.emo.v.hi.neu <- wilcox_test(data$hi.emo.sur_rate, data$hi.neu.sur_rate, paired = TRUE, conf.int = TRUE)
+lo.neu.v.hi.neu <- wilcox_test(data$hi.neu.sur_rate, data$lo.neu.sur_rate, paired = TRUE, conf.int = TRUE)
+
+```
+Distributions of ratings were first tested for normality using Shapiro-Wilk's test. The results of all four tests were highly significant (p's < .001), so non-parametric tests were used for data analysis. Friedman's test results showed significantly different distributions across the conditions $\chi^{2}$(`r (printnum(friedman.results$parameter))`) = `r printnum(friedman.results$statistic)`, p `r printp(friedman.results$p.value)`. Follow up Wilcoxon signed rank tests revealed that surprise is rated as more negative when holding emotional content in working memory compared to neutral content. Low emotional load ratings were significantly more negative than low, Z = `r (printnum(lo.emo.v.lo.neu$z_val))`, p = `r (printp(lo.emo.v.lo.neu$p.value))`, neutral and high, Z = `r (printnum(lo.emo.v.hi.neu$z_val))`, p `r (printp(lo.emo.v.hi.neu$p.value))`, neutral loads. The same was true for high emotional load ratings and low, Z = `r (printnum(hi.emo.v.lo.neu$z_val))`, p `r (printp(hi.emo.v.lo.neu$p.value))`, and high, Z = `r (printnum(hi.emo.v.hi.neu$z_val))`, p `r (printp(hi.emo.v.hi.neu$p.value))`, neutral loads. However, there was no discernable effect of load. That is, the comparisons between low and high load ratings for both emotional, Z = `r (printnum(lo.emo.v.hi.emo$z_val))`, p = `r (printp(lo.emo.v.hi.emo$p.value))`, and neutral, Z = `r (printnum(lo.neu.v.hi.neu$z_val))`, p = `r (printp(lo.neu.v.hi.neu$p.value))`, load ratings were not significantly different [^2]. 
+
+``` {r plot figure 1, include = TRUE}
+### summarize the data ###
+friedman.data.summarized <- summarySE(friedman.data, measurevar="Percent Negative Ratings", groupvars = "Condition")
+
+ggplot(friedman.data.summarized, aes(Condition, `Percent Negative Ratings`, fill = as.factor(Condition))) +
+  geom_bar(stat = "summary", fun.y = "mean") +
+  geom_errorbar(aes(ymin=`Percent Negative Ratings`-se, ymax=`Percent Negative Ratings`+se), width=.1)
+```
+
+[^2]: These results are qualitatively the same when analyzing these data with a repeated measures ANOVA. 
+
+## Reaction times
+```{r analyze RTs, include = FALSE}
+## assess normality ###
+ shapiro.test(data$lo.neu.sur_RTz)
+ shapiro.test(data$hi.neu.sur_RT)
+ shapiro.test(data$lo.emo.sur_RT)
+ shapiro.test(data$hi.emo.sur_RT)
+
+### force normality ###
+RTz.long <- gather(data, key = Condition, value = RTz,
+                   lo.neu.sur_RT,
+                   hi.neu.sur_RT,
+                   lo.emo.sur_RT,
+                   hi.emo.sur_RT)
+
+RTz.long$RTz <- ave(RTz.long$RTz, RTz.long$subjID, FUN=scale)
+
+wide <- spread(RTz.long, key = Condition, value = RTz)
+shapiro.test(wide$lo.emo.sur_RT)
+### make factors ###
+RTz.long$Load <- ifelse(RTz.long$Condition == "lo.neu.sur_RT", "Low",
+                         ifelse(RTz.long$Condition == "lo.emo.sur_RT", "Low",
+                                ifelse(RTz.long$Condition == "hi.neu.sur_RT", "High",
+                                       ifelse(RTz.long$Condition == "hi.emo.sur_RT", "High", ""))))
+
+RTz.long$Type <- ifelse(RTz.long$Condition == "lo.neu.sur_RT", "Neutral",
+                         ifelse(RTz.long$Condition == "lo.emo.sur_RT", "Emotional",
+                                ifelse(RTz.long$Condition == "hi.neu.sur_RT", "Neutral",
+                                       ifelse(RTz.long$Condition == "hi.emo.sur_RT", "Emotional", ""))))
+
+### make w/in subjs factors ###
+RTz.long$subjID <- as.factor(RTz.long$subjID)
+
+### traditional ANOVA ###
+RTaov <- with(RTz.long,
+                   aov(RTz ~ (Load * Type) +
+                       Error(subjID / (Load * Type))), contrasts = contr.sum())
+summary(RTaov)
+RTaov <- tidy(RTaov)
+
+# ### make long ###
+# data.long <- gather(data, key = "Condition", value = "ReactionTime",
+#                     lo.neu.sur_RT, hi.neu.sur_RT,
+#                     lo.emo.sur_RT, hi.emo.sur_RT)
+# 
+# ### make factors ###
+# data.long$Load <- ifelse(data.long$Condition == "lo.neu.sur_RT", "Low",
+#                          ifelse(data.long$Condition == "lo.emo.sur_RT", "Low",
+#                                 ifelse(data.long$Condition == "hi.neu.sur_RT", "High",
+#                                        ifelse(data.long$Condition == "hi.emo.sur_RT", "High", ""))))
+# 
+# data.long$Type <- ifelse(data.long$Condition == "lo.neu.sur_RT", "Neutral",
+#                          ifelse(data.long$Condition == "lo.emo.sur_RT", "Emotional",
+#                                 ifelse(data.long$Condition == "hi.neu.sur_RT", "Neutral",
+#                                        ifelse(data.long$Condition == "hi.emo.sur_RT", "Emotional", ""))))
+# 
+# ### make w/in subjs factors ###
+# data.long$subjID <- as.factor(data.long$subjID)
+# 
+# ### traditional ANOVA ###
+# RTaov <- with(data.long,
+#                    aov(ReactionTime ~ (Load * Type) +
+#                        Error(subjID / (Load * Type))), contrasts = contr.sum())
+# summary(RTaov)
+# RTaov <- tidy(RTaov)
+
+# ### friedman's nonparametric ###
+# friedman.RT.results <- friedman.test(ReactionTime ~ Condition|subjID, data = data.long)
+# ### Follow up wilcoxon tests ###
+# lo.emo.v.lo.neuRT <- wilcox.test(data$lo.emo.sur_RT, data$lo.neu.sur_RT, paired = TRUE, conf.int = TRUE)
+# lo.emo.v.hi.neuRT <- wilcox.test(data$lo.emo.sur_RT, data$hi.neu.sur_RT, paired = TRUE, conf.int = TRUE)
+# lo.emo.v.hi.emoRT <- wilcox.test(data$lo.emo.sur_RT, data$hi.emo.sur_RT, paired = TRUE, conf.int = TRUE)
+# hi.emo.v.lo.neuRT <- wilcox.test(data$hi.emo.sur_RT, data$lo.neu.sur_RT, paired = TRUE, conf.int = TRUE)
+# hi.emo.v.hi.neuRT <- wilcox.test(data$hi.emo.sur_RT, data$hi.neu.sur_RT, paired = TRUE, conf.int = TRUE)
+# lo.neu.v.hi.neuRT <- wilcox.test(data$hi.neu.sur_RT, data$lo.neu.sur_RT, paired = TRUE, conf.int = TRUE)
+
+# summary(friedman.RT.results)
+
+```
+To assses for normality, the data were first tested with Shapiro-Wilk's test. All conditions appeared to be sampled from normal distributions (p's > .08). A Load (Low, High) X Type (Neutral, Emotional) repeated measures ANOVA was used to assess differences in the RTs. There was a trend towards a main effect of type, F(`r (RTaov$df[which(RTaov$term == "Type")])`, `r (RTaov$df[which(RTaov$stratum == "subjID")])`) = `r printnum(RTaov$statistic[which(RTaov$term == "Type")])`, p = `r printnum(RTaov$p.value[which(RTaov$term == "Type")])`. However, follow up Wilcoxon signed rank tests did not reveal any differences that survived correction for multiple comparisons. There was a trend for RTs of face ratings on high load emotional trials to be longer than high load neutral trials (p =), and a similar pattern for low load emotional trial ratings to take longer than high load neutral trials (p = . One other comparison approached trend levels of signficance, with low load neutral trial ratings taking longer than high neutral loads, (p = . All other comparisons were non-significant (p's > .
+
+```{r plot RT data}
+#data.long.summary <- summarySE(data.long, measurevar="ReactionTime", groupvars = "Condition")
+#ggplot(data.long.summary, aes(Condition, `ReactionTime`, fill = as.factor(Condition))) +
+ # geom_bar(stat = "summary", fun.y = "mean") +
+#  geom_errorbar(aes(ymin=`ReactionTime`-se, ymax=`ReactionTime`+se), width=.1)
+```
+
+``` {r RT by ratings, include = TRUE}
+# ### assess for normality ###
+# shapiro.test(data$lo.neu.sur_n_RT) ## non-normal
+# shapiro.test(data$lo.neu.sur_p_RT) ## normal
+# shapiro.test(data$hi.neu.sur_n_RT) ## non-normal
+# shapiro.test(data$hi.neu.sur_p_RT) ## normal
+# shapiro.test(data$lo.emo.sur_n_RT) ## non-normal
+# shapiro.test(data$lo.emo.sur_p_RT) ## non-normal
+# shapiro.test(data$hi.emo.sur_n_RT) ## barely normal
+# shapiro.test(data$hi.emo.sur_p_RT) ## non-normal
+# 
+# ### t-test for pos ratings vs. neg ratings
+# lo.neu.RT.pvn <- wilcox.test(data$lo.neu.sur_n_RT, data$lo.neu.sur_p_RT, paired = TRUE)
+# wilcox.test(data$hi.neu.sur_n_RT, data$hi.neu.sur_p_RT, paired = TRUE)
+# wilcox.test(data$lo.emo.sur_n_RT, data$lo.emo.sur_p_RT, paired = TRUE)
+# wilcox.test(data$hi.emo.sur_n_RT, data$hi.emo.sur_p_RT, paired = TRUE)
+# 
+# ### make long ###
+# data.long <- gather(data, key = "Condition", value = "ReactionTime",
+#                     lo.neu.sur_n_RT, hi.neu.sur_n_RT,
+#                     lo.emo.sur_n_RT, hi.emo.sur_n_RT,
+#                     lo.neu.sur_p_RT, hi.neu.sur_p_RT,
+#                     lo.emo.sur_p_RT, hi.emo.sur_p_RT)
+# data.long$Condition <- as.factor(data.long$Condition)
+# 
+# data.long.summary <- summarySE(data.long, measurevar="ReactionTime", groupvars="Condition", na.rm = TRUE)
+# 
+# ggplot(data.long.summary, aes(Condition, ReactionTime, fill = as.factor(Condition))) +
+#   geom_bar(stat = "summary", fun.y = "mean", na.rm = TRUE) +
+#   geom_errorbar(aes(ymin=ReactionTime-se, ymax=ReactionTime+se), width=.1)
+
+### force normality ###
+RTz.long <- gather(data, key = Condition, value = RTz,
+                   lo.neu.sur_n_RT, lo.neu.sur_p_RT,
+                   hi.neu.sur_n_RT, hi.neu.sur_p_RT,
+                   lo.emo.sur_n_RT, lo.emo.sur_p_RT,
+                   hi.emo.sur_n_RT, hi.emo.sur_p_RT)
+
+RTz.long$RTz <- ave(RTz.long$RTz, RTz.long$subjID, FUN=scale)
+
+### back to wide ###
+data2 <- spread(RTz.long, key = Condition, value = RTz)
+### assess for normality ###
+shapiro.test(RTz.long$RTz[which(RTz.long$Condition == "lo.neu.sur_n_RT")])
+shapiro.test(RTz.long$RTz[which(RTz.long$Condition == "lo.neu.sur_p_RT")])
+shapiro.test(RTz.long$RTz[which(RTz.long$Condition == "hi.neu.sur_n_RT")])
+shapiro.test(RTz.long$RTz[which(RTz.long$Condition == "hi.neu.sur_p_RT")])
+shapiro.test(RTz.long$RTz[which(RTz.long$Condition == "lo.emo.sur_n_RT")])
+shapiro.test(RTz.long$RTz[which(RTz.long$Condition == "lo.emo.sur_p_RT")])
+shapiro.test(RTz.long$RTz[which(RTz.long$Condition == "hi.emo.sur_n_RT")])
+shapiro.test(RTz.long$RTz[which(RTz.long$Condition == "hi.emo.sur_p_RT")])
+
+RTz.long$Condition <- as.factor(RTz.long$Condition)
+
+### make factors ###
+RTz.long$Load <- ifelse(RTz.long$Condition == "lo.neu.sur_n_RT", "Low",
+                         ifelse(RTz.long$Condition == "lo.emo.sur_RT", "Low",
+                                ifelse(RTz.long$Condition == "hi.neu.sur_RT", "High",
+                                       ifelse(RTz.long$Condition == "hi.emo.sur_RT", "High", ""))))
+
+RTz.long$Type <- ifelse(RTz.long$Condition == "lo.neu.sur_RT", "Neutral",
+                         ifelse(RTz.long$Condition == "lo.emo.sur_RT", "Emotional",
+                                ifelse(RTz.long$Condition == "hi.neu.sur_RT", "Neutral",
+                                       ifelse(RTz.long$Condition == "hi.emo.sur_RT", "Emotional", ""))))
+
+### make w/in subjs factors ###
+data.long$subjID <- as.factor(data.long$subjID)
+
+### traditional ANOVA ###
+RTaov <- with(data.long,
+                   aov(ReactionTime ~ (Load * Type) +
+                       Error(subjID / (Load * Type))), contrasts = contr.sum())
+summary(RTaov)
+RTaov <- tidy(RTaov)
+
+
+
+
+data.long.summary <- summarySE(data.long, measurevar="ReactionTime", groupvars="Condition", na.rm = TRUE)
+
+ggplot(data.long.summary, aes(Condition, ReactionTime, fill = as.factor(Condition))) +
+  geom_bar(stat = "summary", fun.y = "mean", na.rm = TRUE) +
+  geom_errorbar(aes(ymin=ReactionTime-se, ymax=ReactionTime+se), width=.1)
+
+
+```
+Next, we tested for reaciton time differences between positive and negative interpretations of surprised facial expressions within each working memory load condition. Given the non-normality of these data, we used paired-sample Wilcoxon signed rank tests for assessing differences between positive and negative ratings of surprise RTs. This difference was significant *only* for the low emotional load trials, with surprise rated as positive taking signficantly longer than surprise rated as negative (`r printp(lo.neu.RT.pvn$p.value)`). All other comparisons were not significant (p's > .200). Further, this effect survived Bonferroni correction (p = `r printp(.05 / 4)`). 
+
+``` {r MAD}
+###  MAD analyses ###
+results.long <- gather(data, key = "Condition", value = "MAD",
+                       lo.emo.sur_MAD, hi.emo.sur_MAD, lo.neu.sur_MAD, hi.neu.sur_MAD)
+results.long$load <- ifelse(results.long$Condition == "lo.emo.sur_MAD", "Low",
+                            ifelse(results.long$Condition == "lo.neu.sur_MAD", "Low", "High"))
+results.long$type <- ifelse(results.long$Condition == "lo.emo.sur_MAD", "Emo",
+                            ifelse(results.long$Condition == "hi.emo.sur_MAD", "Emo", "Neu"))
+
+MAD.anova <- aov(MAD ~ load * type, data = results.long)
+summary.aov(MAD.anova)
+
+res.long.sum <- summarySE(results.long, measurevar="MAD", groupvars = "Condition")
+ggplot(res.long.sum, aes(Condition, MAD, fill = as.factor(Condition))) +
+  geom_bar(stat = "summary", fun.y = "mean") +
+  geom_errorbar(aes(ymin=`MAD`-se, ymax=`MAD`+se), width=.1)
+
+```
+
+# Discussion
+The effect of high vs. low load is still not apparent in these data, just like Mattek et al. 2016. An alternative explanation is that the high load manipulation is not sufficiently difficult to recruit the targeted cognitive resources; however, future work will be needed to better test this alternative. 
+
+Previous work has shown that more positive interpretations of surprised faces are related to slower RTs. Our working hypothesis suggests that this delayed reaction is a result of deliberation and slower, top-down cognitive processing. It is interesting to note that, at least in these data, there is no such difference observed between the neutral and emotional WM trials, *even though* the emotional WM trials are overall more negative. Future work should tease apart why this may be. For instance, ... 
+
+\newpage
+
+# References
+```{r create_r-references}
+r_refs(file = "r-references.bib")
+```
+
+\begingroup
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
+
+<div id = "refs"></div>
+\endgroup
