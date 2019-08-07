@@ -509,64 +509,10 @@ MT.data <- mt_import_wide(MT.data)
                                                                          "HiNeuHappyNo", "HiEmoHappyNo"),
                                            MT.data$data$mem.cor, ""))
   ### Create column to average for each face ###
-  MT.data$data$lo.emo.ang_rate <- ifelse(MT.data$data$cond.load == "LoEmoAngry", MT.data$data$rate, NA)
-  MT.data$data$hi.emo.ang_rate <- ifelse(MT.data$data$cond.load == "HiEmoAngry", MT.data$data$rate, NA)
-  MT.data$data$lo.neu.ang_rate <- ifelse(MT.data$data$cond.load == "LoNeuAngry", MT.data$data$rate, NA)
-  MT.data$data$hi.neu.ang_rate <- ifelse(MT.data$data$cond.load == "HiNeuAngry", MT.data$data$rate, NA)
-  MT.data$data$lo.emo.hap_rate <- ifelse(MT.data$data$cond.load == "LoEmoHappy", MT.data$data$rate, NA)
-  MT.data$data$hi.emo.hap_rate <- ifelse(MT.data$data$cond.load == "HiEmoHappy", MT.data$data$rate, NA)
-  MT.data$data$lo.neu.hap_rate <- ifelse(MT.data$data$cond.load == "LoNeuHappy", MT.data$data$rate, NA)
-  MT.data$data$hi.neu.hap_rate <- ifelse(MT.data$data$cond.load == "HiNeuHappy", MT.data$data$rate, NA)
-  MT.data$data$lo.emo.sur_rate <- ifelse(MT.data$data$cond.load == "LoEmoSurprise", MT.data$data$rate, NA)
-  MT.data$data$hi.emo.sur_rate <- ifelse(MT.data$data$cond.load == "HiEmoSurprise", MT.data$data$rate, NA)
-  MT.data$data$lo.neu.sur_rate <- ifelse(MT.data$data$cond.load == "LoNeuSurprise", MT.data$data$rate, NA)
-  MT.data$data$hi.neu.sur_rate <- ifelse(MT.data$data$cond.load == "HiNeuSurprise", MT.data$data$rate, NA)
   MT.data$data$mem.cor.yes <- ifelse(MT.data$data$cond.correct == "Yes", MT.data$data$mem.cor, NA)
   MT.data$data$mem.cor.no <- ifelse(MT.data$data$cond.correct == "No", MT.data$data$mem.cor, NA)
   MT.data$data$mem.cor.yes <- as.numeric(MT.data$data$mem.cor.yes)
   MT.data$data$mem.cor.no <- as.numeric(MT.data$data$mem.cor.no)
-  
-  ### Reaction times ###
-  MT.data$data$lo.emo.ang_RT <- ifelse(MT.data$data$cond.load == "LoEmoAngry", 
-                                       ifelse(MT.data$data$correct == 1, MT.data$data$RT, NA), NA)
-  MT.data$data$hi.emo.ang_RT <- ifelse(MT.data$data$cond.load == "HiEmoAngry", 
-                                       ifelse(MT.data$data$correct == 1, MT.data$data$RT, NA), NA)
-  MT.data$data$lo.neu.ang_RT <- ifelse(MT.data$data$cond.load == "LoNeuAngry", 
-                                       ifelse(MT.data$data$correct == 1, MT.data$data$RT, NA), NA)
-  MT.data$data$hi.neu.ang_RT <- ifelse(MT.data$data$cond.load == "HiNeuAngry", 
-                                       ifelse(MT.data$data$correct == 1, MT.data$data$RT, NA), NA)
-  MT.data$data$lo.emo.hap_RT <- ifelse(MT.data$data$cond.load == "LoEmoHappy", 
-                                       ifelse(MT.data$data$correct == 1, MT.data$data$RT, NA), NA)
-  MT.data$data$hi.emo.hap_RT <- ifelse(MT.data$data$cond.load == "HiEmoHappy", 
-                                       ifelse(MT.data$data$correct == 1, MT.data$data$RT, NA), NA)
-  MT.data$data$lo.neu.hap_RT <- ifelse(MT.data$data$cond.load == "LoNeuHappy", 
-                                       ifelse(MT.data$data$correct == 1, MT.data$data$RT, NA), NA)
-  MT.data$data$hi.neu.hap_RT <- ifelse(MT.data$data$cond.load == "HiNeuHappy", 
-                                       ifelse(MT.data$data$correct == 1, MT.data$data$RT, NA), NA)
-  MT.data$data$lo.emo.sur_p_RT <- ifelse(MT.data$data$cond.load == "LoEmoSurprise", 
-                                         ifelse(MT.data$data$rate == 0, MT.data$data$RT, NA), NA)
-  MT.data$data$hi.emo.sur_p_RT <- ifelse(MT.data$data$cond.load == "HiEmoSurprise", 
-                                         ifelse(MT.data$data$rate == 0, MT.data$data$RT, NA), NA)
-  MT.data$data$lo.neu.sur_p_RT <- ifelse(MT.data$data$cond.load == "LoNeuSurprise", 
-                                         ifelse(MT.data$data$rate == 0, MT.data$data$RT, NA), NA)
-  MT.data$data$hi.neu.sur_p_RT <- ifelse(MT.data$data$cond.load == "HiNeuSurprise", 
-                                         ifelse(MT.data$data$rate == 0, MT.data$data$RT, NA), NA)
-  MT.data$data$lo.emo.sur_n_RT <- ifelse(MT.data$data$cond.load == "LoEmoSurprise", 
-                                         ifelse(MT.data$data$rate == 1, MT.data$data$RT, NA), NA)
-  MT.data$data$hi.emo.sur_n_RT <- ifelse(MT.data$data$cond.load == "HiEmoSurprise", 
-                                         ifelse(MT.data$data$rate == 1, MT.data$data$RT, NA), NA)
-  MT.data$data$lo.neu.sur_n_RT <- ifelse(MT.data$data$cond.load == "LoNeuSurprise", 
-                                         ifelse(MT.data$data$rate == 1, MT.data$data$RT, NA), NA)
-  MT.data$data$hi.neu.sur_n_RT <- ifelse(MT.data$data$cond.load == "HiNeuSurprise", 
-                                         ifelse(MT.data$data$rate == 1, MT.data$data$RT, NA), NA)
-  MT.data$data$lo.emo.sur_RT <- ifelse(MT.data$data$cond.load == "LoEmoSurprise",
-                                       MT.data$data$RT, NA) 
-  MT.data$data$hi.emo.sur_RT <- ifelse(MT.data$data$cond.load == "HiEmoSurprise",
-                                      MT.data$data$RT, NA) 
-  MT.data$data$lo.neu.sur_RT <- ifelse(MT.data$data$cond.load == "LoNeuSurprise",
-                                       MT.data$data$RT, NA) 
-  MT.data$data$hi.neu.sur_RT <- ifelse(MT.data$data$cond.load == "HiNeuSurprise",
-                                       MT.data$data$RT, NA)
   
   ### Create informative condition variables (i.e., angry, happy, sur-neg, sur-pos, etc.) ###
   MT.data$data$condition.rating <- ifelse(MT.data$data$cond.correct == "Angry",  
@@ -592,53 +538,10 @@ MT.data <- mt_import_wide(MT.data)
   ### add RT z scores ###
   MT.data$data$RTz <- ave(MT.data$data$RT, MT.data$data$subjID, FUN=scale)
   
-  ### Reaction times ###
-  MT.data$data$lo.emo.ang_RTz <- ifelse(MT.data$data$cond.load == "HiEmoAngry", 
-                                        ifelse(MT.data$data$correct == 1, MT.data$data$RTz, NA), NA)
-  MT.data$data$hi.emo.ang_RTz <- ifelse(MT.data$data$cond.load == "HiEmoAngry", 
-                                       ifelse(MT.data$data$correct == 1, MT.data$data$RTz, NA), NA)
-  MT.data$data$lo.neu.ang_RTz <- ifelse(MT.data$data$cond.load == "LoNeuAngry", 
-                                       ifelse(MT.data$data$correct == 1, MT.data$data$RTz, NA), NA)
-  MT.data$data$hi.neu.ang_RTz <- ifelse(MT.data$data$cond.load == "HiNeuAngry", 
-                                       ifelse(MT.data$data$correct == 1, MT.data$data$RTz, NA), NA)
-  MT.data$data$lo.emo.hap_RTz <- ifelse(MT.data$data$cond.load == "LoEmoHappy", 
-                                       ifelse(MT.data$data$correct == 1, MT.data$data$RTz, NA), NA)
-  MT.data$data$hi.emo.hap_RTz <- ifelse(MT.data$data$cond.load == "HiEmoHappy", 
-                                       ifelse(MT.data$data$correct == 1, MT.data$data$RTz, NA), NA)
-  MT.data$data$lo.neu.hap_RTz <- ifelse(MT.data$data$cond.load == "LoNeuHappy", 
-                                       ifelse(MT.data$data$correct == 1, MT.data$data$RTz, NA), NA)
-  MT.data$data$hi.neu.hap_RTz <- ifelse(MT.data$data$cond.load == "HiNeuHappy", 
-                                       ifelse(MT.data$data$correct == 1, MT.data$data$RTz, NA), NA)
-  MT.data$data$lo.emo.sur_p_RTz <- ifelse(MT.data$data$cond.load == "LoEmoSurprise", 
-                                         ifelse(MT.data$data$rate == 0, MT.data$data$RTz, NA), NA)
-  MT.data$data$hi.emo.sur_p_RTz <- ifelse(MT.data$data$cond.load == "HiEmoSurprise", 
-                                         ifelse(MT.data$data$rate == 0, MT.data$data$RTz, NA), NA)
-  MT.data$data$lo.neu.sur_p_RTz <- ifelse(MT.data$data$cond.load == "LoNeuSurprise", 
-                                         ifelse(MT.data$data$rate == 0, MT.data$data$RTz, NA), NA)
-  MT.data$data$hi.neu.sur_p_RTz <- ifelse(MT.data$data$cond.load == "HiNeuSurprise", 
-                                         ifelse(MT.data$data$rate == 0, MT.data$data$RTz, NA), NA)
-  MT.data$data$lo.emo.sur_n_RTz <- ifelse(MT.data$data$cond.load == "LoEmoSurprise", 
-                                         ifelse(MT.data$data$rate == 1, MT.data$data$RTz, NA), NA)
-  MT.data$data$hi.emo.sur_n_RTz <- ifelse(MT.data$data$cond.load == "HiEmoSurprise", 
-                                         ifelse(MT.data$data$rate == 1, MT.data$data$RTz, NA), NA)
-  MT.data$data$lo.neu.sur_n_RTz <- ifelse(MT.data$data$cond.load == "LoNeuSurprise", 
-                                         ifelse(MT.data$data$rate == 1, MT.data$data$RTz, NA), NA)
-  MT.data$data$hi.neu.sur_n_RTz <- ifelse(MT.data$data$cond.load == "HiNeuSurprise", 
-                                         ifelse(MT.data$data$rate == 1, MT.data$data$RTz, NA), NA)
-  MT.data$data$lo.emo.sur_RTz <- ifelse(MT.data$data$cond.load == "LoEmoSurprise",
-                                       MT.data$data$RTz, NA) 
-  MT.data$data$hi.emo.sur_RTz <- ifelse(MT.data$data$cond.load == "HiEmoSurprise",
-                                       MT.data$data$RTz, NA) 
-  MT.data$data$lo.neu.sur_RTz <- ifelse(MT.data$data$cond.load == "LoNeuSurprise",
-                                       MT.data$data$RTz, NA) 
-  MT.data$data$hi.neu.sur_RTz <- ifelse(MT.data$data$cond.load == "HiNeuSurprise",
-                                       MT.data$data$RTz, NA)
-  
   ### factor ###
   MT.data$data$factor <- paste(MT.data$data$type, MT.data$data$load)
   
 }
-
 
 ###  MT Measures ###
 {### get derivatives ###
@@ -696,26 +599,26 @@ MT.data.rating.table2 <- (ddply(MT.results2, "subjID", summarise,
                                hi.emo.sur_rate = mean(rate[which(cond.correct == "Surprise" & type == "EMO" & load == "HIGH" & trialtype == "face")], na.rm = TRUE),
                                lo.neu.sur_rate = mean(rate[which(cond.correct == "Surprise" & type == "NEU" & load == "LOW" & trialtype == "face")], na.rm = TRUE),
                                hi.neu.sur_rate = mean(rate[which(cond.correct == "Surprise" & type == "NEU" & load == "HIGH" & trialtype == "face")], na.rm = TRUE),
-                               lo.emo.ang_RT = mean(lo.emo.ang_RT, na.rm = TRUE),
-                               hi.emo.ang_RT = mean(hi.emo.ang_RT, na.rm = TRUE),
-                               lo.neu.ang_RT = mean(lo.neu.ang_RT, na.rm = TRUE),
-                               hi.neu.ang_RT = mean(hi.neu.ang_RT, na.rm = TRUE),
-                               lo.emo.hap_RT = mean(lo.emo.hap_RT, na.rm = TRUE),
-                               hi.emo.hap_RT = mean(hi.emo.hap_RT, na.rm = TRUE),
-                               lo.neu.hap_RT = mean(lo.neu.hap_RT, na.rm = TRUE),
-                               hi.neu.hap_RT = mean(hi.neu.hap_RT, na.rm = TRUE),
-                               lo.emo.sur_n_RT = mean(lo.emo.sur_n_RT, na.rm = TRUE),
-                               hi.emo.sur_n_RT = mean(hi.emo.sur_n_RT, na.rm = TRUE),
-                               lo.neu.sur_n_RT = mean(lo.neu.sur_n_RT, na.rm = TRUE),
-                               hi.neu.sur_n_RT = mean(hi.neu.sur_n_RT, na.rm = TRUE),
-                               lo.emo.sur_p_RT = mean(lo.emo.sur_p_RT, na.rm = TRUE),
-                               hi.emo.sur_p_RT = mean(hi.emo.sur_p_RT, na.rm = TRUE),
-                               lo.neu.sur_p_RT = mean(lo.neu.sur_p_RT, na.rm = TRUE),
-                               hi.neu.sur_p_RT = mean(hi.neu.sur_p_RT, na.rm = TRUE),
-                               lo.neu.sur_RT = mean(lo.neu.sur_RT, na.rm = TRUE),
-                               hi.neu.sur_RT = mean(hi.neu.sur_RT, na.rm = TRUE),
-                               lo.emo.sur_RT = mean(lo.emo.sur_RT, na.rm = TRUE),
-                               hi.emo.sur_RT = mean(hi.emo.sur_RT, na.rm = TRUE),
+                               lo.emo.ang_RT = mean(RT.x[which(cond.correct == "Angry" & type == "EMO" & load == "LOW" & trialtype == "face")], na.rm = TRUE),
+                               hi.emo.ang_RT = mean(RT.x[which(cond.correct == "Angry" & type == "EMO" & load == "HIGH" & trialtype == "face")], na.rm = TRUE),
+                               lo.neu.ang_RT = mean(RT.x[which(cond.correct == "Angry" & type == "NEU" & load == "LOW" & trialtype == "face")], na.rm = TRUE),
+                               hi.neu.ang_RT = mean(RT.x[which(cond.correct == "Angry" & type == "NEU" & load == "HIGH" & trialtype == "face")], na.rm = TRUE),
+                               lo.emo.hap_RT = mean(RT.x[which(cond.correct == "Happy" & type == "EMO" & load == "LOW" & trialtype == "face")], na.rm = TRUE),
+                               hi.emo.hap_RT = mean(RT.x[which(cond.correct == "Happy" & type == "EMO" & load == "HIGH" & trialtype == "face")], na.rm = TRUE),
+                               lo.neu.hap_RT = mean(RT.x[which(cond.correct == "Happy" & type == "NEU" & load == "LOW" & trialtype == "face")], na.rm = TRUE),
+                               hi.neu.hap_RT = mean(RT.x[which(cond.correct == "Happy" & type == "NEU" & load == "HIGH" & trialtype == "face")], na.rm = TRUE),
+                               lo.emo.sur_n_RT = mean(RT.x[which(cond.correct == "Surprise" & type == "EMO" & load == "LOW" & trialtype == "face" & rate == 1)], na.rm = TRUE),
+                               hi.emo.sur_n_RT = mean(RT.x[which(cond.correct == "Surprise" & type == "EMO" & load == "HIGH" & trialtype == "face" & rate == 1)], na.rm = TRUE),
+                               lo.neu.sur_n_RT = mean(RT.x[which(cond.correct == "Surprise" & type == "NEU" & load == "LOW" & trialtype == "face" & rate == 1)], na.rm = TRUE),
+                               hi.neu.sur_n_RT = mean(RT.x[which(cond.correct == "Surprise" & type == "NEU" & load == "HIGH" & trialtype == "face" & rate == 1)], na.rm = TRUE),
+                               lo.emo.sur_p_RT = mean(RT.x[which(cond.correct == "Surprise" & type == "EMO" & load == "LOW" & trialtype == "face" & rate == 0)], na.rm = TRUE),
+                               hi.emo.sur_p_RT = mean(RT.x[which(cond.correct == "Surprise" & type == "EMO" & load == "HIGH" & trialtype == "face" & rate == 0)], na.rm = TRUE),
+                               lo.neu.sur_p_RT = mean(RT.x[which(cond.correct == "Surprise" & type == "NEU" & load == "LOW" & trialtype == "face" & rate == 0)], na.rm = TRUE),
+                               hi.neu.sur_p_RT = mean(RT.x[which(cond.correct == "Surprise" & type == "NEU" & load == "HIGH" & trialtype == "face" & rate == 0)], na.rm = TRUE),
+                               lo.neu.sur_RT = mean(RT.x[which(cond.correct == "Surprise" & type == "NEU" & load == "LOW" & trialtype == "face")], na.rm = TRUE),
+                               hi.neu.sur_RT = mean(RT.x[which(cond.correct == "Surprise" & type == "NEU" & load == "HIGH" & trialtype == "face")], na.rm = TRUE),
+                               lo.emo.sur_RT = mean(RT.x[which(cond.correct == "Surprise" & type == "EMO" & load == "LOW" & trialtype == "face")], na.rm = TRUE),
+                               hi.emo.sur_RT = mean(RT.x[which(cond.correct == "Surprise" & type == "EMO" & load == "HIGH" & trialtype == "face")], na.rm = TRUE),
                                mem.cor.yes = mean(mem.cor.yes, na.rm = TRUE),
                                mem.cor.no = mean(mem.cor.no, na.rm = TRUE),
                                emo.mem = mean(emo.mem, na.rm = TRUE),
@@ -758,66 +661,6 @@ MT.data.rating.table2 <- (ddply(MT.results2, "subjID", summarise,
                                hi.neu.RTz = mean(RTz[which(factor == "NEU HIGH" & trialtype == "face")], na.rm = TRUE),
                                lo.emo.RTz = mean(RTz[which(factor == "EMO LOW" & trialtype == "face")], na.rm = TRUE),
                                hi.emo.RTz = mean(RTz[which(factor == "EMO HIGH" & trialtype == "face")], na.rm = TRUE)))
-
-
-ang_rate = 
-hap_rate = mean(rate[which(condition == "Happy")], na.rm = TRUE),
-sur_rate = mean(rate[which(condition == "Surprise")], na.rm = TRUE),
-ang_rate_b0 = mean(rate[which(condition == "Angry" & group == "b0")], na.rm = TRUE),
-hap_rate_b0 = mean(rate[which(condition == "Happy" & group == "b0")], na.rm = TRUE),
-sur_rate_b0 = mean(rate[which(condition == "Surprise" & group == "b0")], na.rm = TRUE),
-ang_rate_in = mean(rate[which(condition == "Angry" & group == "in")], na.rm = TRUE),
-hap_rate_in = mean(rate[which(condition == "Happy" & group == "in")], na.rm = TRUE),
-sur_rate_in = mean(rate[which(condition == "Surprise" & group == "in")], na.rm = TRUE),
-ang_rate_out = mean(rate[which(condition == "Angry" & group == "out")], na.rm = TRUE),
-hap_rate_out = mean(rate[which(condition == "Happy" & group == "out")], na.rm = TRUE),
-sur_rate_out = mean(rate[which(condition == "Surprise" & group == "out")], na.rm = TRUE),
-ang_RT = mean(RT.x[which(condition == "Angry")], na.rm = TRUE),
-hap_RT = mean(RT.x[which(condition == "Happy")], na.rm = TRUE),
-sur_RT = mean(RT.x[which(condition == "Surprise")], na.rm = TRUE),
-sur_p_RT = mean(RT.x[which(condition.rating == "Sur-Pos" )], na.rm = TRUE),
-sur_n_RT = mean(RT.x[which(condition.rating == "Sur-Neg" )], na.rm = TRUE),
-ang_RT_b0 = mean(RT.x[which(condition == "Angry" & group == "b0")], na.rm = TRUE),
-hap_RT_b0 = mean(RT.x[which(condition == "Happy" & group == "b0")], na.rm = TRUE),
-sur_RT_b0 = mean(RT.x[which(condition == "Surprise" & group == "b0")], na.rm = TRUE),
-sur_p_RT_b0 = mean(RT.x[which(condition.rating == "Sur-Pos" & group == "b0")], na.rm = TRUE),
-sur_n_RT_b0 = mean(RT.x[which(condition.rating == "Sur-Neg" & group == "b0")], na.rm = TRUE),
-ang_RT_in = mean(RT.x[which(condition == "Angry" & group == "in")], na.rm = TRUE),
-hap_RT_in = mean(RT.x[which(condition == "Happy" & group == "in")], na.rm = TRUE),
-sur_RT_in = mean(RT.x[which(condition == "Surprise" & group == "in")], na.rm = TRUE),
-sur_p_RT_in = mean(RT.x[which(condition.rating == "Sur-Pos" & group == "in")], na.rm = TRUE),
-sur_n_RT_in = mean(RT.x[which(condition.rating == "Sur-Neg" & group == "in")], na.rm = TRUE),
-ang_RT_out = mean(RT.x[which(condition == "Angry" & group == "out")], na.rm = TRUE),
-hap_RT_out = mean(RT.x[which(condition == "Happy" & group == "out")], na.rm = TRUE),
-sur_RT_out = mean(RT.x[which(condition == "Surprise" & group == "out")], na.rm = TRUE),
-sur_p_RT_out = mean(RT.x[which(condition.rating == "Sur-Pos" & group == "out")], na.rm = TRUE),
-sur_n_RT_out = mean(RT.x[which(condition.rating == "Sur-Neg" & group == "out")], na.rm = TRUE),
-ang_MAD_b0 = mean(MAD[which(condition == "Angry" & group == "b0")], na.rm = TRUE),
-hap_MAD_b0 = mean(MAD[which(condition == "Happy" & group == "b0")], na.rm = TRUE),
-sur_MAD_b0 = mean(MAD[which(condition == "Surprise" & group == "b0")], na.rm = TRUE),
-sur_p_MAD_b0 = mean(MAD[which(condition.rating == "Sur-Pos" & group == "b0")], na.rm = TRUE),
-sur_n_MAD_b0 = mean(MAD[which(condition.rating == "Sur-Neg" & group == "b0")], na.rm = TRUE),
-ang_MAD_in = mean(MAD[which(condition == "Angry" & group == "in")], na.rm = TRUE),
-hap_MAD_in = mean(MAD[which(condition == "Happy" & group == "in")], na.rm = TRUE),
-sur_MAD_in = mean(MAD[which(condition == "Surprise" & group == "in")], na.rm = TRUE),
-sur_p_MAD_in = mean(MAD[which(condition.rating == "Sur-Pos" & group == "in")], na.rm = TRUE),
-sur_n_MAD_in = mean(MAD[which(condition.rating == "Sur-Neg" & group == "in")], na.rm = TRUE),
-ang_MAD_out = mean(MAD[which(condition == "Angry" & group == "out")], na.rm = TRUE),
-hap_MAD_out = mean(MAD[which(condition == "Happy" & group == "out")], na.rm = TRUE),
-sur_MAD_out = mean(MAD[which(condition == "Surprise" & group == "out")], na.rm = TRUE),
-sur_p_MAD_out = mean(MAD[which(condition.rating == "Sur-Pos" & group == "out")], na.rm = TRUE),
-sur_n_MAD_out = mean(MAD[which(condition.rating == "Sur-Neg" & group == "out")], na.rm = TRUE)))
-
-
-
-
-
-
-
-
-
-
-
 
 write.csv(MT.data.rating.table2, paste("Final.Data.csv",format(Sys.time(),'_%Y-%m-%d_%H-%M-%S'),
                                       '.csv',sep = ''))
