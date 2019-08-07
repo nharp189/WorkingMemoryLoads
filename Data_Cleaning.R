@@ -619,6 +619,18 @@ MT.data.rating.table2 <- (ddply(MT.results2, "subjID", summarise,
                                hi.neu.sur_RT = mean(RT.x[which(cond.correct == "Surprise" & type == "NEU" & load == "HIGH" & trialtype == "face")], na.rm = TRUE),
                                lo.emo.sur_RT = mean(RT.x[which(cond.correct == "Surprise" & type == "EMO" & load == "LOW" & trialtype == "face")], na.rm = TRUE),
                                hi.emo.sur_RT = mean(RT.x[which(cond.correct == "Surprise" & type == "EMO" & load == "HIGH" & trialtype == "face")], na.rm = TRUE),
+                               lo.sur_RT = mean(RT.x[which(cond.correct == "Surprise" & load == "LOW" & trialtype == "face")], na.rm = TRUE),
+                               hi.sur_RT = mean(RT.x[which(cond.correct == "Surprise" & load == "HIGH" & trialtype == "face")], na.rm = TRUE),
+                               neu.sur_RT = mean(RT.x[which(cond.correct == "Surprise" & type == "NEU" & trialtype == "face")], na.rm = TRUE),
+                               emo.sur_RT = mean(RT.x[which(cond.correct == "Surprise" & type == "EMO" & trialtype == "face")], na.rm = TRUE),
+                               lo.sur_n_RT = mean(RT.x[which(cond.correct == "Surprise" & load == "LOW" & trialtype == "face" & rate == 1)], na.rm = TRUE),
+                               hi.sur_n_RT = mean(RT.x[which(cond.correct == "Surprise" & load == "HIGH" & trialtype == "face" & rate == 1)], na.rm = TRUE),
+                               neu.sur_n_RT = mean(RT.x[which(cond.correct == "Surprise" & type == "NEU" & trialtype == "face" & rate == 1)], na.rm = TRUE),
+                               emo.sur_n_RT = mean(RT.x[which(cond.correct == "Surprise" & type == "EMO" & trialtype == "face" & rate ==1)], na.rm = TRUE),
+                               lo.sur_p_RT = mean(RT.x[which(cond.correct == "Surprise" & load == "LOW" & trialtype == "face" & rate == 0)], na.rm = TRUE),
+                               hi.sur_p_RT = mean(RT.x[which(cond.correct == "Surprise" & load == "HIGH" & trialtype == "face" & rate == 0)], na.rm = TRUE),
+                               neu.sur_p_RT = mean(RT.x[which(cond.correct == "Surprise" & type == "NEU" & trialtype == "face" & rate == 0)], na.rm = TRUE),
+                               emo.sur_p_RT = mean(RT.x[which(cond.correct == "Surprise" & type == "EMO" & trialtype == "face" & rate ==0)], na.rm = TRUE),
                                mem.cor.yes = mean(mem.cor.yes, na.rm = TRUE),
                                mem.cor.no = mean(mem.cor.no, na.rm = TRUE),
                                emo.mem = mean(emo.mem, na.rm = TRUE),
@@ -662,7 +674,7 @@ MT.data.rating.table2 <- (ddply(MT.results2, "subjID", summarise,
                                lo.emo.RTz = mean(RTz[which(factor == "EMO LOW" & trialtype == "face")], na.rm = TRUE),
                                hi.emo.RTz = mean(RTz[which(factor == "EMO HIGH" & trialtype == "face")], na.rm = TRUE)))
 
-write.csv(MT.data.rating.table2, paste("Final.Data.csv",format(Sys.time(),'_%Y-%m-%d_%H-%M-%S'),
+write.csv(MT.data.rating.table2, paste("Data/Cleaned_Data/Final.Data.csv",format(Sys.time(),'_%Y-%m-%d_%H-%M-%S'),
                                       '.csv',sep = ''))
 
 
