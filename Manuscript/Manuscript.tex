@@ -190,110 +190,18 @@ Distributions of ratings were first tested for normality using Shapiro-Wilk's te
 \hypertarget{reaction-times}{%
 \subsection{Reaction times}\label{reaction-times}}
 
-To assses for normality, the data were first tested with Shapiro-Wilk's test. All conditions appeared to be sampled from normal distributions (p's \textgreater{} .08). A Load (Low, High) X Type (Neutral, Emotional) repeated measures ANOVA was used to assess differences in the RTs. There was a trend towards a main effect of type, F(1, 49) = 3.82, p = 0.06. However, follow up Wilcoxon signed rank tests did not reveal any differences that survived correction for multiple comparisons. There was a trend for RTs of face ratings on high load emotional trials to be longer than high load neutral trials (p =), and a similar pattern for low load emotional trial ratings to take longer than high load neutral trials (p = . One other comparison approached trend levels of signficance, with low load neutral trial ratings taking longer than high neutral loads, (p = . All other comparisons were non-significant (p's \textgreater{} .
+To assess for normality, the data were first tested with Shapiro-Wilk's test. Two conditions did not appear to be sampled from normal distributions, so non-parametric tests were used. Overall, there was a trending difference across the four conditions, \(\chi^{2}\)(3.00) = 7.15, p .067. Wilcoxon signed rank tests were used to assess post-hoc comparisons and Bonferroni corrected p-value = 0.01. While none of the post-hoc comparisons reached the adjusted significance level, there was a trending difference between emotional and neutral RTs in the high load condition, Z = 2.51, p = .012, such that high emotional WM loads had slower RTs. Two other comparisons were trending for traditional levels of significance. Low emotional WM loads tended to take marginally longer than high neutral WM loads, Z = 1.96, p = .050, and low neutral WM loads took marginally longer than high neutral WM laods, Z = -1.75, p = 0.08. All other comparisons were not significant.
 
 \includegraphics{Manuscript_files/figure-latex/plot RT data-1.pdf}
 
-\begin{verbatim}
-## 
-##  Shapiro-Wilk normality test
-## 
-## data:  data$lo.neu.sur_n_RT
-## W = 0.92168, p-value = 0.003408
-\end{verbatim}
-
-\begin{verbatim}
-## 
-##  Shapiro-Wilk normality test
-## 
-## data:  data$lo.neu.sur_p_RT
-## W = 0.96281, p-value = 0.139
-\end{verbatim}
-
-\begin{verbatim}
-## 
-##  Shapiro-Wilk normality test
-## 
-## data:  data$hi.neu.sur_n_RT
-## W = 0.9405, p-value = 0.01547
-\end{verbatim}
-
-\begin{verbatim}
-## 
-##  Shapiro-Wilk normality test
-## 
-## data:  data$hi.neu.sur_p_RT
-## W = 0.98072, p-value = 0.6489
-\end{verbatim}
-
-\begin{verbatim}
-## 
-##  Shapiro-Wilk normality test
-## 
-## data:  data$lo.emo.sur_n_RT
-## W = 0.94444, p-value = 0.02027
-\end{verbatim}
-
-\begin{verbatim}
-## 
-##  Shapiro-Wilk normality test
-## 
-## data:  data$lo.emo.sur_p_RT
-## W = 0.90016, p-value = 0.002575
-\end{verbatim}
-
-\begin{verbatim}
-## 
-##  Shapiro-Wilk normality test
-## 
-## data:  data$hi.emo.sur_n_RT
-## W = 0.95402, p-value = 0.05001
-\end{verbatim}
-
-\begin{verbatim}
-## 
-##  Shapiro-Wilk normality test
-## 
-## data:  data$hi.emo.sur_p_RT
-## W = 0.88408, p-value = 0.002496
-\end{verbatim}
-
-\begin{verbatim}
-## 
-##  Wilcoxon signed rank test
-## 
-## data:  data$hi.neu.sur_n_RT and data$hi.neu.sur_p_RT
-## V = 604, p-value = 0.2076
-## alternative hypothesis: true location shift is not equal to 0
-\end{verbatim}
-
-\begin{verbatim}
-## 
-##  Wilcoxon signed rank test
-## 
-## data:  data$lo.emo.sur_n_RT and data$lo.emo.sur_p_RT
-## V = 392, p-value = 0.7634
-## alternative hypothesis: true location shift is not equal to 0
-\end{verbatim}
-
-\begin{verbatim}
-## 
-##  Wilcoxon signed rank test
-## 
-## data:  data$hi.emo.sur_n_RT and data$hi.emo.sur_p_RT
-## V = 260, p-value = 0.9485
-## alternative hypothesis: true location shift is not equal to 0
-\end{verbatim}
-
-\includegraphics{Manuscript_files/figure-latex/RT by ratings-1.pdf}
 Next, we tested for reaciton time differences between positive and negative interpretations of surprised facial expressions within each working memory load condition. Given the non-normality of these data, we used paired-sample Wilcoxon signed rank tests for assessing differences between positive and negative ratings of surprise RTs. This difference was significant \emph{only} for the low emotional load trials, with surprise rated as positive taking signficantly longer than surprise rated as negative (.009). All other comparisons were not significant (p's \textgreater{} .200). Further, this effect survived Bonferroni correction (p = .012).
 
 \begin{verbatim}
 ##              Df Sum Sq Mean Sq F value Pr(>F)  
-## load          1  0.164 0.16398   5.118 0.0248 *
-## type          1  0.002 0.00154   0.048 0.8265  
-## load:type     1  0.087 0.08683   2.710 0.1013  
-## Residuals   196  6.279 0.03204                 
+## load          1  0.257 0.25709   4.599 0.0332 *
+## type          1  0.002 0.00230   0.041 0.8394  
+## load:type     1  0.001 0.00061   0.011 0.9170  
+## Residuals   196 10.956 0.05590                 
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 \end{verbatim}

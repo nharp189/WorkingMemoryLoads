@@ -1,5 +1,5 @@
 ### set working directory to MouseTrap Demo folder ###
-setwd("/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses")
+setwd("/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/WorkingMemoryLoads")
 
 if (!require("processx")) install.packages("processx")
 
@@ -33,31 +33,31 @@ if (!require("processx")) install.packages("processx")
 #install.packages("weights")
 }
 ### load the packages... This needs to be done every time. ###
-{library(mousetrap)
-library(foreach)
-library(tidyverse)
-library(readbulk)
-library(plyr)
-library(utils)
-library(stats)
-library(pracma)
-library(tidyr)
-library(magrittr)
-library(graphics)
-library(grDevices)
-library(ggplot2)
-library(scales)
-library(psych)
-library(Rcpp)
-library(diptest)
-library(RColorBrewer)
-library(cstab)
-library(fastcluster)
-library(parallel)
-library(fields)
-library(readxl)
-library(yarrr)
-library(weights)}
+{suppressPackageStartupMessages(library(mousetrap)) 
+  suppressPackageStartupMessages(library(foreach))
+  suppressPackageStartupMessages(library(tidyverse))
+  suppressPackageStartupMessages(library(readbulk))
+  suppressPackageStartupMessages(library(plyr))
+  suppressPackageStartupMessages(library(utils))
+  suppressPackageStartupMessages(library(stats))
+  suppressPackageStartupMessages(library(pracma))
+  suppressPackageStartupMessages(library(tidyr))
+  suppressPackageStartupMessages(library(magrittr))
+  suppressPackageStartupMessages(library(graphics))
+  suppressPackageStartupMessages(library(grDevices))
+  suppressPackageStartupMessages(library(ggplot2))
+  suppressPackageStartupMessages(library(scales))
+  suppressPackageStartupMessages(library(psych))
+  suppressPackageStartupMessages(library(Rcpp))
+  suppressPackageStartupMessages(library(diptest))
+  suppressPackageStartupMessages(library(RColorBrewer))
+  suppressPackageStartupMessages(library(cstab))
+  suppressPackageStartupMessages(library(fastcluster))
+  suppressPackageStartupMessages(library(parallel))
+  suppressPackageStartupMessages(library(fields))
+  suppressPackageStartupMessages(library(readxl))
+  suppressPackageStartupMessages(library(yarrr))
+}
 
 {
 session1files <- list.files(path = "/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/Data/Session1", 
@@ -317,64 +317,64 @@ cor.test(MAD.plot$val_bias,MAD.plot$neg.res)
 
 ### import session two files ###
 {### set1va ###
-set1.va.files.list <- list.files(path = "/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/Data/set1_task_vA", pattern = "*.mt", full.names = TRUE,
+set1.va.files.list <- list.files(path = "/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/WorkingMemoryLoads/Data/set1_task_vA", pattern = "*.mt", full.names = TRUE,
                                  recursive = FALSE)
-set1.va.files <- read_bulk("/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/Data/set1_task_vA/", fun = read_mt, 
+set1.va.files <- read_bulk("/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/WorkingMemoryLoads/Data/set1_task_vA/", fun = read_mt, 
                            extension = ".mt")
 ### set1.va has incorrectly labelled trials... we'll need to import the correct trial order from another file ###
-set1.va.trial.order <- read_excel("/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/trial_order_corrections.xlsx", sheet = 1)
+set1.va.trial.order <- read_excel("/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/WorkingMemoryLoads/trial_order_corrections.xlsx", sheet = 1)
 
 ### correct conditions ###
 set1.va.files <- merge(set1.va.files, set1.va.trial.order, by = "stim")
 
-set1.vc.files.list <- list.files(path = "/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/Data/set1_task_vC", pattern = "*.mt", full.names = TRUE,
+set1.vc.files.list <- list.files(path = "/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/WorkingMemoryLoads/Data/set1_task_vC", pattern = "*.mt", full.names = TRUE,
                                  recursive = FALSE)
-set1.vc.files <- read_bulk("/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/Data/set1_task_vC/", fun = read_mt, 
+set1.vc.files <- read_bulk("/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/WorkingMemoryLoads/Data/set1_task_vC/", fun = read_mt, 
                            extension = ".mt")
 ### set1.vc has incorrectly labelled trials... we'll need to import the correct trial order from another file ###
-set1.vc.trial.order <- read_excel("/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/trial_order_corrections.xlsx", sheet = 2)
+set1.vc.trial.order <- read_excel("/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/WorkingMemoryLoads/trial_order_corrections.xlsx", sheet = 2)
 
 ### correct conditions ###
 set1.vc.files <- merge(set1.vc.files, set1.vc.trial.order, by = "stim")
 
-set2.va.files.list <- list.files(path = "/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/Data/set2_task_vA", pattern = "*.mt", full.names = TRUE,
+set2.va.files.list <- list.files(path = "/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/WorkingMemoryLoads/Data/set2_task_vA", pattern = "*.mt", full.names = TRUE,
                                  recursive = FALSE)
-set2.va.files <- read_bulk("/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/Data/set2_task_vA/", fun = read_mt, 
+set2.va.files <- read_bulk("/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/WorkingMemoryLoads/Data/set2_task_vA/", fun = read_mt, 
                            extension = ".mt")
 ### set2.va has incorrectly labelled trials... we'll need to import the correct trial order from another file ###
-set2.va.trial.order <- read_excel("/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/trial_order_corrections.xlsx", sheet = 4)
+set2.va.trial.order <- read_excel("/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/WorkingMemoryLoads/trial_order_corrections.xlsx", sheet = 4)
 
 ### correct conditions ###
 set2.va.files <- merge(set2.va.files, set2.va.trial.order, by = "stim")
 
-set2.vc.files.list <- list.files(path = "/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/Data/set2_task_vC", pattern = "*.mt", full.names = TRUE,
+set2.vc.files.list <- list.files(path = "/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/WorkingMemoryLoads/Data/set2_task_vC", pattern = "*.mt", full.names = TRUE,
                                  recursive = FALSE)
-set2.vc.files <- read_bulk("/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/Data/set2_task_vC/", fun = read_mt, 
+set2.vc.files <- read_bulk("/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/WorkingMemoryLoads/Data/set2_task_vC/", fun = read_mt, 
                            extension = ".mt")
 
 ### set2.vc has incorrectly labelled trials... we'll need to import the correct trial order from another file ###
-set2.vc.trial.order <- read_excel("/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/trial_order_corrections.xlsx", sheet = 5)
+set2.vc.trial.order <- read_excel("/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/WorkingMemoryLoads/trial_order_corrections.xlsx", sheet = 5)
 
 ### correct conditions ###
 set2.vc.files <- merge(set2.vc.files, set2.vc.trial.order, by = "stim")
 
-set3.vd.files.list <- list.files(path = "/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/Data/set3_task_vD", pattern = "*.mt", full.names = TRUE,
+set3.vd.files.list <- list.files(path = "/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/WorkingMemoryLoads/Data/set3_task_vD", pattern = "*.mt", full.names = TRUE,
                             recursive = FALSE)
-set3.vd.files <- read_bulk("/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/Data/set3_task_vD/", fun = read_mt, 
+set3.vd.files <- read_bulk("/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/WorkingMemoryLoads/Data/set3_task_vD/", fun = read_mt, 
                            extension = ".mt")
 
 ### set3.vd has incorrectly labelled trials... we'll need to import the correct trial order from another file ###
-set3.vd.trial.order <- read_excel("/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/trial_order_corrections.xlsx", sheet = 6)
+set3.vd.trial.order <- read_excel("/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/WorkingMemoryLoads/trial_order_corrections.xlsx", sheet = 6)
 
 ### correct conditions ###
 set3.vd.files <- merge(set3.vd.files, set3.vd.trial.order, by = "stim")
 
-set4.vd.files.list <- list.files(path = "/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/Data/set4_task_vD", pattern = "*.mt", full.names = TRUE,
+set4.vd.files.list <- list.files(path = "/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/WorkingMemoryLoads/Data/set4_task_vD", pattern = "*.mt", full.names = TRUE,
                             recursive = FALSE)
-set4.vd.files <- read_bulk("/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/Data/set4_task_vD/", fun = read_mt, 
+set4.vd.files <- read_bulk("/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/WorkingMemoryLoads/Data/set4_task_vD/", fun = read_mt, 
                            extension = ".mt")
 ### set4.vd has incorrectly labelled trials... we'll need to import the correct trial order from another file ###
-set4.vd.trial.order <- read_excel("/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/trial_order_corrections.xlsx", sheet = 7)
+set4.vd.trial.order <- read_excel("/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/WorkingMemoryLoads/trial_order_corrections.xlsx", sheet = 7)
 
 ### correct conditions ###
 set4.vd.files <- merge(set4.vd.files, set4.vd.trial.order, by = "stim")  
@@ -684,18 +684,18 @@ MT.results2 <- dplyr::inner_join(
 
 ### is surprise ratings different from low vs high trials? ###
 MT.data.rating.table2 <- (ddply(MT.results2, "subjID", summarise, 
-                               lo.emo.ang_rate = mean(lo.emo.ang_rate, na.rm = TRUE),
-                               hi.emo.ang_rate = mean(hi.emo.ang_rate, na.rm = TRUE),
-                               lo.neu.ang_rate = mean(lo.neu.ang_rate, na.rm = TRUE),
-                               hi.neu.ang_rate = mean(hi.neu.ang_rate, na.rm = TRUE),
-                               lo.emo.hap_rate = mean(lo.emo.hap_rate, na.rm = TRUE),
-                               hi.emo.hap_rate = mean(hi.emo.hap_rate, na.rm = TRUE),
-                               lo.neu.hap_rate = mean(lo.neu.hap_rate, na.rm = TRUE),
-                               hi.neu.hap_rate = mean(hi.neu.hap_rate, na.rm = TRUE),
-                               lo.emo.sur_rate = mean(lo.emo.sur_rate, na.rm = TRUE),
-                               hi.emo.sur_rate = mean(hi.emo.sur_rate, na.rm = TRUE),
-                               lo.neu.sur_rate = mean(lo.neu.sur_rate, na.rm = TRUE),
-                               hi.neu.sur_rate = mean(hi.neu.sur_rate, na.rm = TRUE),
+                               lo.emo.ang_rate = mean(rate[which(cond.correct == "Angry" & type == "EMO" & load == "LOW" & trialtype == "face")], na.rm = TRUE),
+                               hi.emo.ang_rate = mean(rate[which(cond.correct == "Angry" & type == "EMO" & load == "HIGH" & trialtype == "face")], na.rm = TRUE),
+                               lo.neu.ang_rate = mean(rate[which(cond.correct == "Angry" & type == "NEU" & load == "LOW" & trialtype == "face")], na.rm = TRUE),
+                               hi.neu.ang_rate = mean(rate[which(cond.correct == "Angry" & type == "NEU" & load == "HIGH" & trialtype == "face")], na.rm = TRUE),
+                               lo.emo.hap_rate = mean(rate[which(cond.correct == "Happy" & type == "EMO" & load == "LOW" & trialtype == "face")], na.rm = TRUE),
+                               hi.emo.hap_rate = mean(rate[which(cond.correct == "Happy" & type == "EMO" & load == "HIGH" & trialtype == "face")], na.rm = TRUE),
+                               lo.neu.hap_rate = mean(rate[which(cond.correct == "Happy" & type == "NEU" & load == "LOW" & trialtype == "face")], na.rm = TRUE),
+                               hi.neu.hap_rate = mean(rate[which(cond.correct == "Happy" & type == "NEU" & load == "HIGH" & trialtype == "face")], na.rm = TRUE),
+                               lo.emo.sur_rate = mean(rate[which(cond.correct == "Surprise" & type == "EMO" & load == "LOW" & trialtype == "face")], na.rm = TRUE),
+                               hi.emo.sur_rate = mean(rate[which(cond.correct == "Surprise" & type == "EMO" & load == "HIGH" & trialtype == "face")], na.rm = TRUE),
+                               lo.neu.sur_rate = mean(rate[which(cond.correct == "Surprise" & type == "NEU" & load == "LOW" & trialtype == "face")], na.rm = TRUE),
+                               hi.neu.sur_rate = mean(rate[which(cond.correct == "Surprise" & type == "NEU" & load == "HIGH" & trialtype == "face")], na.rm = TRUE),
                                lo.emo.ang_RT = mean(lo.emo.ang_RT, na.rm = TRUE),
                                hi.emo.ang_RT = mean(hi.emo.ang_RT, na.rm = TRUE),
                                lo.neu.ang_RT = mean(lo.neu.ang_RT, na.rm = TRUE),
@@ -758,6 +758,66 @@ MT.data.rating.table2 <- (ddply(MT.results2, "subjID", summarise,
                                hi.neu.RTz = mean(RTz[which(factor == "NEU HIGH" & trialtype == "face")], na.rm = TRUE),
                                lo.emo.RTz = mean(RTz[which(factor == "EMO LOW" & trialtype == "face")], na.rm = TRUE),
                                hi.emo.RTz = mean(RTz[which(factor == "EMO HIGH" & trialtype == "face")], na.rm = TRUE)))
+
+
+ang_rate = 
+hap_rate = mean(rate[which(condition == "Happy")], na.rm = TRUE),
+sur_rate = mean(rate[which(condition == "Surprise")], na.rm = TRUE),
+ang_rate_b0 = mean(rate[which(condition == "Angry" & group == "b0")], na.rm = TRUE),
+hap_rate_b0 = mean(rate[which(condition == "Happy" & group == "b0")], na.rm = TRUE),
+sur_rate_b0 = mean(rate[which(condition == "Surprise" & group == "b0")], na.rm = TRUE),
+ang_rate_in = mean(rate[which(condition == "Angry" & group == "in")], na.rm = TRUE),
+hap_rate_in = mean(rate[which(condition == "Happy" & group == "in")], na.rm = TRUE),
+sur_rate_in = mean(rate[which(condition == "Surprise" & group == "in")], na.rm = TRUE),
+ang_rate_out = mean(rate[which(condition == "Angry" & group == "out")], na.rm = TRUE),
+hap_rate_out = mean(rate[which(condition == "Happy" & group == "out")], na.rm = TRUE),
+sur_rate_out = mean(rate[which(condition == "Surprise" & group == "out")], na.rm = TRUE),
+ang_RT = mean(RT.x[which(condition == "Angry")], na.rm = TRUE),
+hap_RT = mean(RT.x[which(condition == "Happy")], na.rm = TRUE),
+sur_RT = mean(RT.x[which(condition == "Surprise")], na.rm = TRUE),
+sur_p_RT = mean(RT.x[which(condition.rating == "Sur-Pos" )], na.rm = TRUE),
+sur_n_RT = mean(RT.x[which(condition.rating == "Sur-Neg" )], na.rm = TRUE),
+ang_RT_b0 = mean(RT.x[which(condition == "Angry" & group == "b0")], na.rm = TRUE),
+hap_RT_b0 = mean(RT.x[which(condition == "Happy" & group == "b0")], na.rm = TRUE),
+sur_RT_b0 = mean(RT.x[which(condition == "Surprise" & group == "b0")], na.rm = TRUE),
+sur_p_RT_b0 = mean(RT.x[which(condition.rating == "Sur-Pos" & group == "b0")], na.rm = TRUE),
+sur_n_RT_b0 = mean(RT.x[which(condition.rating == "Sur-Neg" & group == "b0")], na.rm = TRUE),
+ang_RT_in = mean(RT.x[which(condition == "Angry" & group == "in")], na.rm = TRUE),
+hap_RT_in = mean(RT.x[which(condition == "Happy" & group == "in")], na.rm = TRUE),
+sur_RT_in = mean(RT.x[which(condition == "Surprise" & group == "in")], na.rm = TRUE),
+sur_p_RT_in = mean(RT.x[which(condition.rating == "Sur-Pos" & group == "in")], na.rm = TRUE),
+sur_n_RT_in = mean(RT.x[which(condition.rating == "Sur-Neg" & group == "in")], na.rm = TRUE),
+ang_RT_out = mean(RT.x[which(condition == "Angry" & group == "out")], na.rm = TRUE),
+hap_RT_out = mean(RT.x[which(condition == "Happy" & group == "out")], na.rm = TRUE),
+sur_RT_out = mean(RT.x[which(condition == "Surprise" & group == "out")], na.rm = TRUE),
+sur_p_RT_out = mean(RT.x[which(condition.rating == "Sur-Pos" & group == "out")], na.rm = TRUE),
+sur_n_RT_out = mean(RT.x[which(condition.rating == "Sur-Neg" & group == "out")], na.rm = TRUE),
+ang_MAD_b0 = mean(MAD[which(condition == "Angry" & group == "b0")], na.rm = TRUE),
+hap_MAD_b0 = mean(MAD[which(condition == "Happy" & group == "b0")], na.rm = TRUE),
+sur_MAD_b0 = mean(MAD[which(condition == "Surprise" & group == "b0")], na.rm = TRUE),
+sur_p_MAD_b0 = mean(MAD[which(condition.rating == "Sur-Pos" & group == "b0")], na.rm = TRUE),
+sur_n_MAD_b0 = mean(MAD[which(condition.rating == "Sur-Neg" & group == "b0")], na.rm = TRUE),
+ang_MAD_in = mean(MAD[which(condition == "Angry" & group == "in")], na.rm = TRUE),
+hap_MAD_in = mean(MAD[which(condition == "Happy" & group == "in")], na.rm = TRUE),
+sur_MAD_in = mean(MAD[which(condition == "Surprise" & group == "in")], na.rm = TRUE),
+sur_p_MAD_in = mean(MAD[which(condition.rating == "Sur-Pos" & group == "in")], na.rm = TRUE),
+sur_n_MAD_in = mean(MAD[which(condition.rating == "Sur-Neg" & group == "in")], na.rm = TRUE),
+ang_MAD_out = mean(MAD[which(condition == "Angry" & group == "out")], na.rm = TRUE),
+hap_MAD_out = mean(MAD[which(condition == "Happy" & group == "out")], na.rm = TRUE),
+sur_MAD_out = mean(MAD[which(condition == "Surprise" & group == "out")], na.rm = TRUE),
+sur_p_MAD_out = mean(MAD[which(condition.rating == "Sur-Pos" & group == "out")], na.rm = TRUE),
+sur_n_MAD_out = mean(MAD[which(condition.rating == "Sur-Neg" & group == "out")], na.rm = TRUE)))
+
+
+
+
+
+
+
+
+
+
+
 
 write.csv(MT.data.rating.table2, paste("Final.Data.csv",format(Sys.time(),'_%Y-%m-%d_%H-%M-%S'),
                                       '.csv',sep = ''))

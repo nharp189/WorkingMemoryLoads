@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.8)  29 JUL 2019 14:36
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.8)  7 AUG 2019 13:22
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -894,71 +894,48 @@ Overfull \hbox (12.84642pt too wide) in paragraph at lines 195--196
  []
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 4144) has occurred while \output is active []
 
 [9 <./Manuscript_files/figure-latex/plot figure 1-1.pdf>]
-LaTeX Font Info:    Try loading font information for T1+lmtt on input line 197.
+LaTeX Font Info:    Try loading font information for T1+lmtt on input line 199.
 
 (/usr/local/texlive/2019/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-Underfull \vbox (badness 1087) has occurred while \output is active []
-
-[10 <./Manuscript_files/figure-latex/plot RT data-1.pdf>] [11]
-<Manuscript_files/figure-latex/RT by ratings-1.pdf, id=153, 453.695pt x 313.17p
-t>
-File: Manuscript_files/figure-latex/RT by ratings-1.pdf Graphic file (type pdf)
-
-<use Manuscript_files/figure-latex/RT by ratings-1.pdf>
-Package pdftex.def Info: Manuscript_files/figure-latex/RT by ratings-1.pdf  use
-d on input line 288.
-(pdftex.def)             Requested size: 453.6939pt x 313.16922pt.
-
-Overfull \hbox (12.84642pt too wide) in paragraph at lines 288--290
-[][] 
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[12]
-LaTeX Font Info:    Try loading font information for TS1+lmtt on input line 299
+LaTeX Font Info:    Try loading font information for TS1+lmtt on input line 207
 .
 (/usr/local/texlive/2019/texmf-dist/tex/latex/lm/ts1lmtt.fd
 File: ts1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-)
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[13 <./Manuscript_files/figure-latex/RT by ratings-1.pdf>]
-<Manuscript_files/figure-latex/MAD-1.pdf, id=170, 453.695pt x 313.17pt>
+) [10 <./Manuscript_files/figure-latex/plot RT data-1.pdf>]
+<Manuscript_files/figure-latex/MAD-1.pdf, id=149, 453.695pt x 313.17pt>
 File: Manuscript_files/figure-latex/MAD-1.pdf Graphic file (type pdf)
 <use Manuscript_files/figure-latex/MAD-1.pdf>
 Package pdftex.def Info: Manuscript_files/figure-latex/MAD-1.pdf  used on input
- line 301.
+ line 209.
 (pdftex.def)             Requested size: 453.6939pt x 313.16922pt.
 
-Overfull \hbox (12.84642pt too wide) in paragraph at lines 301--302
+Overfull \hbox (12.84642pt too wide) in paragraph at lines 209--210
 [][]  
  []
 
-[14 <./Manuscript_files/figure-latex/MAD-1.pdf>] [15] AED endfloat: Processing 
-end Figures and Tables [16]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 362.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 362.
+[11 <./Manuscript_files/figure-latex/MAD-1.pdf>] [12] AED endfloat: Processing 
+end Figures and Tables [13]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 270.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 270.
 (./Manuscript.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 362.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 362.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 270.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 270.
 Package rerunfilecheck Info: File `Manuscript.out' has not changed.
 (rerunfilecheck)             Checksum: B062C8AFC80EEEBFAE9C9B7858EB4302;2081.
  ) 
 Here is how much of TeX's memory you used:
- 15596 strings out of 492616
- 232451 string characters out of 6129482
+ 15589 strings out of 492616
+ 232187 string characters out of 6129482
  348712 words of memory out of 5000000
- 19122 multiletter control sequences out of 15000+600000
+ 19118 multiletter control sequences out of 15000+600000
  80831 words of font info for 112 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 43i,10n,47p,1449b,531s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 43i,10n,47p,1449b,532s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2019/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{/usr/local
 /texlive/2019/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/local/texlive/2019/
 texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/texlive/2019/texmf-dist/fon
@@ -971,10 +948,10 @@ texlive/2019/texmf-dist/fonts/type1/public/lm/lmr7.pfb></usr/local/texlive/2019
 fonts/type1/public/lm/lmri12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type
 1/public/lm/lmss8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/lm
 /lmtt12.pfb>
-Output written on Manuscript.pdf (16 pages, 243533 bytes).
+Output written on Manuscript.pdf (13 pages, 235242 bytes).
 PDF statistics:
- 271 PDF objects out of 1000 (max. 8388607)
- 229 compressed objects within 3 object streams
- 61 named destinations out of 1000 (max. 500000)
- 10381 words of extra memory for PDF output out of 12000 (max. 10000000)
+ 250 PDF objects out of 1000 (max. 8388607)
+ 214 compressed objects within 3 object streams
+ 58 named destinations out of 1000 (max. 500000)
+ 10376 words of extra memory for PDF output out of 12000 (max. 10000000)
 
