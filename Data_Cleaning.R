@@ -389,6 +389,14 @@ MT.data <- arrange(MT.data, subjID, order)
 file.list <- list(c(set1.va.files.list, set1.vc.files.list, set2.va.files.list,
                     set2.vc.files.list, set3.vd.files.list, set4.vd.files.list))}
 
+### clean workspace ###
+rm(set1.va.files.list, set1.vc.files.list, set2.va.files.list,
+   set2.vc.files.list, set3.vd.files.list, set4.vd.files.list,
+   set1.va.files, set1.va.trial.order, set1.vc.files,
+   set1.vc.trial.order, set2.va.files, set2.va.trial.order,
+   set2.vc.files, set2.vc.trial.order, set3.vd.files,
+   set3.vd.trial.order, set4.vd.files, set4.vd.trial.order)
+
 ### import MT data ###
 MT.data <- mt_import_wide(MT.data)
 
@@ -564,8 +572,8 @@ MT.data <- mt_import_wide(MT.data)
 }}
 
 ### check RT min / max for outliers ###
-meanrt <- mean(MT.data$data$RT)
-sdrt <- sd(MT.data$data$RT)
+meanrt <- mean(MT.data$data$RT[which(MT.data$data$trialtype == "face")])
+sdrt <- sd(MT.data$data$RT[which(MT.data$data$trialtype == "face")])
 outlier <- meanrt + (3*sdrt)
 #print(outlier)
 
@@ -674,7 +682,7 @@ MT.data.rating.table2 <- (ddply(MT.results2, "subjID", summarise,
                                lo.emo.RTz = mean(RTz[which(factor == "EMO LOW" & trialtype == "face")], na.rm = TRUE),
                                hi.emo.RTz = mean(RTz[which(factor == "EMO HIGH" & trialtype == "face")], na.rm = TRUE)))
 
-write.csv(MT.data.rating.table2, paste("Data/Cleaned_Data/Final.Data.csv",format(Sys.time(),'_%Y-%m-%d_%H-%M-%S'),
+ write.csv(MT.data.rating.table2, paste("Data/Cleaned_Data/Final.Data.csv",format(Sys.time(),'_%Y-%m-%d_%H-%M-%S'),
                                       '.csv',sep = ''))
 
 

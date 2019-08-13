@@ -122,7 +122,7 @@ Prior to completing the analyses, the data were assessed for normality using the
 # Results
 ## Subjective ratings
 ```{r import data and analyze ratings, include = FALSE, echo = TRUE}
-data <- read.csv("~/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/WorkingMemoryLoads/Data/Cleaned_Data/Final.Data.csv_2019-08-07_15-04-27.csv")
+data <- read.csv("~/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/WorkingMemoryLoads/Data/Cleaned_Data/Final.Data.csv_2019-08-13_12-52-10.csv")
 ### remove psych disorders ### Ask maital?
 # data <- data[-c(4, 33, 37, 38, 41, 47),]
 
