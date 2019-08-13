@@ -278,18 +278,18 @@ wilcox.test(data$lo.emo.sur_n_RT, data$lo.emo.sur_p_RT, paired = TRUE)
 wilcox.test(data$hi.emo.sur_n_RT, data$hi.emo.sur_p_RT, paired = TRUE)
 
 ### make long ###
-data.long <- gather(data, key = "Condition", value = "ReactionTime",
-                    lo.neu.sur_n_RT, hi.neu.sur_n_RT,
-                    lo.emo.sur_n_RT, hi.emo.sur_n_RT,
-                    lo.neu.sur_p_RT, hi.neu.sur_p_RT,
-                    lo.emo.sur_p_RT, hi.emo.sur_p_RT)
+data.long <- gather(data, key = "Condition", value = "ReactionTimeZ",
+                    lo.neu.sur_n_RTz, hi.neu.sur_n_RTz,
+                    lo.emo.sur_n_RTz, hi.emo.sur_n_RTz,
+                    lo.neu.sur_p_RTz, hi.neu.sur_p_RTz,
+                    lo.emo.sur_p_RTz, hi.emo.sur_p_RTz)
 data.long$Condition <- as.factor(data.long$Condition)
 
-data.long.summary <- summarySE(data.long, measurevar="ReactionTime", groupvars="Condition", na.rm = TRUE)
+data.long.summary <- summarySE(data.long, measurevar="ReactionTimeZ", groupvars="Condition", na.rm = TRUE)
 
-ggplot(data.long.summary, aes(Condition, ReactionTime, fill = as.factor(Condition))) +
+ggplot(data.long.summary, aes(Condition, ReactionTimeZ, fill = as.factor(Condition))) +
   geom_bar(stat = "summary", fun.y = "mean", na.rm = TRUE) +
-  geom_errorbar(aes(ymin=ReactionTime-se, ymax=ReactionTime+se), width=.1)
+  geom_errorbar(aes(ymin=ReactionTimeZ-se, ymax=ReactionTimeZ+se), width=.1)
 
 # ### force normality ###
 # RTz.long <- gather(data, key = Condition, value = RTz,
@@ -348,6 +348,12 @@ Next, we tested for reaciton time differences between positive and negative inte
 
 ``` {r MAD, include = FALSE}
 ###  MAD analyses ###
+### check for normality ###
+shapiro.test(data$lo.emo.sur_MAD) # barely normal (p = .054)
+shapiro.test(data$hi.emo.sur_MAD) # barely normal (p = .08)
+shapiro.test(data$lo.neu.sur_MAD) # normal
+shapiro.test(data$hi.neu.sur_MAD) # normal
+
 results.long <- gather(data, key = "Condition", value = "MAD",
                        lo.emo.sur_MAD, hi.emo.sur_MAD, lo.neu.sur_MAD, hi.neu.sur_MAD)
 results.long$load <- ifelse(results.long$Condition == "lo.emo.sur_MAD", "Low",
@@ -365,6 +371,11 @@ res.long.sum <- summarySE(results.long, measurevar="MAD", groupvars = "Condition
 ggplot(res.long.sum, aes(Condition, MAD, fill = as.factor(Condition))) +
   geom_bar(stat = "summary", fun.y = "mean") +
   geom_errorbar(aes(ymin=`MAD`-se, ymax=`MAD`+se), width=.1)
+```
+``` {r MAD map}
+suppressPackageStartupMessages(library(mousetrap)) 
+# source MADFigure.R ??? 
+
 ```
 Finally, we assessed differences in maximum absolute deviation (MAD) across the WM trial conditions. 
 

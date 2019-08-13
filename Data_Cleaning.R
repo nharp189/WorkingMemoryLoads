@@ -678,6 +678,57 @@ write.csv(MT.data.rating.table2, paste("Data/Cleaned_Data/Final.Data.csv",format
                                       '.csv',sep = ''))
 
 
+### MD analysis, just like RT by response ###
+MT.results.small <- subset(MT.data.rating.table2[,c(1,56:63)])
+
+shapiro.test(MT.results.small$lo.emo.sur_n_MAD)
+shapiro.test(MT.results.small$lo.emo.sur_p_MAD)
+wilcox.test(MT.results.small$lo.emo.sur_n_MAD, MT.results.small$lo.emo.sur_p_MAD, paired = TRUE)
+MAD.long.resp <- gather(MT.results.small, key = "Condition", value = "MAD",
+                        lo.emo.sur_n_MAD, lo.emo.sur_p_MAD)
+ggplot(data = MAD.long.resp, aes(x = Condition, y = MAD)) +
+  geom_bar(stat = "summary", fun.y = "mean") +
+  stat_summary(fun.data = mean_se, geom = "errorbar", width = .25, color = c("Black"))
+
+
+shapiro.test(MT.results.small$hi.emo.sur_n_MAD)
+shapiro.test(MT.results.small$hi.emo.sur_p_MAD)
+wilcox.test(MT.results.small$hi.emo.sur_n_MAD, MT.results.small$hi.emo.sur_p_MAD, paired = TRUE)
+MAD.long.resp <- gather(MT.results.small, key = "Condition", value = "MAD",
+                        hi.emo.sur_n_MAD, hi.emo.sur_p_MAD)
+ggplot(data = MAD.long.resp, aes(x = Condition, y = MAD)) +
+  geom_bar(stat = "summary", fun.y = "mean") +
+  stat_summary(fun.data = mean_se, geom = "errorbar", width = .25, color = c("Black"))
+
+shapiro.test(MT.results.small$lo.neu.sur_n_MAD)
+shapiro.test(MT.results.small$lo.neu.sur_p_MAD)
+wilcox.test(MT.results.small$lo.neu.sur_n_MAD, MT.results.small$lo.neu.sur_p_MAD, paired = TRUE)
+MAD.long.resp <- gather(MT.results.small, key = "Condition", value = "MAD",
+                        lo.neu.sur_n_MAD, lo.neu.sur_p_MAD)
+ggplot(data = MAD.long.resp, aes(x = Condition, y = MAD)) +
+  geom_bar(stat = "summary", fun.y = "mean") +
+  stat_summary(fun.data = mean_se, geom = "errorbar", width = .25, color = c("Black"))
+
+
+shapiro.test(MT.results.small$hi.neu.sur_n_MAD)
+shapiro.test(MT.results.small$hi.neu.sur_p_MAD)
+wilcox.test(MT.results.small$hi.neu.sur_n_MAD, MT.results.small$hi.neu.sur_p_MAD, paired = TRUE)
+MAD.long.resp <- gather(MT.results.small, key = "Condition", value = "MAD",
+                        hi.neu.sur_n_MAD, hi.neu.sur_p_MAD)
+ggplot(data = MAD.long.resp, aes(x = Condition, y = MAD)) +
+  geom_bar(stat = "summary", fun.y = "mean") +
+  stat_summary(fun.data = mean_se, geom = "errorbar", width = .25, color = c("Black"))
+
+
+
+
+
+
+
+
+
+
+
 
 shapiro.test(MT.data.rating.table2$lo.neu.sur_RTz)
 RTz.long <- gather(MT.data.rating.table2, key = Condition, value = RTz,
@@ -710,7 +761,7 @@ ggplot(RTz.long, aes(Condition, RTz, fill = as.factor(Condition))) +
 
 
 ### analyzing MAD by resp ###
-MAD.long.resp <- gather(MT.data.rating.table2, key = "Condition", value = "MAD",
+MAD.long.resp <- gather(MT.results.small, key = "Condition", value = "MAD",
                         lo.emo.sur_n_MAD, lo.emo.sur_p_MAD, hi.emo.sur_n_MAD, hi.emo.sur_p_MAD,
                         lo.neu.sur_n_MAD, lo.neu.sur_p_MAD, hi.neu.sur_n_MAD, hi.neu.sur_p_MAD)
 
@@ -736,7 +787,7 @@ summary.aov(MAD.anova.resp)
 MAD.res.long.sum <- summarySE(MAD.long.resp, measurevar="MAD", groupvars = "Condition")
 ggplot(MAD.res.long.sum, aes(Condition, MAD, fill = as.factor(Condition))) +
   geom_bar(stat = "summary", fun.y = "mean") +
-  geom_errorbar(aes(ymin=`MAD`-se, ymax=`MAD`+se), width=.1)
+  geom_bar(fun.data = mean_se, geom = "errorbar", width = .1)
 
 
 
