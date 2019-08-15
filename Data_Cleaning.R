@@ -3,35 +3,6 @@ setwd("/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/A
 
 if (!require("processx")) install.packages("processx")
 
-{### install MouseTrap... This only needs to be done once. ###
-### ... and readbulk for applying to a set of files ###
-#install.packages("mousetrap")
-#install.packages("readbulk")
-#install.packages("here")
-#install.packages("foreach")
-#install.packages("tidyverse")
-#install.packages("plyr")
-#install.packages("utils")
-#install.packages("stats")
-#install.packages("pracma")
-#install.packages("tidyr")
-#install.packages("magrittr")
-#install.packages("graphics")
-#install.packages("grDevices")
-#install.packages("ggplot2")
-#install.packages("scales")
-#install.packages("psych")
-#install.packages("Rcpp")
-#install.packages("diptest")
-#install.packages("RColorBrewer")
-#install.packages("cstab")
-#install.packages("fastcluster")
-#install.packages("parallel")
-#install.packages("fields")
-#install.packages("orca")
-#install.packages("plotly")
-#install.packages("weights")
-}
 ### load the packages... This needs to be done every time. ###
 {suppressPackageStartupMessages(library(mousetrap)) 
   suppressPackageStartupMessages(library(foreach))
@@ -245,7 +216,7 @@ session1.data.persub <- mt_aggregate_per_subject(session1.data, use = "measures"
 ### merge MT measures w/ rating data ###
 session1.ratings.table <- merge(session1.data.persub, session1.ratings.table, by = "subjID")
 ### write output for session1 ###
-write.csv(session1.ratings.table, "WM.Session1.csv")
+#write.csv(session1.ratings.table, "WM.Session1.csv")
 
 
 
@@ -578,7 +549,7 @@ outlier <- meanrt + (3*sdrt)
 #print(outlier)
 
 ### remove trials > outlierRT ###
-MT.data$data <- subset(MT.data$data, RT <= outlier)
+MT.data$data <-MT.data$data[!(MT.data$data$RT >= outlier),]
 
 ### flag trials before incorrect memory probes ###
 for(i in 2:nrow(MT.data$data)) {
@@ -682,50 +653,8 @@ MT.data.rating.table2 <- (ddply(MT.results2, "subjID", summarise,
                                lo.emo.RTz = mean(RTz[which(factor == "EMO LOW" & trialtype == "face")], na.rm = TRUE),
                                hi.emo.RTz = mean(RTz[which(factor == "EMO HIGH" & trialtype == "face")], na.rm = TRUE)))
 
- write.csv(MT.data.rating.table2, paste("Data/Cleaned_Data/Final.Data.csv",format(Sys.time(),'_%Y-%m-%d_%H-%M-%S'),
-                                      '.csv',sep = ''))
-
-
-### MD analysis, just like RT by response ###
-MT.results.small <- subset(MT.data.rating.table2[,c(1,56:63)])
-
-shapiro.test(MT.results.small$lo.emo.sur_n_MAD)
-shapiro.test(MT.results.small$lo.emo.sur_p_MAD)
-wilcox.test(MT.results.small$lo.emo.sur_n_MAD, MT.results.small$lo.emo.sur_p_MAD, paired = TRUE)
-MAD.long.resp <- gather(MT.results.small, key = "Condition", value = "MAD",
-                        lo.emo.sur_n_MAD, lo.emo.sur_p_MAD)
-ggplot(data = MAD.long.resp, aes(x = Condition, y = MAD)) +
-  geom_bar(stat = "summary", fun.y = "mean") +
-  stat_summary(fun.data = mean_se, geom = "errorbar", width = .25, color = c("Black"))
-
-
-shapiro.test(MT.results.small$hi.emo.sur_n_MAD)
-shapiro.test(MT.results.small$hi.emo.sur_p_MAD)
-wilcox.test(MT.results.small$hi.emo.sur_n_MAD, MT.results.small$hi.emo.sur_p_MAD, paired = TRUE)
-MAD.long.resp <- gather(MT.results.small, key = "Condition", value = "MAD",
-                        hi.emo.sur_n_MAD, hi.emo.sur_p_MAD)
-ggplot(data = MAD.long.resp, aes(x = Condition, y = MAD)) +
-  geom_bar(stat = "summary", fun.y = "mean") +
-  stat_summary(fun.data = mean_se, geom = "errorbar", width = .25, color = c("Black"))
-
-shapiro.test(MT.results.small$lo.neu.sur_n_MAD)
-shapiro.test(MT.results.small$lo.neu.sur_p_MAD)
-wilcox.test(MT.results.small$lo.neu.sur_n_MAD, MT.results.small$lo.neu.sur_p_MAD, paired = TRUE)
-MAD.long.resp <- gather(MT.results.small, key = "Condition", value = "MAD",
-                        lo.neu.sur_n_MAD, lo.neu.sur_p_MAD)
-ggplot(data = MAD.long.resp, aes(x = Condition, y = MAD)) +
-  geom_bar(stat = "summary", fun.y = "mean") +
-  stat_summary(fun.data = mean_se, geom = "errorbar", width = .25, color = c("Black"))
-
-
-shapiro.test(MT.results.small$hi.neu.sur_n_MAD)
-shapiro.test(MT.results.small$hi.neu.sur_p_MAD)
-wilcox.test(MT.results.small$hi.neu.sur_n_MAD, MT.results.small$hi.neu.sur_p_MAD, paired = TRUE)
-MAD.long.resp <- gather(MT.results.small, key = "Condition", value = "MAD",
-                        hi.neu.sur_n_MAD, hi.neu.sur_p_MAD)
-ggplot(data = MAD.long.resp, aes(x = Condition, y = MAD)) +
-  geom_bar(stat = "summary", fun.y = "mean") +
-  stat_summary(fun.data = mean_se, geom = "errorbar", width = .25, color = c("Black"))
+# write.csv(MT.data.rating.table2, paste("Data/Cleaned_Data/Final.Data.csv",format(Sys.time(),'_%Y-%m-%d_%H-%M-%S'),
+#                                       '.csv',sep = ''))
 
 
 
@@ -738,64 +667,12 @@ ggplot(data = MAD.long.resp, aes(x = Condition, y = MAD)) +
 
 
 
-shapiro.test(MT.data.rating.table2$lo.neu.sur_RTz)
-RTz.long <- gather(MT.data.rating.table2, key = Condition, value = RTz,
-               lo.neu.sur_RTz, hi.neu.sur_RTz, lo.emo.sur_RTz, hi.emo.sur_RTz)
-
-### make factors ###
-RTz.long$Load <- ifelse(RTz.long$Condition == "lo.neu.sur_RTz", "Low",
-                        ifelse(RTz.long$Condition == "lo.emo.sur_RTz", "Low",
-                               ifelse(RTz.long$Condition == "hi.neu.sur_RTz", "High",
-                                      ifelse(RTz.long$Condition == "hi.emo.sur_RTz", "High", ""))))
-
-RTz.long$Type <- ifelse(RTz.long$Condition == "lo.neu.sur_RTz", "Neutral",
-                        ifelse(RTz.long$Condition == "lo.emo.sur_RTz", "Emotional",
-                               ifelse(RTz.long$Condition == "hi.neu.sur_RTz", "Neutral",
-                                      ifelse(RTz.long$Condition == "hi.emo.sur_RTz", "Emotional", ""))))
-
-### make w/in subjs factors ###
-RTz.long$subjID <- as.factor(RTz.long$subjID)
-
-### traditional ANOVA ###
-RTaov <- with(RTz.long,
-              aov(RTz ~ (Load * Type) +
-                    Error(subjID / (Load * Type))), contrasts = contr.sum())
-summary(RTaov)
-
-ggplot(RTz.long, aes(Condition, RTz, fill = as.factor(Condition))) +
-  geom_bar(stat = "summary", fun.y = "mean", na.rm = TRUE) +
-  stat_summary(fun.data = mean_se, geom = "errorbar", width = .25, color = c("Black"))
 
 
 
-### analyzing MAD by resp ###
-MAD.long.resp <- gather(MT.results.small, key = "Condition", value = "MAD",
-                        lo.emo.sur_n_MAD, lo.emo.sur_p_MAD, hi.emo.sur_n_MAD, hi.emo.sur_p_MAD,
-                        lo.neu.sur_n_MAD, lo.neu.sur_p_MAD, hi.neu.sur_n_MAD, hi.neu.sur_p_MAD)
-
-MAD.long.resp$load <- ifelse(MAD.long.resp$Condition == "lo.emo.sur_n_MAD", "Low",
-                            ifelse(MAD.long.resp$Condition == "lo.emo.sur_p_MAD", "Low",
-                                   ifelse(MAD.long.resp$Condition == "lo.neu.sur_n_MAD", "Low",
-                                          ifelse(MAD.long.resp$Condition == "lo.neu.sur_p_MAD", "Low", "High"))))
-                            
-MAD.long.resp$type <- ifelse(MAD.long.resp$Condition == "lo.emo.sur_n_MAD", "Emo",
-                             ifelse(MAD.long.resp$Condition == "lo.emo.sur_p_MAD", "Emo",
-                                    ifelse(MAD.long.resp$Condition == "hi.emo.sur_n_MAD", "Emo",
-                                           ifelse(MAD.long.resp$Condition == "hi.emo.sur_p_MAD", "Emo", "Neu"))))
-
-MAD.long.resp$resp <- ifelse(MAD.long.resp$Condition == "lo.emo.sur_n_MAD", "Neg",
-                             ifelse(MAD.long.resp$Condition == "hi.emo.sur_n_MAD", "Neg",
-                                    ifelse(MAD.long.resp$Condition == "hi.neu.sur_n_MAD", "Neg",
-                                           ifelse(MAD.long.resp$Condition == "lo.neu.sur_n_MAD", "Neg", "Pos"))))
 
 
-MAD.anova.resp <- aov(MAD ~ load * type * resp, data = MAD.long.resp)
-summary.aov(MAD.anova.resp)
 
-MAD.res.long.sum <- summarySE(MAD.long.resp, measurevar="MAD", groupvars = "Condition")
-ggplot(MAD.res.long.sum, aes(Condition, MAD, fill = as.factor(Condition))) +
-  geom_bar(stat = "summary", fun.y = "mean") +
-  geom_bar(fun.data = mean_se, geom = "errorbar", width = .1)
 
 
 
@@ -836,100 +713,6 @@ subRTs <- ddply(MT.data$data,"subjID", summarise,
 sur.MTresults2 <- subset(MT.results2, cond.correct == "Surprise")
 sur.pos.MTresults2 <- subset(sur.MTresults2, rate == 0)
 sur.neg.MTresults2 <- subset(sur.MTresults2, rate == 1)
-
-
-library(yarrr)
-### plot MDs by surprise response type ###
-pirateplot(MAD ~ condition.rating +  type, data = sur.MTresults2,
-           bean.f.col = c("Red", "Blue"),
-           main = "MDs - Surprise by Response Type and Emo/Neu Load",
-           inf.method = "se")
-pirateplot(MAD ~ type + load, data = sur.pos.MTresults2,
-           inf.method = "se",
-           main = "Surprise as Positive - MDs")
-pirateplot(MAD ~ type + load, data = sur.neg.MTresults2,
-           inf.method = "se",
-           main = "Surprise as Negative - MDs")
-
-pirateplot(MD ~ condition, data = by.surp.wideMAD.spread,
-           inf.method = "se",
-           bean.f.col = c("Red", "Blue", "Red", "Blue"))
-
-### make MAD wide ###
-sur.pos.wideMAD <- sur.pos.MTresults2 %>% spread(cond.load, MAD)
-sur.pos.wideMAD <- (ddply(sur.pos.wideMAD, "subjID", summarise,
-                   hi.em.sur.MAD.p = mean(HiEmoSurprise, na.rm = TRUE),
-                   lo.em.sur.MAD.p = mean(LoEmoSurprise, na.rm = TRUE),
-                   hi.neu.sur.MAD.p = mean(HiNeuSurprise, na.rm = TRUE),
-                   lo.neu.sur.MAD.p = mean(LoNeuSurprise, na.rm = TRUE),
-                   LOW.surp.MAD.p = mean(c(LoNeuSurprise,LoEmoSurprise), na.rm = TRUE),
-                   HI.surp.MAD.p = mean(c(HiNeuSurprise,HiEmoSurprise), na.rm = TRUE),
-                   NEU.surp.MAD.p = mean(c(LoNeuSurprise,HiNeuSurprise), na.rm = TRUE),
-                   EMO.surp.MAD.p = mean(c(LoEmoSurprise,HiEmoSurprise), na.rm = TRUE),
-                   lo.emo.sur_p_RT = mean(lo.emo.sur_p_RT, na.rm = TRUE),
-                   hi.emo.sur_p_RT = mean(hi.emo.sur_p_RT, na.rm = TRUE),
-                   lo.neu.sur_p_RT = mean(lo.neu.sur_p_RT, na.rm = TRUE),
-                   hi.neu.sur_p_RT = mean(hi.neu.sur_p_RT, na.rm = TRUE)))
-                   
-sur.neg.wideMAD <- sur.neg.MTresults2 %>% spread(cond.load, MAD)
-sur.neg.wideMAD <- (ddply(sur.neg.wideMAD, "subjID", summarise,
-                          hi.em.sur.MAD.n = mean(HiEmoSurprise, na.rm = TRUE),
-                          lo.em.sur.MAD.n = mean(LoEmoSurprise, na.rm = TRUE),
-                          hi.neu.sur.MAD.n = mean(HiNeuSurprise, na.rm = TRUE),
-                          lo.neu.sur.MAD.n = mean(LoNeuSurprise, na.rm = TRUE),
-                          LOW.surp.MAD.n = mean(c(LoNeuSurprise,LoEmoSurprise), na.rm = TRUE),
-                          HI.surp.MAD.n = mean(c(HiNeuSurprise,HiEmoSurprise), na.rm = TRUE),
-                          NEU.surp.MAD.n = mean(c(LoNeuSurprise,HiNeuSurprise), na.rm = TRUE),
-                          EMO.surp.MAD.n = mean(c(LoEmoSurprise,HiEmoSurprise), na.rm = TRUE),
-                          hi.neu.sur_n_RT = mean(hi.neu.sur_n_RT, na.rm = TRUE),
-                          hi.emo.sur_n_RT = mean(hi.emo.sur_n_RT, na.rm = TRUE),
-                          lo.emo.sur_n_RT = mean(lo.emo.sur_n_RT, na.rm = TRUE), 
-                          lo.neu.sur_n_RT = mean(lo.neu.sur_n_RT, na.rm = TRUE)))
-                          
-                          
-
-
-### merge ###
-by.surp.wideMAD <- merge(sur.neg.wideMAD, sur.pos.wideMAD, by = "subjID")
-#by.surp.wideMAD <- na.omit(by.surp.wideMAD)
-
-
-#by.surp.wideMAD <- gather(by.surp.wideMAD, key = condition, value = MD,
-                         # LowNeg, LowPos, HighNeg, HighPos)
-#write.csv(by.surp.wideMAD, "~/Desktop/by.surp.MAD.csv")
-### make MAD wide both ratings ###
-wideMAD2 <- sur.MTresults2 %>% spread(cond.load, MAD)
-wideMAD2 <- (ddply(wideMAD2, "subjID", summarise, 
-                          lo.emo.sur_rate = mean(lo.emo.sur_rate, na.rm = TRUE),
-                          hi.emo.sur_rate = mean(hi.emo.sur_rate, na.rm = TRUE),
-                          lo.neu.sur_rate = mean(lo.neu.sur_rate, na.rm = TRUE),
-                          hi.neu.sur_rate = mean(hi.neu.sur_rate, na.rm = TRUE),
-                          hi.em.sur.MAD = mean(HiEmoSurprise, na.rm = TRUE),
-                          lo.em.sur.MAD = mean(LoEmoSurprise, na.rm = TRUE),
-                          hi.neu.sur.MAD = mean(HiNeuSurprise, na.rm = TRUE),
-                          lo.neu.sur.MAD = mean(LoNeuSurprise, na.rm = TRUE),
-                          lo.emo.sur_RT = mean(lo.emo.sur_RT, na.rm = TRUE),
-                          hi.emo.sur_RT = mean(hi.emo.sur_RT, na.rm = TRUE),
-                          lo.neu.sur_RT = mean(lo.neu.sur_RT, na.rm = TRUE),
-                          hi.neu.sur_RT = mean(hi.neu.sur_RT, na.rm = TRUE),
-                          lo.neu.mem = mean(ifelse((paste(type,load) == "NEULOW")),
-                                            mem.cor, NA)))
-
-### merge w/ by surp ratings ###
-MAD.surp <- merge(by.surp.wideMAD, wideMAD2, by = "subjID")
-MAD.surp$val_bias <- rowMeans(MAD.surp[c('lo.emo.sur_rate', 'hi.emo.sur_rate',
-                                                 'lo.neu.sur_rate', 'hi.neu.sur_rate')],
-                              na.rm = TRUE)
-
-### filter out any subs with na's ###
-MAD.surp <- MAD.surp[complete.cases(MAD.surp),]
-shapiro.test(MAD.surp$val_bias)
-View(MAD.surp)
-## think about more positive (better emo reg) being able
-## to better recall less negative pics?? 
-
-
-
 
 # ### create LOW/HIGH main effect MD ###
 # MAD.surp$LOW.surp.MAD.n <- ((MAD.surp$lo.neu.sur.MAD.n + MAD.surp$lo.em.sur.MAD.n)/2)
@@ -1206,19 +989,7 @@ ggplot(data=MAD.surp,aes(x=val_bias,y=NEU.surp.MAD.p))+
 #####
 #####
 
-### check RT normality ###
-{### hi.neu.sur_p_RT = normal ###
-### hi.emo.sur_n_RT = normal ###
-### all others non-normal ###
-shapiro.test(MAD.surp$lo.neu.sur_n_RT)
-shapiro.test(MAD.surp$lo.neu.sur_p_RT)
-shapiro.test(MAD.surp$lo.emo.sur_n_RT)
-shapiro.test(MAD.surp$lo.emo.sur_p_RT)
-shapiro.test(MAD.surp$hi.neu.sur_n_RT)
-shapiro.test(MAD.surp$hi.neu.sur_p_RT)
-shapiro.test(MAD.surp$hi.emo.sur_n_RT)
-shapiro.test(MAD.surp$hi.emo.sur_p_RT)
-}
+
 
 
 ### LOW EMO MD X VALBIAS ###
