@@ -178,47 +178,6 @@ shapiro.test(data$hi.neu.sur_RT)
 shapiro.test(data$lo.emo.sur_RT)
 shapiro.test(data$hi.emo.sur_RT)
 
-### force normality ###
-# RTz.long <- gather(data, key = Condition, value = RTz,
-#                     lo.neu.sur_RTz,
-#                     hi.neu.sur_RTz,
-#                     lo.emo.sur_RTz,
-#                     hi.emo.sur_RTz)
- 
-# ### run Friedman's test and store results ###
-# RTz.friedman <- friedman.test(RTz ~ Condition|subjID, data = RTz.long)
-# lo.emo.v.lo.neu.RTz <- wilcox_test(data$lo.emo.sur_RTz, data$lo.neu.sur_RTz, paired = TRUE, conf.int = TRUE)
-# lo.emo.v.hi.neu.RTz <- wilcox_test(data$lo.emo.sur_RTz, data$hi.neu.sur_RTz, paired = TRUE, conf.int = TRUE)
-# lo.emo.v.hi.emo.RTz <- wilcox_test(data$lo.emo.sur_RTz, data$hi.emo.sur_RTz, paired = TRUE, conf.int = TRUE)
-# hi.emo.v.lo.neu.RTz <- wilcox_test(data$hi.emo.sur_RTz, data$lo.neu.sur_RTz, paired = TRUE, conf.int = TRUE)
-# hi.emo.v.hi.neu.RTz <- wilcox_test(data$hi.emo.sur_RTz, data$hi.neu.sur_RTz, paired = TRUE, conf.int = TRUE)
-# lo.neu.v.hi.neu.RTz <- wilcox_test(data$hi.neu.sur_RTz, data$lo.neu.sur_RTz, paired = TRUE, conf.int = TRUE)
-# 
-# # RTz.long$RTz <- ave(RTz.long$RTz, RTz.long$subjID, FUN=scale)
-# 
-# # wide <- spread(RTz.long, key = Condition, value = RTz)
-# # hapiro.test(wide$lo.emo.sur_RT)
-### make factors ###
-# RTz.long$Load <- ifelse(RTz.long$Condition == "lo.neu.sur_RTz", "Low",
-#                           ifelse(RTz.long$Condition == "lo.emo.sur_RTz", "Low",
-#                                  ifelse(RTz.long$Condition == "hi.neu.sur_RTz", "High",
-#                                         ifelse(RTz.long$Condition == "hi.emo.sur_RTz", "High", ""))))
-#  
-# RTz.long$Type <- ifelse(RTz.long$Condition == "lo.neu.sur_RTz", "Neutral",
-#                           ifelse(RTz.long$Condition == "lo.emo.sur_RTz", "Emotional",
-#                                  ifelse(RTz.long$Condition == "hi.neu.sur_RTz", "Neutral",
-#                                         ifelse(RTz.long$Condition == "hi.emo.sur_RTz", "Emotional", ""))))
-#  
-# ### make w/in subjs factors ###
-# RTz.long$subjID <- as.factor(RTz.long$subjID)
-#  
-# ### traditional ANOVA ###
-# RTaov <- with(RTz.long,
-#                     aov(RTz ~ (Load * Type) +
-#                         Error(subjID / (Load * Type))), contrasts = contr.sum())
-# summary(RTaov)
-# RTaov <- tidy(RTaov)
-
 ### make long ###
 data.long <- gather(data, key = "Condition", value = "ReactionTime",
                     lo.neu.sur_RT, hi.neu.sur_RT,
@@ -245,70 +204,12 @@ RTaov <- with(data.long,
 summary(RTaov)
 RTaov <- tidy(RTaov)
 ```
-To assses for normality, the data were first tested with Shapiro-Wilk's test. All conditions appeared to be sampled from normal distributions (p's > .300). A Load (Low, High) X Type (Neutral, Emotional) repeated measures ANOVA was used to assess differences in the RTs. There was a trend towards a main effect of type, F(`r (RTaov$df[which(RTaov$term == "Type")])`, `r (RTaov$df[which(RTaov$stratum == "subjID")])`) = `r printnum(RTaov$statistic[which(RTaov$term == "Type")])`, p = `r printnum(RTaov$p.value[which(RTaov$term == "Type")])`. There was no effect of domain, F(`r (RTaov$df[which(RTaov$term == "Load")])`, `r (RTaov$df[which(RTaov$stratum == "subjID")])`) = `r printnum(RTaov$statistic[which(RTaov$term == "Load")])`, p = `r printnum(RTaov$p.value[which(RTaov$term == "Load")])`, nor any interaction between load and domain, F(`r (RTaov$df[which(RTaov$term == "Load:Type")])`, `r (RTaov$df[which(RTaov$stratum == "subjID")])`) = `r printnum(RTaov$statistic[which(RTaov$term == "Load:Type")])`, p = `r printnum(RTaov$p.value[which(RTaov$term == "Load:Type")])`. 
+To assses for normality, the data were first tested with Shapiro-Wilk's test. All conditions appeared to be sampled from normal distributions (p's > .300). A Load (Low, High) X Type (Neutral, Emotional) repeated measures ANOVA was used to assess differences in the RTs. There was a trend towards a main effect of domain, F(`r (RTaov$df[which(RTaov$term == "Type")])`, `r (RTaov$df[which(RTaov$stratum == "subjID")])`) = `r printnum(RTaov$statistic[which(RTaov$term == "Type")])`, p = `r printnum(RTaov$p.value[which(RTaov$term == "Type")])`. There was no effect of load, F(`r (RTaov$df[which(RTaov$term == "Load")])`, `r (RTaov$df[which(RTaov$stratum == "subjID")])`) = `r printnum(RTaov$statistic[which(RTaov$term == "Load")])`, p = `r printnum(RTaov$p.value[which(RTaov$term == "Load")])`, nor any interaction between load and domain, F(`r (RTaov$df[which(RTaov$term == "Load:Type")])`, `r (RTaov$df[which(RTaov$stratum == "subjID")])`) = `r printnum(RTaov$statistic[which(RTaov$term == "Load:Type")])`, p = `r printnum(RTaov$p.value[which(RTaov$term == "Load:Type")])`. 
 
 ```{r plot RT data, include = TRUE}
 ggplot(data.long, aes(Condition, `ReactionTime`, fill = as.factor(Condition))) +
   geom_bar(stat = "summary", fun.y = "mean") +
   stat_summary(fun.data = mean_se, geom = "errorbar", width = .1)
-```
-
-``` {r RT by ratings, include = FALSE}
-### assess for normality ###
-shapiro.test(data$lo.neu.sur_n_RT) ## non-normal
-shapiro.test(data$lo.neu.sur_p_RT) ## normal
-shapiro.test(data$hi.neu.sur_n_RT) ## non-normal
-shapiro.test(data$hi.neu.sur_p_RT) ## normal
-shapiro.test(data$lo.emo.sur_n_RT) ## non-normal
-shapiro.test(data$lo.emo.sur_p_RT) ## non-normal
-shapiro.test(data$hi.emo.sur_n_RT) ## barely normal
-shapiro.test(data$hi.emo.sur_p_RT) ## non-normal
-
-### t-test for pos ratings vs. neg ratings
-lo.neu.RT.pvn <- wilcox.test(data$lo.neu.sur_n_RT, data$lo.neu.sur_p_RT, paired = TRUE)
-wilcox.test(data$hi.neu.sur_n_RT, data$hi.neu.sur_p_RT, paired = TRUE)
-wilcox.test(data$lo.emo.sur_n_RT, data$lo.emo.sur_p_RT, paired = TRUE)
-wilcox.test(data$hi.emo.sur_n_RT, data$hi.emo.sur_p_RT, paired = TRUE)
-
-### make long ###
-lo.neu.resp <- gather(data, key = "Condition", value =  "ReactionTime",
-                    lo.neu.sur_n_RT, lo.neu.sur_p_RT)
-lo.emo.resp <- gather(data, key = "Condition", value =  "ReactionTime",
-                    lo.emo.sur_n_RT, lo.emo.sur_p_RT)
-hi.neu.resp <- gather(data, key = "Condition", value =  "ReactionTime",
-                    hi.neu.sur_n_RT, hi.neu.sur_p_RT)
-hi.emo.resp <- gather(data, key = "Condition", value =  "ReactionTime",
-                    hi.emo.sur_n_RT, hi.emo.sur_p_RT)
-                    
-lo.neu.resp$Condition <- as.factor(lo.neu.resp$Condition)
-lo.emo.resp$Condition <- as.factor(lo.emo.resp$Condition)
-hi.neu.resp$Condition <- as.factor(hi.neu.resp$Condition)
-hi.emo.resp$Condition <- as.factor(hi.emo.resp$Condition)
-
-lo.neu.resp.plot <- ggplot(lo.neu.resp, aes(Condition, ReactionTime, fill = as.factor(Condition))) +
-  geom_bar(stat = "summary", fun.y = "mean", na.rm = TRUE) +
-  stat_summary(fun.data = mean_se, geom = "errorbar", width = .1)
-
-lo.emo.resp.plot <- ggplot(lo.emo.resp, aes(Condition, ReactionTime, fill = as.factor(Condition))) +
-  geom_bar(stat = "summary", fun.y = "mean", na.rm = TRUE) +
-  stat_summary(fun.data = mean_se, geom = "errorbar", width = .1)
-
-hi.neu.resp.plot <- ggplot(hi.neu.resp, aes(Condition, ReactionTime, fill = as.factor(Condition))) +
-  geom_bar(stat = "summary", fun.y = "mean", na.rm = TRUE) +
-  stat_summary(fun.data = mean_se, geom = "errorbar", width = .1)
-
-hi.emo.resp.plot <- ggplot(hi.emo.resp, aes(Condition, ReactionTime, fill = as.factor(Condition))) +
-  geom_bar(stat = "summary", fun.y = "mean", na.rm = TRUE) +
-  stat_summary(fun.data = mean_se, geom = "errorbar", width = .1)
-
-# lo.neu.resp.plot
-
-# hi.neu.resp.plot
-
-#lo.emo.resp.plot
-
-# hi.emo.resp.plot
-
 ```
 Next, we tested for reaction time differences between positive and negative interpretations of surprised facial expressions within each working memory load condition. A large proportion of the conditions were not normally distributed, thus we used paired-sample Wilcoxon signed rank tests for assessing differences between positive and negative ratings of surprise RTs. This difference was significant *only* for the low emotional load trials, with surprise rated as positive taking signficantly longer than surprise rated as negative (`r printp(lo.neu.RT.pvn$p.value)`). All other comparisons were not significant (p's > .200). Further, this effect survived Bonferroni correction (p = `r printp(.05 / 4)`). 
 
@@ -344,66 +245,6 @@ suppressPackageStartupMessages(library(mousetrap))
 ```
 Finally, we assessed differences in maximum absolute deviation (MAD) across the WM trial conditions. While one of the conditions, low emotional MDs, was not normally distributed (p = .024), all other conditions were normally distributed and repeated-measures ANOVA was used to analyze the MDs across conditions. There was a significant effect of load, F(`r printnum(MAD.anova$df[which(MAD.anova$term == "load")])`,`r printnum(MAD.anova$df[which(MAD.anova$term == "Residuals")])`) = `r printnum(MAD.anova$statistic[which(MAD.anova$term == "load")])`, p = `r printp(MAD.anova$p.value[which(MAD.anova$term == "load")])`, such that MDs under high load were larger than trials with low load. There was no significant effect of domain on MDs, F(`r printnum(MAD.anova$df[which(MAD.anova$term == "type")])` `r printnum(MAD.anova$df[which(MAD.anova$term == "Residuals")])`) = `r printnum(MAD.anova$statistic[which(MAD.anova$term == "type")])`, p = `r printp(MAD.anova$p.value[which(MAD.anova$term == "type")])`, nor an interaction of load by domain, F(`r printnum(MAD.anova$df[which(MAD.anova$term == "load:type")])` `r printnum(MAD.anova$df[which(MAD.anova$term == "Residuals")])`) = `r printnum(MAD.anova$statistic[which(MAD.anova$term == "load:type")])`, p = `r printp(MAD.anova$p.value[which(MAD.anova$term == "load:type")])`. 
 
-``` {r MAD resp, include = FALSE}
-### assess for normality ###
-shapiro.test(data$lo.neu.sur_n_MAD) ## normal
-shapiro.test(data$lo.neu.sur_p_MAD) ## non-normal
-shapiro.test(data$hi.neu.sur_n_MAD) ## barely normal (.058)
-shapiro.test(data$hi.neu.sur_p_MAD) ## normal
-shapiro.test(data$lo.emo.sur_n_MAD) ## non-normal
-shapiro.test(data$lo.emo.sur_p_MAD) ## barely normal (.068)
-shapiro.test(data$hi.emo.sur_n_MAD) ## non-normal
-shapiro.test(data$hi.emo.sur_p_MAD) ## normal
-
-### t-test for pos ratings vs. neg ratings
-wilcox.test(data$lo.neu.sur_n_MAD, data$lo.neu.sur_p_MAD, paired = TRUE) ### different 
-wilcox.test(data$hi.neu.sur_n_MAD, data$hi.neu.sur_p_MAD, paired = TRUE) ### trending
-wilcox.test(data$lo.emo.sur_n_MAD, data$lo.emo.sur_p_MAD, paired = TRUE) ### non-sig
-wilcox.test(data$hi.emo.sur_n_MAD, data$hi.emo.sur_p_MAD, paired = TRUE) ### non-sig
-
-t.test(data$lo.neu.sur_n_MAD, data$lo.neu.sur_p_MAD, paired = TRUE) ### different 
-t.test(data$hi.neu.sur_n_MAD, data$hi.neu.sur_p_MAD, paired = TRUE) ### trending
-t.test(data$lo.emo.sur_n_MAD, data$lo.emo.sur_p_MAD, paired = TRUE) ### non-sig
-t.test(data$hi.emo.sur_n_MAD, data$hi.emo.sur_p_MAD, paired = TRUE) ### non-sig
-
-
-
-### make long ###
-lo.neu.resp.MAD <- gather(data, key = "Condition", value =  "MAD",
-                    lo.neu.sur_n_MAD, lo.neu.sur_p_MAD)
-lo.emo.resp.MAD  <- gather(data, key = "Condition", value =  "MAD",
-                    lo.emo.sur_n_MAD, lo.emo.sur_p_MAD)
-hi.neu.resp.MAD  <- gather(data, key = "Condition", value =  "MAD",
-                    hi.neu.sur_n_MAD, hi.neu.sur_p_MAD)
-hi.emo.resp.MAD  <- gather(data, key = "Condition", value =  "MAD",
-                    hi.emo.sur_n_MAD, hi.emo.sur_p_MAD)
-                    
-lo.neu.resp.MAD$Condition <- as.factor(lo.neu.resp.MAD$Condition)
-lo.emo.resp.MAD$Condition <- as.factor(lo.emo.resp.MAD$Condition)
-hi.neu.resp.MAD$Condition <- as.factor(hi.neu.resp.MAD$Condition)
-hi.emo.resp.MAD$Condition <- as.factor(hi.emo.resp.MAD$Condition)
-
-lo.neu.resp.MAD.plot <- ggplot(lo.neu.resp.MAD, aes(Condition, MAD, fill = as.factor(Condition))) +
-  geom_bar(stat = "summary", fun.y = "mean", na.rm = TRUE) +
-  stat_summary(fun.data = mean_se, geom = "errorbar", width = .1)
-
-lo.emo.resp.MAD.plot <- ggplot(lo.emo.resp.MAD, aes(Condition, MAD, fill = as.factor(Condition))) +
-  geom_bar(stat = "summary", fun.y = "mean", na.rm = TRUE) +
-  stat_summary(fun.data = mean_se, geom = "errorbar", width = .1)
-
-hi.neu.resp.MAD.plot <- ggplot(hi.neu.resp.MAD, aes(Condition, MAD, fill = as.factor(Condition))) +
-  geom_bar(stat = "summary", fun.y = "mean", na.rm = TRUE) +
-  stat_summary(fun.data = mean_se, geom = "errorbar", width = .1)
-
-hi.emo.resp.MAD.plot <- ggplot(hi.emo.resp.MAD, aes(Condition, MAD, fill = as.factor(Condition))) +
-  geom_bar(stat = "summary", fun.y = "mean", na.rm = TRUE) +
-  stat_summary(fun.data = mean_se, geom = "errorbar", width = .1)
-
-lo.neu.resp.MAD.plot
-lo.emo.resp.MAD.plot
-hi.neu.resp.MAD.plot
-hi.emo.resp.MAD.plot
-```
 # Discussion
 The effect of high vs. low load is still not apparent in these data, just like Mattek et al. 2016. An alternative explanation is that the high load manipulation is not sufficiently difficult to recruit the targeted cognitive resources; however, future work will be needed to better test this alternative. 
 
