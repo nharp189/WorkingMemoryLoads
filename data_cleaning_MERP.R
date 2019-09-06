@@ -1,0 +1,419 @@
+### set working directory to MouseTrap Demo folder ###
+setwd("/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/WorkingMemoryLoads")
+
+if (!require("processx")) install.packages("processx")
+
+### load the packages... This needs to be done every time. ###
+{suppressPackageStartupMessages(library(mousetrap)) 
+  suppressPackageStartupMessages(library(foreach))
+  suppressPackageStartupMessages(library(tidyverse))
+  suppressPackageStartupMessages(library(readbulk))
+  suppressPackageStartupMessages(library(plyr))
+  suppressPackageStartupMessages(library(utils))
+  suppressPackageStartupMessages(library(stats))
+  suppressPackageStartupMessages(library(pracma))
+  suppressPackageStartupMessages(library(tidyr))
+  suppressPackageStartupMessages(library(magrittr))
+  suppressPackageStartupMessages(library(graphics))
+  suppressPackageStartupMessages(library(grDevices))
+  suppressPackageStartupMessages(library(ggplot2))
+  suppressPackageStartupMessages(library(scales))
+  suppressPackageStartupMessages(library(psych))
+  suppressPackageStartupMessages(library(Rcpp))
+  suppressPackageStartupMessages(library(diptest))
+  suppressPackageStartupMessages(library(RColorBrewer))
+  suppressPackageStartupMessages(library(cstab))
+  suppressPackageStartupMessages(library(fastcluster))
+  suppressPackageStartupMessages(library(parallel))
+  suppressPackageStartupMessages(library(fields))
+  suppressPackageStartupMessages(library(readxl))
+  suppressPackageStartupMessages(library(yarrr))
+}
+
+### import session two files ###
+{### set1va ###
+  set1.va.files.list <- list.files(path = "/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/WorkingMemoryLoads/Data/set1_task_vA", pattern = "*.mt", full.names = TRUE,
+                                   recursive = FALSE)
+  set1.va.files <- read_bulk("/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/WorkingMemoryLoads/Data/set1_task_vA/", fun = read_mt, 
+                             extension = ".mt")
+  ### set1.va has incorrectly labelled trials... we'll need to import the correct trial order from another file ###
+  set1.va.trial.order <- read_excel("/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/WorkingMemoryLoads/trial_order_corrections.xlsx", sheet = 1)
+  
+  ### correct conditions ###
+  set1.va.files <- merge(set1.va.files, set1.va.trial.order, by = "stim")
+  
+  set1.vc.files.list <- list.files(path = "/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/WorkingMemoryLoads/Data/set1_task_vC", pattern = "*.mt", full.names = TRUE,
+                                   recursive = FALSE)
+  set1.vc.files <- read_bulk("/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/WorkingMemoryLoads/Data/set1_task_vC/", fun = read_mt, 
+                             extension = ".mt")
+  ### set1.vc has incorrectly labelled trials... we'll need to import the correct trial order from another file ###
+  set1.vc.trial.order <- read_excel("/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/WorkingMemoryLoads/trial_order_corrections.xlsx", sheet = 2)
+  
+  ### correct conditions ###
+  set1.vc.files <- merge(set1.vc.files, set1.vc.trial.order, by = "stim")
+  
+  set2.va.files.list <- list.files(path = "/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/WorkingMemoryLoads/Data/set2_task_vA", pattern = "*.mt", full.names = TRUE,
+                                   recursive = FALSE)
+  set2.va.files <- read_bulk("/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/WorkingMemoryLoads/Data/set2_task_vA/", fun = read_mt, 
+                             extension = ".mt")
+  ### set2.va has incorrectly labelled trials... we'll need to import the correct trial order from another file ###
+  set2.va.trial.order <- read_excel("/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/WorkingMemoryLoads/trial_order_corrections.xlsx", sheet = 4)
+  
+  ### correct conditions ###
+  set2.va.files <- merge(set2.va.files, set2.va.trial.order, by = "stim")
+  
+  set2.vc.files.list <- list.files(path = "/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/WorkingMemoryLoads/Data/set2_task_vC", pattern = "*.mt", full.names = TRUE,
+                                   recursive = FALSE)
+  set2.vc.files <- read_bulk("/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/WorkingMemoryLoads/Data/set2_task_vC/", fun = read_mt, 
+                             extension = ".mt")
+  
+  ### set2.vc has incorrectly labelled trials... we'll need to import the correct trial order from another file ###
+  set2.vc.trial.order <- read_excel("/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/WorkingMemoryLoads/trial_order_corrections.xlsx", sheet = 5)
+  
+  ### correct conditions ###
+  set2.vc.files <- merge(set2.vc.files, set2.vc.trial.order, by = "stim")
+  
+  set3.vd.files.list <- list.files(path = "/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/WorkingMemoryLoads/Data/set3_task_vD", pattern = "*.mt", full.names = TRUE,
+                                   recursive = FALSE)
+  set3.vd.files <- read_bulk("/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/WorkingMemoryLoads/Data/set3_task_vD/", fun = read_mt, 
+                             extension = ".mt")
+  
+  ### set3.vd has incorrectly labelled trials... we'll need to import the correct trial order from another file ###
+  set3.vd.trial.order <- read_excel("/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/WorkingMemoryLoads/trial_order_corrections.xlsx", sheet = 6)
+  
+  ### correct conditions ###
+  set3.vd.files <- merge(set3.vd.files, set3.vd.trial.order, by = "stim")
+  
+  set4.vd.files.list <- list.files(path = "/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/WorkingMemoryLoads/Data/set4_task_vD", pattern = "*.mt", full.names = TRUE,
+                                   recursive = FALSE)
+  set4.vd.files <- read_bulk("/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/WorkingMemoryLoads/Data/set4_task_vD/", fun = read_mt, 
+                             extension = ".mt")
+  ### set4.vd has incorrectly labelled trials... we'll need to import the correct trial order from another file ###
+  set4.vd.trial.order <- read_excel("/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/WorkingMemoryLoads/trial_order_corrections.xlsx", sheet = 7)
+  
+  ### correct conditions ###
+  set4.vd.files <- merge(set4.vd.files, set4.vd.trial.order, by = "stim")  
+  
+  ### combine into one mousetrap object ###
+  MT.data <- rbind.fill(set1.va.files, set1.vc.files)
+  MT.data <- rbind.fill(MT.data, set2.va.files)
+  MT.data <- rbind.fill(MT.data, set2.vc.files)
+  MT.data <- rbind.fill(MT.data, set3.vd.files)
+  MT.data <- rbind.fill(MT.data, set4.vd.files)
+  MT.data <- arrange(MT.data, subjID, order)
+  file.list <- list(c(set1.va.files.list, set1.vc.files.list, set2.va.files.list,
+                      set2.vc.files.list, set3.vd.files.list, set4.vd.files.list))}
+
+### clean workspace ###
+rm(set1.va.files.list, set1.vc.files.list, set2.va.files.list,
+   set2.vc.files.list, set3.vd.files.list, set4.vd.files.list,
+   set1.va.files, set1.va.trial.order, set1.vc.files,
+   set1.vc.trial.order, set2.va.files, set2.va.trial.order,
+   set2.vc.files, set2.vc.trial.order, set3.vd.files,
+   set3.vd.trial.order, set4.vd.files, set4.vd.trial.order)
+
+### import MT data ###
+MT.data <- mt_import_wide(MT.data)
+
+### process data ###
+{foreach(file = file.list) %do% {
+  
+  ### create "rate" variable (0 = Positive, 1 = Negative) ###
+  MT.data$data$rate <- ifelse(MT.data$data$response == "POSITIVE", 0, 
+                              ifelse(MT.data$data$response == "YES", 0, 1))
+  
+  ### coerce to character ###
+  MT.data$data$cond.correct <- as.character(MT.data$data$cond.correct)
+  
+  ### create "correct response" variable for clearly valenced faces (0 = Incorrect, 1 = Correct) ###
+  MT.data$data$correct <- ifelse(MT.data$data$cond.correct == "Angry",  
+                                 ifelse(MT.data$data$rate == 1, 1, 0), 
+                                 ifelse(MT.data$data$cond.correct == "Happy", 
+                                        ifelse(MT.data$data$rate == 0, 1, 0), ""))
+  ### label face vs. memory probe trials ###
+  MT.data$data$trialtype <- ifelse(MT.data$data$condition %in% c("Happy", "Angry","Surprise"),"face",
+                                   ifelse(MT.data$data$condition %in% c("Yes","No"),"memory", "instruct"))
+  
+  
+  ### label conditions (emo, neu, hi, lo) ###
+  MT.data$data$type <- ifelse(MT.data$data$cond.load %in% c("LoEmoSurpriseYes","HiEmoSurpriseYes",
+                                                            "LoEmoAngryYes", "HiEmoAngryYes",
+                                                            "LoEmoHappyYes", "HiEmoHappyYes",
+                                                            "LoEmoSurpriseNo","HiEmoSurpriseNo",
+                                                            "LoEmoAngryNo", "HiEmoAngryNo",
+                                                            "LoEmoHappyNo", "HiEmoHappyNo",
+                                                            "LoEmoSurprise","HiEmoSurprise",
+                                                            "LoEmoAngry", "HiEmoAngry",
+                                                            "LoEmoHappy", "HiEmoHappy",
+                                                            "LoEmoSurprise","HiEmoSurprise",
+                                                            "LoEmoAngry", "HiEmoAngry",
+                                                            "LoEmoHappy", "HiEmoHappy"),
+                              "EMO", 
+                              ifelse(MT.data$data$cond.load %in% c("LoNeuSurpriseYes","HiNeuSurpriseYes",
+                                                                   "LoNeuAngryYes", "HiNeuAngryYes",
+                                                                   "LoNeuHappyYes", "HiNeuHappyYes",
+                                                                   "LoNeuSurpriseNo","HiNeuSurpriseNo",
+                                                                   "LoNeuAngryNo", "HiNeuAngryNo",
+                                                                   "LoNeuHappyNo", "HiNeuHappyNo",
+                                                                   "LoNeuSurprise","HiNeuSurprise",
+                                                                   "LoNeuAngry", "HiNeuAngry",
+                                                                   "LoNeuHappy", "HiNeuHappy",
+                                                                   "LoNeuSurprise","HiNeuSurprise",
+                                                                   "LoNeuAngry", "HiNeuAngry",
+                                                                   "LoNeuHappy", "HiNeuHappy"),
+                                     "NEU", NA))
+  
+  MT.data$data$load <- ifelse(MT.data$data$cond.load %in% c("LoNeuSurpriseYes", "LoNeuAngryYes",
+                                                            "LoNeuHappyYes", "LoNeuSurpriseNo", 
+                                                            "LoNeuAngryNo", "LoNeuHappyNo",
+                                                            "LoEmoSurpriseYes", "LoEmoAngryYes", 
+                                                            "LoEmoHappyYes", "LoEmoSurpriseNo",
+                                                            "LoEmoAngryNo", "LoEmoHappyNo",
+                                                            "LoNeuSurprise", "LoNeuAngry",
+                                                            "LoNeuHappy", "LoNeuSurprise", 
+                                                            "LoNeuAngry", "LoNeuHappy",
+                                                            "LoEmoSurprise", "LoEmoAngry", 
+                                                            "LoEmoHappy", "LoEmoSurprise",
+                                                            "LoEmoAngry", "LoEmoHappy"),
+                              "LOW",
+                              ifelse(MT.data$data$cond.load %in% c("HiNeuSurpriseYes", "HiNeuAngryYes",
+                                                                   "HiNeuHappyYes", "HiNeuSurpriseNo", 
+                                                                   "HiNeuAngryNo", "HiNeuHappyNo",
+                                                                   "HiEmoSurpriseYes", "HiEmoAngryYes", 
+                                                                   "HiEmoHappyYes", "HiEmoSurpriseNo",
+                                                                   "HiEmoAngryNo", "HiEmoHappyNo",
+                                                                   "HiNeuSurprise", "HiNeuAngry",
+                                                                   "HiNeuHappy", "HiNeuSurprise", 
+                                                                   "HiNeuAngry", "HiNeuHappy",
+                                                                   "HiEmoSurprise", "HiEmoAngry", 
+                                                                   "HiEmoHappy", "HiEmoSurprise",
+                                                                   "HiEmoAngry", "HiEmoHappy"),
+                                     "HIGH", NA))
+  
+  ### create correct response column for memory probes ###
+  MT.data$data$mem.cor <- ifelse(MT.data$data$cond.correct == "Yes",
+                                 ifelse(MT.data$data$rate == 0, 1, 0),
+                                 ifelse(MT.data$data$cond.correct == "No",
+                                        ifelse(MT.data$data$rate == 1, 1, 0), ""))
+  
+  ### create correct response for EMO mem probes ###
+  MT.data$data$emo.mem <- as.numeric(ifelse(MT.data$data$cond.load %in% c("LoEmoSurpriseYes","HiEmoSurpriseYes",
+                                                                          "LoEmoAngryYes", "HiEmoAngryYes",
+                                                                          "LoEmoHappyYes", "HiEmoHappyYes",
+                                                                          "LoEmoSurpriseNo","HiEmoSurpriseNo",
+                                                                          "LoEmoAngryNo", "HiEmoAngryNo",
+                                                                          "LoEmoHappyNo", "HiEmoHappyNo"),
+                                            MT.data$data$mem.cor, ""))
+  
+  ### create correct response for EMO mem probes ###
+  MT.data$data$neu.mem <- as.numeric(ifelse(MT.data$data$cond.load %in% c("LoNeuSurpriseYes","HiNeuSurpriseYes",
+                                                                          "LoNeuAngryYes", "HiNeuAngryYes",
+                                                                          "LoNeuHappyYes", "HiNeuHappyYes",
+                                                                          "LoNeuSurpriseNo","HiNeuSurpriseNo",
+                                                                          "LoNeuAngryNo", "HiNeuAngryNo",
+                                                                          "LoNeuHappyNo", "HiNeuHappyNo"),
+                                            MT.data$data$mem.cor, ""))
+  
+  ### create correct response for LOW mem probes ###
+  MT.data$data$lo.mem <- as.numeric(ifelse(MT.data$data$cond.load %in% c("LoNeuSurpriseYes","LoEmoSurpriseYes",
+                                                                         "LoNeuAngryYes", "LoEmoAngryYes",
+                                                                         "LoNeuHappyYes", "LoEmoHappyYes",
+                                                                         "LoNeuSurpriseNo","LoEmoSurpriseNo",
+                                                                         "LoNeuAngryNo", "LoEmoAngryNo",
+                                                                         "LoNeuHappyNo", "LoEmoHappyNo"),
+                                           MT.data$data$mem.cor, ""))
+  
+  ### create correct response for HIGH mem probes ###
+  MT.data$data$hi.mem <- as.numeric(ifelse(MT.data$data$cond.load %in% c("HiNeuSurpriseYes","HiEmoSurpriseYes",
+                                                                         "HiNeuAngryYes", "HiEmoAngryYes",
+                                                                         "HiNeuHappyYes", "HiEmoHappyYes",
+                                                                         "HiNeuSurpriseNo","HiEmoSurpriseNo",
+                                                                         "HiNeuAngryNo", "HiEmoAngryNo",
+                                                                         "HiNeuHappyNo", "HiEmoHappyNo"),
+                                           MT.data$data$mem.cor, ""))
+  ### Create column to average for each face ###
+  MT.data$data$mem.cor.yes <- ifelse(MT.data$data$cond.correct == "Yes", MT.data$data$mem.cor, NA)
+  MT.data$data$mem.cor.no <- ifelse(MT.data$data$cond.correct == "No", MT.data$data$mem.cor, NA)
+  MT.data$data$mem.cor.yes <- as.numeric(MT.data$data$mem.cor.yes)
+  MT.data$data$mem.cor.no <- as.numeric(MT.data$data$mem.cor.no)
+  
+  ### Create informative condition variables (i.e., angry, happy, sur-neg, sur-pos, etc.) ###
+  MT.data$data$condition.rating <- ifelse(MT.data$data$cond.correct == "Angry",  
+                                          ifelse(MT.data$data$rate == 1, "Angry", NA),
+                                          ifelse(MT.data$data$cond.correct == "Happy", 
+                                                 ifelse(MT.data$data$rate == 0, "Happy", NA), 
+                                                 ifelse(MT.data$data$cond.correct == "Surprise",  
+                                                        ifelse(MT.data$data$rate == 1, "Sur.Neg", "Sur.Pos"), NA)))
+  
+  ### label load, face, and ratings together ###
+  MT.data$data$cond.full <- paste(MT.data$data$cond.load, MT.data$data$condition.rating)
+  
+  ## there are no factors b/w memory trials.. while I did not randomize correctly,
+  ## let's look to see if there's some interesting relationships. Starting by
+  ## categorizing memory trials... 
+  MT.data$data$memtype <- paste(MT.data$data$load,MT.data$data$type)
+  MT.data$data$memtype <- ifelse(MT.data$data$trialtype == "memory",
+                                 MT.data$data$memtype, "")
+  
+  ### make subj factor ###
+  MT.data$data$subjID <- factor(MT.data$data$subjID)
+  
+  ### add RT z scores ###
+  MT.data$data$RTz <- ave(MT.data$data$RT, MT.data$data$subjID, FUN=scale)
+  
+  ### factor ###
+  MT.data$data$factor <- paste(MT.data$data$type, MT.data$data$load)
+  
+}
+  
+  ###  MT Measures ###
+  {### get derivatives ###
+    MT.data <- mt_derivatives(MT.data)
+    
+    ### Flip traSurp.Negectories ###
+    MT.data <- mt_remap_symmetric(MT.data) 
+    
+    ### adSurp.Negust to identical start/end traSurp.Negectories ###
+    MT.data <- mt_align_start_end(MT.data) 
+    
+    ### normalize, there's some issues w/ trials w/ 0 variability: hence this weird bit ###
+    #MT.data$data$pos_var <- apply(MT.data$trajectories[,,"xpos"],1,var,na.rm=TRUE) + apply(MT.data$trajectories[,,"ypos"],1,var,na.rm=TRUE)
+    #table(MT.data$data$pos_var==0)
+    #MT.data <- mt_subset(MT.data, pos_var>0)
+    MT.data <- mt_time_normalize(MT.data) 
+    
+    ### add measures ###
+    MT.data <- mt_measures(MT.data)
+  }}
+
+### check RT min / max for outliers ###
+meanrt <- mean(MT.data$data$RT[which(MT.data$data$trialtype == "face")])
+sdrt <- sd(MT.data$data$RT[which(MT.data$data$trialtype == "face")])
+outlier <- meanrt + (3*sdrt)
+#print(outlier)
+
+### remove trials > outlierRT ###
+MT.data$data <-MT.data$data[!(MT.data$data$RT >= outlier),]
+
+### flag trials before incorrect memory probes ###
+for(i in 2:nrow(MT.data$data)) {
+  MT.data$data$flag[i-1] <- ifelse(MT.data$data$mem.cor[i] == 0, 0, 1)
+}
+
+### remove flagged trials ###
+MT.data$data <- subset(MT.data$data, MT.data$data$flag == 1)
+
+# Merge measures with trial data
+MT.results2 <- dplyr::inner_join(
+  MT.data$data, MT.data$measures,
+  by="mt_id")
+
+### is surprise ratings different from low vs high trials? ###
+MT.data.rating.table2 <- (ddply(MT.results2, "subjID", summarise, 
+                                lo.emo.ang_rate = mean(rate[which(cond.correct == "Angry" & type == "EMO" & load == "LOW" & trialtype == "face")], na.rm = TRUE),
+                                hi.emo.ang_rate = mean(rate[which(cond.correct == "Angry" & type == "EMO" & load == "HIGH" & trialtype == "face")], na.rm = TRUE),
+                                lo.neu.ang_rate = mean(rate[which(cond.correct == "Angry" & type == "NEU" & load == "LOW" & trialtype == "face")], na.rm = TRUE),
+                                hi.neu.ang_rate = mean(rate[which(cond.correct == "Angry" & type == "NEU" & load == "HIGH" & trialtype == "face")], na.rm = TRUE),
+                                lo.emo.hap_rate = mean(rate[which(cond.correct == "Happy" & type == "EMO" & load == "LOW" & trialtype == "face")], na.rm = TRUE),
+                                hi.emo.hap_rate = mean(rate[which(cond.correct == "Happy" & type == "EMO" & load == "HIGH" & trialtype == "face")], na.rm = TRUE),
+                                lo.neu.hap_rate = mean(rate[which(cond.correct == "Happy" & type == "NEU" & load == "LOW" & trialtype == "face")], na.rm = TRUE),
+                                hi.neu.hap_rate = mean(rate[which(cond.correct == "Happy" & type == "NEU" & load == "HIGH" & trialtype == "face")], na.rm = TRUE),
+                                lo.emo.sur_rate = mean(rate[which(cond.correct == "Surprise" & type == "EMO" & load == "LOW" & trialtype == "face")], na.rm = TRUE),
+                                hi.emo.sur_rate = mean(rate[which(cond.correct == "Surprise" & type == "EMO" & load == "HIGH" & trialtype == "face")], na.rm = TRUE),
+                                lo.neu.sur_rate = mean(rate[which(cond.correct == "Surprise" & type == "NEU" & load == "LOW" & trialtype == "face")], na.rm = TRUE),
+                                hi.neu.sur_rate = mean(rate[which(cond.correct == "Surprise" & type == "NEU" & load == "HIGH" & trialtype == "face")], na.rm = TRUE),
+                                lo.emo.ang_RT = mean(RT.x[which(cond.correct == "Angry" & type == "EMO" & load == "LOW" & trialtype == "face")], na.rm = TRUE),
+                                hi.emo.ang_RT = mean(RT.x[which(cond.correct == "Angry" & type == "EMO" & load == "HIGH" & trialtype == "face")], na.rm = TRUE),
+                                lo.neu.ang_RT = mean(RT.x[which(cond.correct == "Angry" & type == "NEU" & load == "LOW" & trialtype == "face")], na.rm = TRUE),
+                                hi.neu.ang_RT = mean(RT.x[which(cond.correct == "Angry" & type == "NEU" & load == "HIGH" & trialtype == "face")], na.rm = TRUE),
+                                lo.emo.hap_RT = mean(RT.x[which(cond.correct == "Happy" & type == "EMO" & load == "LOW" & trialtype == "face")], na.rm = TRUE),
+                                hi.emo.hap_RT = mean(RT.x[which(cond.correct == "Happy" & type == "EMO" & load == "HIGH" & trialtype == "face")], na.rm = TRUE),
+                                lo.neu.hap_RT = mean(RT.x[which(cond.correct == "Happy" & type == "NEU" & load == "LOW" & trialtype == "face")], na.rm = TRUE),
+                                hi.neu.hap_RT = mean(RT.x[which(cond.correct == "Happy" & type == "NEU" & load == "HIGH" & trialtype == "face")], na.rm = TRUE),
+                                lo.emo.sur_n_RT = mean(RT.x[which(cond.correct == "Surprise" & type == "EMO" & load == "LOW" & trialtype == "face" & rate == 1)], na.rm = TRUE),
+                                hi.emo.sur_n_RT = mean(RT.x[which(cond.correct == "Surprise" & type == "EMO" & load == "HIGH" & trialtype == "face" & rate == 1)], na.rm = TRUE),
+                                lo.neu.sur_n_RT = mean(RT.x[which(cond.correct == "Surprise" & type == "NEU" & load == "LOW" & trialtype == "face" & rate == 1)], na.rm = TRUE),
+                                hi.neu.sur_n_RT = mean(RT.x[which(cond.correct == "Surprise" & type == "NEU" & load == "HIGH" & trialtype == "face" & rate == 1)], na.rm = TRUE),
+                                lo.emo.sur_p_RT = mean(RT.x[which(cond.correct == "Surprise" & type == "EMO" & load == "LOW" & trialtype == "face" & rate == 0)], na.rm = TRUE),
+                                hi.emo.sur_p_RT = mean(RT.x[which(cond.correct == "Surprise" & type == "EMO" & load == "HIGH" & trialtype == "face" & rate == 0)], na.rm = TRUE),
+                                lo.neu.sur_p_RT = mean(RT.x[which(cond.correct == "Surprise" & type == "NEU" & load == "LOW" & trialtype == "face" & rate == 0)], na.rm = TRUE),
+                                hi.neu.sur_p_RT = mean(RT.x[which(cond.correct == "Surprise" & type == "NEU" & load == "HIGH" & trialtype == "face" & rate == 0)], na.rm = TRUE),
+                                lo.neu.sur_RT = mean(RT.x[which(cond.correct == "Surprise" & type == "NEU" & load == "LOW" & trialtype == "face")], na.rm = TRUE),
+                                hi.neu.sur_RT = mean(RT.x[which(cond.correct == "Surprise" & type == "NEU" & load == "HIGH" & trialtype == "face")], na.rm = TRUE),
+                                lo.emo.sur_RT = mean(RT.x[which(cond.correct == "Surprise" & type == "EMO" & load == "LOW" & trialtype == "face")], na.rm = TRUE),
+                                hi.emo.sur_RT = mean(RT.x[which(cond.correct == "Surprise" & type == "EMO" & load == "HIGH" & trialtype == "face")], na.rm = TRUE),
+                                lo.sur_RT = mean(RT.x[which(cond.correct == "Surprise" & load == "LOW" & trialtype == "face")], na.rm = TRUE),
+                                hi.sur_RT = mean(RT.x[which(cond.correct == "Surprise" & load == "HIGH" & trialtype == "face")], na.rm = TRUE),
+                                neu.sur_RT = mean(RT.x[which(cond.correct == "Surprise" & type == "NEU" & trialtype == "face")], na.rm = TRUE),
+                                emo.sur_RT = mean(RT.x[which(cond.correct == "Surprise" & type == "EMO" & trialtype == "face")], na.rm = TRUE),
+                                lo.sur_n_RT = mean(RT.x[which(cond.correct == "Surprise" & load == "LOW" & trialtype == "face" & rate == 1)], na.rm = TRUE),
+                                hi.sur_n_RT = mean(RT.x[which(cond.correct == "Surprise" & load == "HIGH" & trialtype == "face" & rate == 1)], na.rm = TRUE),
+                                neu.sur_n_RT = mean(RT.x[which(cond.correct == "Surprise" & type == "NEU" & trialtype == "face" & rate == 1)], na.rm = TRUE),
+                                emo.sur_n_RT = mean(RT.x[which(cond.correct == "Surprise" & type == "EMO" & trialtype == "face" & rate ==1)], na.rm = TRUE),
+                                lo.sur_p_RT = mean(RT.x[which(cond.correct == "Surprise" & load == "LOW" & trialtype == "face" & rate == 0)], na.rm = TRUE),
+                                hi.sur_p_RT = mean(RT.x[which(cond.correct == "Surprise" & load == "HIGH" & trialtype == "face" & rate == 0)], na.rm = TRUE),
+                                neu.sur_p_RT = mean(RT.x[which(cond.correct == "Surprise" & type == "NEU" & trialtype == "face" & rate == 0)], na.rm = TRUE),
+                                emo.sur_p_RT = mean(RT.x[which(cond.correct == "Surprise" & type == "EMO" & trialtype == "face" & rate ==0)], na.rm = TRUE),
+                                mem.cor.yes = mean(mem.cor.yes, na.rm = TRUE),
+                                mem.cor.no = mean(mem.cor.no, na.rm = TRUE),
+                                emo.mem = mean(emo.mem, na.rm = TRUE),
+                                neu.mem = mean(neu.mem, na.rm = TRUE),
+                                lo.mem = mean(lo.mem, na.rm = TRUE),
+                                hi.mem = mean(hi.mem, na.rm = TRUE),
+                                lo.emo.sur_MAD = mean(MAD[which(cond.load == "LoEmoSurprise")], na.rm = TRUE),
+                                hi.emo.sur_MAD = mean(MAD[which(cond.load == "HiEmoSurprise")], na.rm = TRUE),
+                                lo.neu.sur_MAD = mean(MAD[which(cond.load == "LoNeuSurprise")], na.rm = TRUE),
+                                hi.neu.sur_MAD = mean(MAD[which(cond.load == "HiNeuSurprise")], na.rm = TRUE),
+                                lo.emo.sur_n_MAD = mean(MAD[which(cond.full == "LoEmoSurprise Sur.Neg")], na.rm = TRUE),
+                                lo.emo.sur_p_MAD = mean(MAD[which(cond.full == "LoEmoSurprise Sur.Pos")], na.rm = TRUE),
+                                hi.emo.sur_n_MAD = mean(MAD[which(cond.full == "HiEmoSurprise Sur.Neg")], na.rm = TRUE),
+                                hi.emo.sur_p_MAD = mean(MAD[which(cond.full == "HiEmoSurprise Sur.Pos")], na.rm = TRUE),
+                                lo.neu.sur_n_MAD = mean(MAD[which(cond.full == "LoNeuSurprise Sur.Neg")], na.rm = TRUE),
+                                lo.neu.sur_p_MAD = mean(MAD[which(cond.full == "LoNeuSurprise Sur.Pos")], na.rm = TRUE),
+                                hi.neu.sur_n_MAD = mean(MAD[which(cond.full == "HiNeuSurprise Sur.Neg")], na.rm = TRUE),
+                                hi.neu.sur_p_MAD = mean(MAD[which(cond.full == "HiNeuSurprise Sur.Pos")], na.rm = TRUE),
+                                lo.emo.ang_RTz = mean(RTz[which(cond.load == "LoEmoAngry")], na.rm = TRUE),
+                                hi.emo.ang_RTz = mean(RTz[which(cond.load == "HiEmoAngry")], na.rm = TRUE),
+                                lo.neu.ang_RTz = mean(RTz[which(cond.load == "LoNeuAngry")], na.rm = TRUE),
+                                hi.neu.ang_RTz = mean(RTz[which(cond.load == "HiNeuAngry")], na.rm = TRUE),
+                                lo.emo.hap_RTz = mean(RTz[which(cond.load == "LoEmoHappy")], na.rm = TRUE),
+                                hi.emo.hap_RTz = mean(RTz[which(cond.load == "HiEmoHappy")], na.rm = TRUE),
+                                lo.neu.hap_RTz = mean(RTz[which(cond.load == "LoNeuHappy")], na.rm = TRUE),
+                                hi.neu.hap_RTz = mean(RTz[which(cond.load == "HiNeuHappy")], na.rm = TRUE),
+                                lo.emo.sur_p_RTz = mean(RTz[which(cond.full == "LoEmoSurprise Sur.Pos")], na.rm = TRUE),
+                                hi.emo.sur_p_RTz = mean(RTz[which(cond.full == "HiEmoSurprise Sur.Pos")], na.rm = TRUE),
+                                lo.neu.sur_p_RTz = mean(RTz[which(cond.full == "LoNeuSurprise Sur.Pos")], na.rm = TRUE),
+                                hi.neu.sur_p_RTz = mean(RTz[which(cond.full == "HiNeuSurprise Sur.Pos")], na.rm = TRUE),
+                                lo.emo.sur_n_RTz = mean(RTz[which(cond.full == "LoEmoSurprise Sur.Neg")], na.rm = TRUE),
+                                hi.emo.sur_n_RTz = mean(RTz[which(cond.full == "HiEmoSurprise Sur.Neg")], na.rm = TRUE),
+                                lo.neu.sur_n_RTz = mean(RTz[which(cond.full == "LoNeuSurprise Sur.Neg")], na.rm = TRUE),
+                                hi.neu.sur_n_RTz = mean(RTz[which(cond.full == "HiNeuSurprise Sur.Neg")], na.rm = TRUE),
+                                lo.emo.sur_RTz = mean(RTz[which(cond.load == "LoEmoSurprise")], na.rm = TRUE),
+                                hi.emo.sur_RTz = mean(RTz[which(cond.load == "HiEmoSurprise")], na.rm = TRUE),
+                                lo.neu.sur_RTz = mean(RTz[which(cond.load == "LoNeuSurprise")], na.rm = TRUE),
+                                hi.neu.sur_RTz = mean(RTz[which(cond.load == "HiNeuSurprise")], na.rm = TRUE),
+                                lo.neu.RTz = mean(RTz[which(factor == "NEU LOW" & trialtype == "face")], na.rm = TRUE),
+                                hi.neu.RTz = mean(RTz[which(factor == "NEU HIGH" & trialtype == "face")], na.rm = TRUE),
+                                lo.emo.RTz = mean(RTz[which(factor == "EMO LOW" & trialtype == "face")], na.rm = TRUE),
+                                hi.emo.RTz = mean(RTz[which(factor == "EMO HIGH" & trialtype == "face")], na.rm = TRUE)))
+
+dem <- read.csv("Data/qualtrics_data_20190607.csv")
+questions <- c("Q2", "Q3", "Q4", "Q5", "Q6",
+               "Q7", "Q8", "Q9", "Q12")
+dem <- dem[, c(questions)]
+names(dem) <- c("subjID", "age", "sex", "race", "ethn", "psych", "neuro", "meds", "birthdate")
+dem <- dem[-c(1:2),]
+### wrong sub # or no sub # entered ###
+rownames(dem) = NULL
+dem$subjID <- as.character(dem$subjID)
+dem[56,1] <- "71056"
+dem[25,1] <- "71025"
+dem[38,1] <- "71039"
+
+MT.data.rating.table2 <- merge(MT.data.rating.table2, dem, by = "subjID")
+
+#write.csv(MT.data.rating.table2, paste("Data/Cleaned_Data/Final.Data.csv",format(Sys.time(),'_%Y-%m-%d_%H-%M-%S'),
+ #                                      '.csv',sep = ''))
+
+nrow
+

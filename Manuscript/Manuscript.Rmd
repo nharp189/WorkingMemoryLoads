@@ -52,7 +52,7 @@ draft             : no
 
 documentclass     : "apa6"
 classoption       : "man"
-output            : papaja::apa6_word
+output            : papaja::apa6_pdf
 ---
 
 ```{r setup, include = FALSE}
@@ -94,7 +94,10 @@ In the present study, we aim to test the effects of low and high working memory 
 
 # Methods
 ## Participants
-58 subjects were recruited from the University of Nebraska-Lincoln. All subjects provided written informed consent in accordance with the Declaration of Helsinki and all procedures were approved by the local Institutional Review Board (Approval #20141014670EP). The data from eight subjects were excluded due to technical difficulties or an error in the experiment script. This left 50 individuals in the final sample. 
+``` {r read data}
+data <- read.csv("~/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/WorkingMemoryLoads/Data/Cleaned_Data/Final.Data.csv_2019-09-06_12-18-56.csv")
+```
+Fifty-eight subjects were recruited from the undergraduate research pool at the University of Nebraska-Lincoln. The data from eight subjects were excluded due to technical difficulties resulting from an error in one of the experiment scripts. This left 50 individuals in the final sample for analysis. The mean age of the remaining sample was `r printnum(mean(data$age))` (`r printnum(sd(data$age))`), a majority of participants were female (`r printnum((sum(data$sex == "Female") / nrow(data))*100)`%), and all were white/caucasian without hispanic/Latinx ethnicity. All subjects provided written informed consent in accordance with the Declaration of Helsinki and all procedures were approved by the local Institutional Review Board (Approval #20141014670EP). Each participant received course credit for completing the study. 
 
 ## Material
 ### Stimuli
@@ -104,13 +107,13 @@ shapiro.test(subset(stim.data, Condition == "POS")$Aro_Mn)
 shapiro.test(subset(stim.data, Condition == "NEG")$Aro_Mn)
 stim.t.test <- wilcox_test(subset(stim.data, Condition == "POS")$Aro_Mn, subset(stim.data, Condition == "NEG")$Aro_Mn)
 ```
-The stimuli included faces taken from the NimStim [@tottenham_nimstim_2009] and Karolinska Directed Emotional Faces [@lundqvist_karolinska_1998] stimuli sets. The faces consisted of 34 unique identities including 11 angry, 12 happy, and 24 surprised expressions organized pseudorandomly. The scenes were taken from the International Affective Picture System [@lang_international_2008]. A total of 288 scenes (72 positive, 72 negative, and 144 neutral) were selected for the image matrices. The positive and negative images did not differ on arousal (Z = `r printnum(stim.t.test$z_val)`, p = `r printnum(stim.t.test$p.value)`). The scenes were organized into low (two images) and high (six images) cognitive load of either neutral or emotional (equal number of positive and negative) images (Figure 1). 
+The stimuli included faces taken from the NimStim [@tottenham_nimstim_2009] and Karolinska Directed Emotional Faces [@lundqvist_karolinska_1998] stimuli sets, as in previous work [@neta_primacy_2010; @brown_cortisol_2017]. The faces consisted of 34 unique identities including 11 angry, 12 happy, and 24 surprised expressions organized pseudorandomly. The scene stimuli were selected from the International Affective Picture System [@lang_international_2008]. A total of 288 scenes (72 positive, 72 negative, and 144 neutral) were selected for the image matrices. The positive and negative images did not differ on arousal (Z = `r printnum(stim.t.test$z_val)`, p = `r printnum(stim.t.test$p.value)`). The scenes were organized into low (two images) and high (six images) cognitive load of either neutral or emotional (equal number of positive and negative) images (Figure 1). 
 
 ### Software
 The task was completed in MouseTracker [@freeman_mousetracker:_2010] and participants used a mouse to click the appropriate response for the face ratings (i.e., "POSITIVE" or "NEGATIVE") and the memory probe (i.e., "YES" or "NO"). 
 
 ## Procedure
-Participants were randomly assigned to complete one of the task versions. The tasks included 144 [^1] trials split between working memory probe and face rating trials. On each trial, participants first viewed an image matrix of either neutral or emotional images, which the participants were instructed to remember for the duration of the trial.  The image matrix was presented for four seconds and the images were swapped from low and high load matrices across versions of the task. After the image matrix a happy, angry, or surprised face appeared for one second and the participants rated the face by clicking on either the positive or negative response option. After the face rating, a single image probe appeared, and participants indicated whether or not the image probe was present in the previous image matrix. 
+After arriving at the lab, participants provided informed consent prior to completing the task. Participants were randomly assigned to complete one of the task versions, which included 144 [^1] trials split between working memory probe and face rating trials. The trials were self-initiated; the participant clicked a "start" button at the bottom of the screen at the beginning of each trial. After initiating the trial, participants viewed an image matrix of either neutral or emotional images, which the participants were instructed to remember for the duration of the trial. The image matrix was presented for four seconds and the image was either a low or high load matrix consisting of either emotional (equal positive and negative) or neutral images. After the image matrix a happy, angry, or surprised face appeared for one second and the participants rated the face by clicking on either the positive or negative response option. After the face rating, a single image probe appeared, and participants indicated whether or not the image probe was present in the previous image matrix. 
 
 [^1]: Some versions of the task only included 142 trials due to a programming error. 
 
@@ -122,7 +125,7 @@ Prior to completing the analyses, the data were assessed for normality using the
 # Results
 ## Subjective ratings
 ```{r import data and analyze ratings, include = FALSE, echo = TRUE}
-data <- read.csv("~/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/WorkingMemoryLoads/Data/Cleaned_Data/Final.Data.csv_2019-08-14_08-52-46.csv")
+
 ### remove psych disorders ### Ask maital?
 # data <- data[-c(4, 33, 37, 38, 41, 47),]
 
@@ -169,49 +172,6 @@ ggplot(friedman.data, aes(Condition, `Percent Negative Ratings`, fill = as.facto
 ```
 
 [^2]: These results are qualitatively the same when analyzing these data with a repeated measures ANOVA. 
-
-## Reaction times
-```{r analyze RTs, include = FALSE}
-## assess normality ###
-shapiro.test(data$lo.neu.sur_RT)
-shapiro.test(data$hi.neu.sur_RT)
-shapiro.test(data$lo.emo.sur_RT)
-shapiro.test(data$hi.emo.sur_RT)
-
-### make long ###
-data.long <- gather(data, key = "Condition", value = "ReactionTime",
-                    lo.neu.sur_RT, hi.neu.sur_RT,
-                    lo.emo.sur_RT, hi.emo.sur_RT)
-
-### make factors ###
-data.long$Load <- ifelse(data.long$Condition == "lo.neu.sur_RT", "Low",
-                         ifelse(data.long$Condition == "lo.emo.sur_RT", "Low",
-                                ifelse(data.long$Condition == "hi.neu.sur_RT", "High",
-                                       ifelse(data.long$Condition == "hi.emo.sur_RT", "High", ""))))
-
-data.long$Type <- ifelse(data.long$Condition == "lo.neu.sur_RT", "Neutral",
-                         ifelse(data.long$Condition == "lo.emo.sur_RT", "Emotional",
-                                ifelse(data.long$Condition == "hi.neu.sur_RT", "Neutral",
-                                       ifelse(data.long$Condition == "hi.emo.sur_RT", "Emotional", ""))))
-
-### make w/in subjs factors ###
-data.long$subjID <- as.factor(data.long$subjID)
-
-### traditional ANOVA ###
-RTaov <- with(data.long,
-                   aov(ReactionTime ~ (Load * Type) +
-                       Error(subjID / (Load * Type))), contrasts = contr.sum())
-summary(RTaov)
-RTaov <- tidy(RTaov)
-```
-To assses for normality, the data were first tested with Shapiro-Wilk's test. All conditions appeared to be sampled from normal distributions (p's > .300). A Load (Low, High) X Type (Neutral, Emotional) repeated measures ANOVA was used to assess differences in the RTs. There was a trend towards a main effect of domain, F(`r (RTaov$df[which(RTaov$term == "Type")])`, `r (RTaov$df[which(RTaov$stratum == "subjID")])`) = `r printnum(RTaov$statistic[which(RTaov$term == "Type")])`, p = `r printnum(RTaov$p.value[which(RTaov$term == "Type")])`. There was no effect of load, F(`r (RTaov$df[which(RTaov$term == "Load")])`, `r (RTaov$df[which(RTaov$stratum == "subjID")])`) = `r printnum(RTaov$statistic[which(RTaov$term == "Load")])`, p = `r printnum(RTaov$p.value[which(RTaov$term == "Load")])`, nor any interaction between load and domain, F(`r (RTaov$df[which(RTaov$term == "Load:Type")])`, `r (RTaov$df[which(RTaov$stratum == "subjID")])`) = `r printnum(RTaov$statistic[which(RTaov$term == "Load:Type")])`, p = `r printnum(RTaov$p.value[which(RTaov$term == "Load:Type")])`. 
-
-```{r plot RT data, include = TRUE}
-ggplot(data.long, aes(Condition, `ReactionTime`, fill = as.factor(Condition))) +
-  geom_bar(stat = "summary", fun.y = "mean") +
-  stat_summary(fun.data = mean_se, geom = "errorbar", width = .1)
-```
-Next, we tested for reaction time differences between positive and negative interpretations of surprised facial expressions within each working memory load condition. A large proportion of the conditions were not normally distributed, thus we used paired-sample Wilcoxon signed rank tests for assessing differences between positive and negative ratings of surprise RTs. This difference was significant *only* for the low emotional load trials, with surprise rated as positive taking signficantly longer than surprise rated as negative (`r printp(lo.neu.RT.pvn$p.value)`). All other comparisons were not significant (p's > .200). Further, this effect survived Bonferroni correction (p = `r printp(.05 / 4)`). 
 
 ``` {r MAD, include = FALSE}
 ###  MAD analyses ###
