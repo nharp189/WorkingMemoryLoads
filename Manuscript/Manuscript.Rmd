@@ -52,7 +52,7 @@ draft             : no
 
 documentclass     : "apa6"
 classoption       : "man"
-output            : papaja::apa6_pdf
+output            : papaja::apa6_word
 ---
 
 ```{r setup, include = FALSE}
@@ -97,7 +97,7 @@ In the present study, we aim to test the effects of low and high working memory 
 ``` {r read data}
 data <- read.csv("~/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/WorkingMemoryLoads/Data/Cleaned_Data/Final.Data.csv_2019-09-06_12-18-56.csv")
 ```
-Fifty-eight subjects were recruited from the undergraduate research pool at the University of Nebraska-Lincoln. The data from eight subjects were excluded due to technical difficulties resulting from an error in one of the experiment scripts. This left 50 individuals in the final sample for analysis. The mean age of the remaining sample was `r printnum(mean(data$age))` (`r printnum(sd(data$age))`), a majority of participants were female (`r printnum((sum(data$sex == "Female") / nrow(data))*100)`%), and all were white/caucasian without hispanic/Latinx ethnicity. All subjects provided written informed consent in accordance with the Declaration of Helsinki and all procedures were approved by the local Institutional Review Board (Approval #20141014670EP). Each participant received course credit for completing the study. 
+Fifty-eight subjects were recruited from the undergraduate research pool at the University of Nebraska-Lincoln. The data from eight subjects were excluded due to technical difficulties resulting from an error in one of the experiment scripts. This left 50 individuals in the final sample for analysis. The mean age of the remaining sample was `r printnum(mean(data$age))` (`r printnum(sd(data$age))`), a majority of participants were female (`r printnum((sum(data$sex == "Female") / nrow(data))*100)`%), and all were white/caucasian without hispanic/Latinx ethnicity. All subjects provided written informed consent in accordance with the Declaration of Helsinki and all procedures were approved by the University of Nebraska-Lincoln Institutional Review Board (Approval #20141014670EP). Each participant received course credit for completing the study. 
 
 ## Material
 ### Stimuli
@@ -107,20 +107,17 @@ shapiro.test(subset(stim.data, Condition == "POS")$Aro_Mn)
 shapiro.test(subset(stim.data, Condition == "NEG")$Aro_Mn)
 stim.t.test <- wilcox_test(subset(stim.data, Condition == "POS")$Aro_Mn, subset(stim.data, Condition == "NEG")$Aro_Mn)
 ```
-The stimuli included faces taken from the NimStim [@tottenham_nimstim_2009] and Karolinska Directed Emotional Faces [@lundqvist_karolinska_1998] stimuli sets, as in previous work [@neta_primacy_2010; @brown_cortisol_2017]. The faces consisted of 34 unique identities including 11 angry, 12 happy, and 24 surprised expressions organized pseudorandomly. The scene stimuli were selected from the International Affective Picture System [@lang_international_2008]. A total of 288 scenes (72 positive, 72 negative, and 144 neutral) were selected for the image matrices. The positive and negative images did not differ on arousal (Z = `r printnum(stim.t.test$z_val)`, p = `r printnum(stim.t.test$p.value)`). The scenes were organized into low (two images) and high (six images) cognitive load of either neutral or emotional (equal number of positive and negative) images (Figure 1). 
-
-### Software
-The task was completed in MouseTracker [@freeman_mousetracker:_2010] and participants used a mouse to click the appropriate response for the face ratings (i.e., "POSITIVE" or "NEGATIVE") and the memory probe (i.e., "YES" or "NO"). 
+The stimuli included faces from the NimStim [@tottenham_nimstim_2009] and Karolinska Directed Emotional Faces [@lundqvist_karolinska_1998] stimuli sets, as in previous work [@neta_primacy_2010; @brown_cortisol_2017]. The faces consisted of 34 unique identities including 11 angry, 12 happy, and 24 surprised expressions organized pseudorandomly. The scene stimuli were selected from the International Affective Picture System [@lang_international_2008]. A total of 288 scenes (72 positive, 72 negative, and 144 neutral) were selected for the image matrices. The positive and negative images did not differ on arousal (Z = `r printnum(stim.t.test$z_val)`, p = `r printnum(stim.t.test$p.value)`). The scenes were organized into low (two images) and high (six images) cognitive load of either neutral or emotional (equal number of positive and negative) images (Figure 1). 
 
 ## Procedure
-After arriving at the lab, participants provided informed consent prior to completing the task. Participants were randomly assigned to complete one of the task versions, which included 144 [^1] trials split between working memory probe and face rating trials. The trials were self-initiated; the participant clicked a "start" button at the bottom of the screen at the beginning of each trial. After initiating the trial, participants viewed an image matrix of either neutral or emotional images, which the participants were instructed to remember for the duration of the trial. The image matrix was presented for four seconds and the image was either a low or high load matrix consisting of either emotional (equal positive and negative) or neutral images. After the image matrix a happy, angry, or surprised face appeared for one second and the participants rated the face by clicking on either the positive or negative response option. After the face rating, a single image probe appeared, and participants indicated whether or not the image probe was present in the previous image matrix. 
+After arriving at the lab, participants provided informed consent prior to completing the task. Participants were randomly assigned to complete one of the task versions, which included 144 [^1] trials split between working memory probe and face rating trials. The task was completed using MouseTracker software [@freeman_mousetracker:_2010] and participants responded with a mouse to indicate the appropriate response for the face ratings (i.e., "POSITIVE" or "NEGATIVE") and the memory probe (i.e., "YES" or "NO"). The trials were self-initiated; that is, the participant clicked a "start" button at the bottom of the screen at the beginning of each trial at their own pace. After initiating the trial, a fixation cross appeared (1000 ms), then participants viewed an image matrix, which the participants were instructed to remember for the duration of the trial. The image matrix was presented for 4000 ms and the image was either a low or high load matrix consisting of either emotional (equal positive and negative) or neutral images. After the image matrix a happy, angry, or surprised face appeared for 1000 ms and the participants rated the face by clicking on either the positive or negative response option. After the face rating, a single image probe appeared (5000 ms), and participants indicated whether or not the image probe was present in the previous image matrix. 
 
 [^1]: Some versions of the task only included 142 trials due to a programming error. 
 
 ## Data analysis
 We used `r cite_r("r-references.bib")` for all our analyses. Data preprocessing was completed in R using the mousetrap package [@kieslich_mouse-tracking_inpress]. First, percent negative ratings were calculated for happy, angry, and surprised faces across all trial types, as well as a percent correct score for the memory probe trials. After, trials were screened for RT outliers. Any trials that were greater than three standard deviations from the mean were removed from the analyses. Additionally, we removed the preceding face rating trial for any incorrect memory probe trials, as these trials can be considered a manipulation failure. 
 
-Prior to completing the analyses, the data were assessed for normality using the Shapiro-Wilks test. Data that met the normality assumption were submitted to repeated measures ANOVA, while data that failed to meet this assumption was analyzed using non-parametric tests. We tested for differences in valence bias among the different working memory load conditions. Friedman's test was used to assess overall differences and pairwise comparisons were completed using Wilcoxon signed rank tests using Bonferroni correction. The same analysis strategy was also used to assess differences in reaction times, collapsed across both positive and negative interpretations of surprised facial expressions. Finally, we checked for differences between reaction times for both positive and negative ratings of surprise in each working memory load condition. Due to a large amount of missing data (almost 50% of the subjects), as a result of some subjects only choosing the positive or negative response option in a given working memory load condition, we were unable to analyze these data with Friedman's test. Thus, we conducted a series of Wilcoxon signed rank tests for each of the four conditions with Bonferroni correction. 
+Prior to completing the analyses, all data were assessed for normality using Shapiro-Wilks tests. We tested for differences in valence bias among the different working memory load conditions. Friedman's test was used to assess overall differences and pairwise comparisons were completed using Wilcoxon signed rank tests using Bonferroni correction. Next, we tested for differences among maximum deviations in each working memory load condition using a load (low, high) X domain (emotional, neutral) repeated-measures ANOVA.
 
 # Results
 ## Subjective ratings
@@ -163,12 +160,22 @@ lo.neu.v.hi.neu <- wilcox_test(data$hi.neu.sur_rate, data$lo.neu.sur_rate, paire
 #                         "hi.emo.sur_rate"= "emo")
 # summary(aov(`Percent Negative Ratings` ~ load * type, data = aov.data))
 ```
-Distributions of ratings were first tested for normality using Shapiro-Wilk's test. The results of all four tests were significant (p's < .001), so non-parametric tests were used for data analysis. Friedman's test results showed significantly different rank-order distributions across the conditions $\chi^{2}$(`r (printnum(friedman.results$parameter))`) = `r printnum(friedman.results$statistic)`, p `r printp(friedman.results$p.value)`. Follow up Wilcoxon signed rank tests revealed that surprise is rated as more negative when holding emotional content in working memory compared to neutral content, and this was true for both low and high loads. Low emotional load ratings were significantly more negative than low, Z = `r (printnum(lo.emo.v.lo.neu$z_val))`, p = `r (printp(lo.emo.v.lo.neu$p.value))`, neutral and high, Z = `r (printnum(lo.emo.v.hi.neu$z_val))`, p `r (printp(lo.emo.v.hi.neu$p.value))`, neutral loads. The same was true for high emotional load ratings and low, Z = `r (printnum(hi.emo.v.lo.neu$z_val))`, p `r (printp(hi.emo.v.lo.neu$p.value))`, and high, Z = `r (printnum(hi.emo.v.hi.neu$z_val))`, p `r (printp(hi.emo.v.hi.neu$p.value))`, neutral loads. However, there was no discernable effect of load. That is, the comparisons between low and high load ratings for both emotional, Z = `r (printnum(lo.emo.v.hi.emo$z_val))`, p = `r (printp(lo.emo.v.hi.emo$p.value))`, and neutral, Z = `r (printnum(lo.neu.v.hi.neu$z_val))`, p = `r (printp(lo.neu.v.hi.neu$p.value))`, load ratings were not significantly different [^2]. 
-
+Distributions of ratings were first tested for normality using Shapiro-Wilk's test. The results of all four tests were highly significant (p's < .001), so non-parametric tests were used for data analysis. Friedman's test results showed significantly different rank-order distributions across the conditions $\chi^{2}$(`r (printnum(friedman.results$parameter))`) = `r printnum(friedman.results$statistic)`, p `r printp(friedman.results$p.value)`. Follow up Wilcoxon signed rank tests revealed that surprise is rated as more negative when holding emotional content in working memory compared to neutral content, and this was true for both low and high loads. Low emotional load ratings were significantly more negative than low, Z = `r (printnum(lo.emo.v.lo.neu$z_val))`, p = `r (printp(lo.emo.v.lo.neu$p.value))`, neutral and high, Z = `r (printnum(lo.emo.v.hi.neu$z_val))`, p `r (printp(lo.emo.v.hi.neu$p.value))`, neutral loads. The same was true for high emotional load ratings and low, Z = `r (printnum(hi.emo.v.lo.neu$z_val))`, p `r (printp(hi.emo.v.lo.neu$p.value))`, and high, Z = `r (printnum(hi.emo.v.hi.neu$z_val))`, p `r (printp(hi.emo.v.hi.neu$p.value))`, neutral loads. However, there was no effect of load. That is, the comparisons between low and high load ratings for both emotional, Z = `r (printnum(lo.emo.v.hi.emo$z_val))`, p = `r (printp(lo.emo.v.hi.emo$p.value))`, and neutral, Z = `r (printnum(lo.neu.v.hi.neu$z_val))`, p = `r (printp(lo.neu.v.hi.neu$p.value))`, load ratings were not significantly different [^2]. 
+<!-- double check that this is true for the repeated measures ANOVA analysis too -->
 ``` {r plot figure 1, include = TRUE}
-ggplot(friedman.data, aes(Condition, `Percent Negative Ratings`, fill = as.factor(Condition))) +
+friedman.data$Condition <- factor(friedman.data$Condition, levels = c("lo.emo.sur_rate", "hi.emo.sur_rate",
+                                                                      "lo.neu.sur_rate", "hi.neu.sur_rate"))
+friedman.data$Condition <- recode(friedman.data$Condition, "lo.emo.sur_rate" = "Low Emotional", "hi.emo.sur_rate" = "High Emotional",
+                                                            "lo.neu.sur_rate" = "Low Neutral", "hi.neu.sur_rate" = "High Neutral")
+friedman.data$`Percent Negative Ratings` <- friedman.data$`Percent Negative Ratings` * 100
+ggplot(friedman.data, aes(Condition, `Percent Negative Ratings`, fill = Condition)) +
   geom_bar(stat = "summary", fun.y = "mean") +
-  stat_summary(fun.data = mean_se, geom = "errorbar", width = .1)
+  scale_fill_manual(values = c("#0d7378", "#21e1eb", "#498526", "#65e01d")) + 
+  stat_summary(fun.data = mean_se, geom = "errorbar", width = .1) +
+  expand_limits(y=c(0, 100)) +
+  theme(axis.text.x=element_blank()) +
+  theme_apa()
+  
 ```
 
 [^2]: These results are qualitatively the same when analyzing these data with a repeated measures ANOVA. 
@@ -192,18 +199,25 @@ MAD.anova <- aov(MAD ~ load * type, data = MAD.long)
 summary.aov(MAD.anova)
 MAD.anova <- tidy(MAD.anova)
 ```
-
+Next, we assessed differences in maximum absolute deviation (MD) across the working memory trial conditions. While one of the conditions, low emotional MD, was not normally distributed (p = .024), all other conditions were normally distributed and repeated-measures ANOVA was used to analyze the MDs across conditions. There was a significant effect of load, F(`r printnum(MAD.anova$df[which(MAD.anova$term == "load")])`,`r printnum(MAD.anova$df[which(MAD.anova$term == "Residuals")])`) = `r printnum(MAD.anova$statistic[which(MAD.anova$term == "load")])`, p = `r printp(MAD.anova$p.value[which(MAD.anova$term == "load")])`, such that MDs under high load were larger than trials with low load. There was no significant effect of domain on MDs, F(`r printnum(MAD.anova$df[which(MAD.anova$term == "type")])` `r printnum(MAD.anova$df[which(MAD.anova$term == "Residuals")])`) = `r printnum(MAD.anova$statistic[which(MAD.anova$term == "type")])`, p = `r printp(MAD.anova$p.value[which(MAD.anova$term == "type")])`, nor an interaction of load by domain, F(`r printnum(MAD.anova$df[which(MAD.anova$term == "load:type")])` `r printnum(MAD.anova$df[which(MAD.anova$term == "Residuals")])`) = `r printnum(MAD.anova$statistic[which(MAD.anova$term == "load:type")])`, p = `r printp(MAD.anova$p.value[which(MAD.anova$term == "load:type")])`. 
 ``` {r MAD plot, include = TRUE}
-ggplot(MAD.long, aes(Condition, MAD, fill = as.factor(Condition))) +
+MAD.long$Condition <- factor(MAD.long$Condition, levels = c("lo.emo.sur_MAD", "hi.emo.sur_MAD",
+                                                                      "lo.neu.sur_MAD", "hi.neu.sur_MAD"))
+MAD.long$Condition <- recode(MAD.long$Condition, "lo.emo.sur_MAD" = "Low Emotional", "hi.emo.sur_MAD" = "High Emotional",
+                                                            "lo.neu.sur_MAD" = "Low Neutral", "hi.neu.sur_MAD" = "High Neutral")
+ggplot(MAD.long, aes(Condition, MAD, fill = Condition)) +
   geom_bar(stat = "summary", fun.y = "mean") +
-  stat_summary(fun.data = mean_se, geom = "errorbar", width = .1)
+  stat_summary(fun.data = mean_se, geom = "errorbar", width = .1) +
+  scale_fill_manual(values = c("#0d7378", "#21e1eb", "#498526", "#65e01d")) + 
+  theme_apa() +
+  theme(axis.text.x=element_blank()) 
+
 ```
 ``` {r MAD map, include = FALSE}
 suppressPackageStartupMessages(library(mousetrap)) 
 # source MADFigure.R ??? 
 
 ```
-Finally, we assessed differences in maximum absolute deviation (MAD) across the WM trial conditions. While one of the conditions, low emotional MDs, was not normally distributed (p = .024), all other conditions were normally distributed and repeated-measures ANOVA was used to analyze the MDs across conditions. There was a significant effect of load, F(`r printnum(MAD.anova$df[which(MAD.anova$term == "load")])`,`r printnum(MAD.anova$df[which(MAD.anova$term == "Residuals")])`) = `r printnum(MAD.anova$statistic[which(MAD.anova$term == "load")])`, p = `r printp(MAD.anova$p.value[which(MAD.anova$term == "load")])`, such that MDs under high load were larger than trials with low load. There was no significant effect of domain on MDs, F(`r printnum(MAD.anova$df[which(MAD.anova$term == "type")])` `r printnum(MAD.anova$df[which(MAD.anova$term == "Residuals")])`) = `r printnum(MAD.anova$statistic[which(MAD.anova$term == "type")])`, p = `r printp(MAD.anova$p.value[which(MAD.anova$term == "type")])`, nor an interaction of load by domain, F(`r printnum(MAD.anova$df[which(MAD.anova$term == "load:type")])` `r printnum(MAD.anova$df[which(MAD.anova$term == "Residuals")])`) = `r printnum(MAD.anova$statistic[which(MAD.anova$term == "load:type")])`, p = `r printp(MAD.anova$p.value[which(MAD.anova$term == "load:type")])`. 
 
 # Discussion
 The effect of high vs. low load is still not apparent in these data, just like Mattek et al. 2016. An alternative explanation is that the high load manipulation is not sufficiently difficult to recruit the targeted cognitive resources; however, future work will be needed to better test this alternative. 
