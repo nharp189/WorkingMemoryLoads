@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.8)  18 SEP 2019 15:10
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.8)  24 SEP 2019 14:32
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -850,56 +850,59 @@ This may cause the page layout to be inconsistent, however.
 
 [1{/usr/local/texlive/2019/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
-] [2] [3]
+] [2] [3] [4] [5] [6] [7]
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10> on input line 180.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <7> on input line 180.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <5> on input line 180.
+
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[4] [5] [6]
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 169.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 169.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 169.
-[7] [8]
-<Manuscript_files/figure-latex/plot figure 1-1.pdf, id=108, 446.66875pt x 312.1
+[8]
+Underfull \vbox (badness 4954) has occurred while \output is active []
+
+[9]
+<Manuscript_files/figure-latex/plot figure 1-1.pdf, id=127, 446.66875pt x 312.1
 6624pt>
 File: Manuscript_files/figure-latex/plot figure 1-1.pdf Graphic file (type pdf)
 
 <use Manuscript_files/figure-latex/plot figure 1-1.pdf>
 Package pdftex.def Info: Manuscript_files/figure-latex/plot figure 1-1.pdf  use
-d on input line 185.
+d on input line 196.
 (pdftex.def)             Requested size: 446.67445pt x 312.17024pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[9]
-<Manuscript_files/figure-latex/MAD plot-1.pdf, id=118, 442.65375pt x 299.1175pt
+[10]
+<Manuscript_files/figure-latex/MAD plot-1.pdf, id=137, 442.65375pt x 299.1175pt
 >
 File: Manuscript_files/figure-latex/MAD plot-1.pdf Graphic file (type pdf)
 <use Manuscript_files/figure-latex/MAD plot-1.pdf>
 Package pdftex.def Info: Manuscript_files/figure-latex/MAD plot-1.pdf  used on 
-input line 188.
+input line 199.
 (pdftex.def)             Requested size: 442.67966pt x 299.13501pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[10 <./Manuscript_files/figure-latex/plot figure 1-1.pdf>] [11 <./Manuscript_fi
-les/figure-latex/MAD plot-1.pdf>] [12] [13] [14] AED endfloat: Processing end F
-igures and Tables [15]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 260.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 260.
+[11 <./Manuscript_files/figure-latex/plot figure 1-1.pdf>] [12 <./Manuscript_fi
+les/figure-latex/MAD plot-1.pdf>] [13] [14] AED endfloat: Processing end Figure
+s and Tables [15]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 267.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 267.
 (./Manuscript.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 260.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 260.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 267.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 267.
 Package rerunfilecheck Info: File `Manuscript.out' has not changed.
-(rerunfilecheck)             Checksum: E8EBF72A83DFDB837D1F3B07F8068C53;1855.
+(rerunfilecheck)             Checksum: 8D07AD3C63BE0E45AEF687AE574E90FB;2448.
  ) 
 Here is how much of TeX's memory you used:
- 15509 strings out of 492616
- 230699 string characters out of 6129482
- 348642 words of memory out of 5000000
- 19040 multiletter control sequences out of 15000+600000
- 80632 words of font info for 113 fonts, out of 8000000 for 9000
+ 15517 strings out of 492616
+ 230863 string characters out of 6129482
+ 349795 words of memory out of 5000000
+ 19046 multiletter control sequences out of 15000+600000
+ 80503 words of font info for 112 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  43i,10n,47p,2621b,448s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2019/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/
@@ -912,10 +915,10 @@ m/lmr10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/lm/lmr12.pfb
 /texlive/2019/texmf-dist/fonts/type1/public/lm/lmr8.pfb></usr/local/texlive/201
 9/texmf-dist/fonts/type1/public/lm/lmri12.pfb></usr/local/texlive/2019/texmf-di
 st/fonts/type1/public/lm/lmss8.pfb>
-Output written on Manuscript.pdf (15 pages, 208689 bytes).
+Output written on Manuscript.pdf (15 pages, 210568 bytes).
 PDF statistics:
- 239 PDF objects out of 1000 (max. 8388607)
- 205 compressed objects within 3 object streams
- 59 named destinations out of 1000 (max. 500000)
- 10355 words of extra memory for PDF output out of 12000 (max. 10000000)
+ 251 PDF objects out of 1000 (max. 8388607)
+ 217 compressed objects within 3 object streams
+ 63 named destinations out of 1000 (max. 500000)
+ 10379 words of extra memory for PDF output out of 12000 (max. 10000000)
 
