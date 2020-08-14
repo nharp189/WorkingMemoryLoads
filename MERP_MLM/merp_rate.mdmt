@@ -1,0 +1,18 @@
+#HLM2 MDM CREATION TEMPLATE
+mdmtype:2
+rawdattype:spss
+l1fname:C:\Users\nharp2\Desktop\MERP_MLM\l1.sav
+l2fname:C:\Users\nharp2\Desktop\MERP_MLM\l2.sav
+l1missing:y
+timeofdeletion:analysis
+mdmname:merp_rate
+*begin l1vars
+level2id:SUBJID
+PERNEG
+LOAD
+DOM
+*end l1vars
+*begin l2vars
+level2id:SUBJID
+LO.EMO.A
+*end l2vars

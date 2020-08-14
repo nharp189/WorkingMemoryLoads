@@ -31,9 +31,9 @@ if (!require("processx")) install.packages("processx")
 }
 
 {
-session1files <- list.files(path = "/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/Data/Session1", 
+session1files <- list.files(path = "/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/WorkingMemoryLoads/Data/Session1", 
                             pattern = "*.mt", full.names = TRUE, recursive = FALSE)
-session1.data <- read_bulk("/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/Data/Session1/", fun = read_mt, 
+session1.data <- read_bulk("/Users/nicholasharp/Documents/Nick-Grad/Neta_Lab/depletion_study/study2/Analyses/WorkingMemoryLoads/Data/Session1/", fun = read_mt, 
                            extension = ".mt")
 session1.data <- mt_import_wide(session1.data)
 foreach(file = session1files) %do% {

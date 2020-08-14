@@ -1,0 +1,18 @@
+
+                      LEVEL-1 DESCRIPTIVE STATISTICS
+
+ VARIABLE NAME       N       MEAN         SD         MINIMUM      MAXIMUM
+    PERNEG           200       0.70       0.27         0.00         1.00
+      LOAD           200       0.50       0.50         0.00         1.00
+       DOM           200       0.50       0.50         0.00         1.00
+
+
+                      LEVEL-2 DESCRIPTIVE STATISTICS
+
+ VARIABLE NAME       N       MEAN         SD         MINIMUM      MAXIMUM
+  LO.EMO.A            50       0.98       0.06         0.67         1.00
+
+MDM template:  C:\Users\nharp2\Desktop\MERP_MLM\merp_rate.mdmt
+MDM file name: merp_rate
+Date:          Nov 4, 2019
+Time:          08:12:48

@@ -76,33 +76,25 @@ suppressPackageStartupMessages(library(broom))
 ```
 # Introduction
 ## Facial expressions and individual differences
+Facial expressions are important social signals; they communicate emotion between individuals and even spark emotional responses in others [@frith_role_2009]. Researchers have long argued that facial expressions are universal signals of emotion, positing humans' innate ability to associate facial expressions with emotional experience [@darwin_expression_1872; @ekman_constants_1971; @izard_innate_1994]. More recently, Barrett and colleagues suggested that the relationship between facial expressions and emotions is more complex, stating that facial expression of an emotion may vary across cultures, social context, or even individuals [@barrett_emotional_2019]. Other work has shown individual differences in interpretations of facial expressions [@green_factors_2018; @neta_corrugator_2009]. Regardless of this variability in emotional expressions, experience, and interpretations, humans readily make judgments about personality traits (e.g., trustworthiness), aesthetics (e.g., attractiveness), and emotions from faces [@todorov_evaluating_2008; @said_statistical_2011; @carroll_facial_1996]. Interpretations of valence (i.e., the inherent positive or negative emotional value of a stimulus) are one instance of judgments of facial expressions guiding potential social (i.e., approach-avoidance) behavior <!-- not sure if this is truly social? --> [@krieglmeyer_being_2010]. 
 
-### Facial expressions are an important social signal
-Facial expressions are important social signals, often communicating emotion between individuals and even sparking emotional responses in the perceiver [@frith_role_2009]. Researchers have long argued that facial expressions are universal signals of emotion, positing humans' innate ability to associate facial expressions with emotional experience [@darwin_expression_1872; @ekman_constants_1971; @izard_innate_1994]. More recently, Barrett and colleagues suggested that the relationship between facial expressions and emotions is more complex, stating that expression of an emotion may vary across cultures, social context, or even individuals -[@barrett_emotional_2019]. Other work has shown individual differences in interpretations of facial expressions [@green_factors_2018; @neta_corrugator_2009]. Regardless of this variability in emotional expressions, experience, and interpretations, humans readily make judgments about personality traits (e.g., trustworthiness), aesthetics (e.g., attractiveness), and emotions from faces [@todorov_evaluating_2008; @said_statistical_2011; @carroll_facil_1996]. Interpretations of valence, that is the inherent positive or negative emotional value of a stimulus, are one instance of judgments of facial expressions guiding potential social (i.e., approach-avoidance) behavior <!-- not sure if this is truly social? --> [@krieglmeyer_being_2010]. 
+While most people can accurately differentiate the emotional valence of many facial expressions, such as consistently interpreting angry (happy) faces as negative (positive), there are individual differences in valence judgments of emotionally ambiguous facial expressions, like a surprised face [@neta_corrugator_2009; @petro_individual_2018 <!-- right citations?-->]. This difference in valence interpretations of surprised expressions is attributable to such stimuli's predictive value for both positive and negative outcomes in an individual's previous experience. For instance, a surprised expression could signal positive (e.g., winning the lottery) or negative (e.g., a car accident) events. These differences in valence interpretations represent an important individual difference, as the same stimulus can result in two alternative interpretations between individuals--likely leading to different downstream behaviors [e.g., @krieglmeyer_being_2010]. This individual difference in interpretations of emotionally ambiguous stimuli is known as one's *valence bias*, and a growing body of work has used both facial expressions and scenes to better understand this individual difference [@neta_corrugator_2009; @neta_primacy_2010; @neta_neural_2013]. 
 
-### Individuals differ (trait) in their tendency to interpret ambiguous images, like a surprised face
-While most people can accurately differentiate the emotional valence of many facial expressions [CITE], such as consistently interpreting angry (happy) faces as negative (positive), there are individual differences in valence judgments of emotionally ambiguous facial expressions, like a surprised face [@neta_corrugator_2009; @petro_individual_2018 <!-- right citations?-->]. This difference in valence interpretations of surprised expressions is attributable to such stimuli's predictive value for both positive and negative outcomes in an individual's previous experience. For instance, a surprised expression could signal positive (e.g., winning the lottery) or negative (e.g., a car accident) events. These differences in valence interpretations represent an important individual difference, as the same stimulus can result in two alternative interpretations between individuals--likely leading to different downstream behaviors [e.g., @krieglmeyer_being_2010]. This individual difference in interpretations of emotionally ambiguous stimuli is known as one's *valence bias*, and a growing body of work has used both facial expressions and scenes to better understand this individual difference [@neta_corrugator_2009; @neta_primacy_2010; @neta_neural_2013]. 
+Despite one's valence bias, the initial response to ambiguity appears to be negativity [@neta_corrugator_2009; @neta_primacy_2010; @neta_valence_2011; @petro_individual_2018]. Under this framework, which is known as the *initial negativity* hypothesis, positive interpretations rely on the implementation of some emotion regulation strategy, perhaps similar to cognitive reappraisal. During cognitive reappraisal, individuals work to change intial perceptions of an emotional stimulus [@lazarus_short-circuiting_1964]. Similarly, the initial negativity hypothesis posits that individuals' initial perception of surprised expressions is negative, and that those arriving at a positive interpretation must implement a regulatory mechanism to alter their interpretation. 
 
-### Despite the bias, everyone seems to show an initial negativity--positivity is associated with emotion regulation
-Despite one's valence bias, the initial response to ambiguity appears to be negativity [@neta_corrugator_2009; @neta_primacy_2010; @neta_valence_2011; @petro_individual_2018]. Under this framework, which is known as the *initial negativity* hypothesis, positive interpretations rely on the implementation of some emotion regulation strategy, perhaps similar to cognitive reappraisal. During cognitive reappraisal, individuals work to change intial perceptions of an emotional stimulus [@lazarus_short_1964]. Similarly, the initial negativity hypothesis posits that individuals' initial perception of surprised expressions is negative, and that those arriving at a positive interpretation must implement a regulatory mechanism to alter their interpretation. 
+Behavioral evidence supports the initial negativity hypothesis. For instance, reaction time data show that individuals with more positive biases take longer to reach a valence judgment for surprised expressions than those with a more negative bias [@neta_corrugator_2009], suggesting a more time-intensive (regulatory) process for positive interpretations. Other work demonstrates the faster and default nature of negative interpretations through manipulating the spatial frequency of images of surprised expressions. The images with only low spatial frequency information, which is processed earlier than  high spatial frequency information, were rated more negatively than the high spatial frequency images [@neta_primacy_2010]. Additionally, surprised facial expressions are more quickly detected in an emotional oddball paradigm among happy (positive) than angry (negative) faces [@neta_valence_2011], suggesting that surprised expressions are more readily perceived as similar to angry faces (i.e., perceived as negative) than happy faces. 
 
-### Behavioral and brain data supports the initial negativity hypothesis
-Both behavioral and brain data in support of the initial negativity hypothesis come from many studies. For instance, reaction time (RT) data show that individuals with more positive biases take longer to reach a valence judgment for surprised expressions than those with a more negative bias [@neta_corrugator_2009], suggesting a more time-intensive (regulatory) process for positive interpretations. Other work demonstrates the automaticity of negative interpretations through presenting either low- (LSF) or high-spatial frequency (HSF) images of surprised expressions. The images with only LSF information, which is processed earlier than its HSF counterpart, were rated more negatively than the HSF images [@neta_primacy_2010]. Additionally, surprised facial expressions are more quickly detected among happy (positive) than angry (negative) faces [@neta_valence_2011]. The results from this emotional oddball paradigm suggest that surprised expressions are more readily perceived as similar to angry faces (i.e., perceived as negative) than happy faces. There is also support for the initial negativity hypothesis in studies with brain data. Ventromedial prefrontal cortex, a putative regulatory region, and the amygdala actively are inversely correlated, and participants with more negative biases show higher activity in the amygdala while more positive participants show higher activity in vmPFC [@kim_inverse_2003]. More recently, Petro and colleagues showed that participants with a more positive valence bias show more activity for surprised faces in emotion regulation-related brain regions -[vmPFC; @petro_individual_2018].Taken together, these effects support the idea that negative interpretations of surprised faces are faster and default process, while positive interpretations rely on slower regulatory processes. <!-- is it okay to combine these sections? -->
-
+There is also support for the initial negativity hypothesis in neuroimaging studies. Ventromedial prefrontal cortex, a putative regulatory region, and amygdala actively are inversely correlated, and participants with more negative biases show higher activity in the amygdala while more positive participants show higher activity in vmPFC [@kim_inverse_2003]. More recently, Petro and colleagues [-@petro_individual_2018] showed that participants with a more positive valence bias show more activity for surprised faces in emotion regulation-related brain regions (vmPFC).Taken together, both behavioral and brain data support the notion that negative interpretations of surprised faces are a faster, default process and positive interpretations rely on slower regulatory processes, which may be susceptible to demands from other cognitive processes.
+ 
 ## Cognitive loads and task interference
-### In our daily lives, these resources are not always available
+In daily life, cognitive resources are often shared among several processes as stimuli compete for our attention. For example, imagine a student attending a lecture. If the student is frequently distracted by notifications and directing cognitive resources towards a text message conversation or computer applications, then the student's ability to understand and remember the lecture will likely suffer. Indeed, cognitive resource competition leads to a phenomenon known as cognitive load, which negatively impacts executive processes [@murphy_twenty_2016; @lavie_load_2004]. High levels of cognitive load alter performance on a variety of tasks, including those in both cognitive and emotional domains [@pontari_influence_2000; @jiaping_empathy_2017; @thomas_impact_2017; @nagamatsu_increased_2011; @kron_feelings_2010]. Working memory tasks, which require participants to maintain some stimulus representation in working memory, are often used for testing cognitive load effects [e.g., @burnham_cognitive_2010; @lavie_role_2005; or see @murphy_twenty_2016 for a review]. 
 
+The cognitive demands of active working memory maintenance often interact with concurrent affective processes (e.g., face categorization, subjective emotional experience), perhaps as a result of a shared resource pool for these processes. For instance, Ahmed [-@ahmed_knowing_2018] showed that performance on a facial expression categorization task suffers when participants are under high cognitive load. Other work has linked cognitive load to changes in emotional responses [@van_dillen_tuning_2009; @blair_modulation_2007]. For example, higher loads during a working memory task reduce subjective emotional experience, as well as amygdala activity [@van_dillen_tuning_2009]. Other neuroimaging work has shown that Stroop interference effects were exaggerated during trials temporally surrounded by emotional stimuli, while emotional responses in the brain (i.e., amygdala and inferior frontal gyrus activation) were lower during trials with Stroop task demands compared to trials with no concurrent task demands [@blair_modulation_2007]. Other work highlights the importance of cognitive load task characteristics on a syllogistic reasoning task, demonstrating that participants perform worse on tasks with emotional, rather than neutral, content when under high cognitive load  [@tremoliere_cognitive_2016]. Together, these effects suggest an overlap between cognitive demands and emotional processes, with high cognitive demands interfering with typical emotion processing. 
 
-### Active WM maintenance affects concurrent processes
-
-### Other work has tested the effects of cognitive load on valence bias, but did not find an effect for interpretations of surprise. This could be due to domain-specific effects of cognitive load. 
+Previous work has tested the effects of cognitive load on valence bias to assess both subjective ratings of surprise and the underlying cognitive-motor dynamics of the ratings via mousetracking. While there was no effect of load on subjective interpretations of surprised expressions, participants did show altered mouse trajectories, such that mouse movements were less drawn towards the response option (i.e., positive or negative) in line with one's bias [@mattek_differential_2016]. <!-- The researchers also collected mouse trajectories, using MouseTracker [@freeman_mousetracker:_2010], to quantify the cognitive-motor attraction towards ultimately unselected responses [CITE, CITE].--> One potential explanation for the null effect of load on ratings is the domain-specificity of the cognitive load. While there are some domain-general effects of cognitive load on emotional processing [@blair_modulation_2007; @van_dillen_tuning_2009], which helps explain the effects of load on mouse trajectories, other lines of work have shown dissociable processing of emotional and non-emotional task stimuli [@egner_dissociable_2008]. Critically, Mattek and colleagues [-@mattek_differential_2016] used non-emotional stimuli (i.e., number sequence) in their manipulation of cognitive load during interpretations of surprised facial expressions. The cognitive demand required for maintaining emotional information in working memory may tax resources used for emotion regulation more so than non-emotional information. Under the initial negativity framework, this would lead to more negative interpretations of surprise during cognitive load with emotional stimuli. 
 
 ## The present study
-
-### h1: domain main effect
-
-### h2: domain x load interaction
-
+In the present study we test the effects of both low and high cognitive load across emotional and non-emotional domains. We expect to find a main effect of load domain, emotional or non-emotional, on interpretations of surprise, such that interpretations made under emotional working memory loads are more negative than those made under non-emotional working memory loads. Further, we predict an interaction effect, such that emotional working memory loads with more content (high load) will result in more negative interpetations than emotional working memory loads with less content (low load). 
 
 # Methods
 ## Participants
@@ -239,6 +231,63 @@ Increased working memory demands (i.e., a higher cognitive load) do not always r
 Previous work has shown that more positive interpretations of surprised faces are related to slower RTs. Our working hypothesis suggests that this delayed reaction is a result of deliberation and slower, top-down cognitive processing. It is interesting to note that, at least in these data, there is no such difference observed between the neutral and emotional WM trials, *even though* the emotional WM trials are overall more negative. Future work should tease apart why this may be. For instance, ... 
 
 Future work should consider whether the representations of these emotional images in AWM (Reuter-Lorenz), or 
+
+
+[@frith_role_2009]
+[@carrol_facial_1996]
+[@bar_very_2006]
+[@said_statistical_2011]
+[@todorov_evaluating_2008]
+[@krieglmeyer_being_2010]
+[@neta_corrugator_2009]
+[@petro_individual_2018]
+[@neta_neural_2013]
+[@neta_primacy_2010]
+
+[@frijda_emotions_1986]
+[@neta_valence_2011]
+[@neta_dont_2016-1]
+[@kim_contextual_2004]
+[@richard_emotion_2000]
+[@sheppes_divergent_2008]
+[@baumeister_self-regulation_1996]
+
+[@storbeck_performance_2012]
+[@scalf_competition_2013]
+[@lavie_load_2004]
+[@murphy_twenty_2016]
+[@pontari_influence_2000; @jiaping_empathy_2017; @thomas_impact_2017; @nagamatsu_increased_2011; @kron_feelings_2010]
+[@mather_aging_2005]
+[@knight_aging_2007]
+[@chandler_cognitive_1991]
+[@tremoliere_cognitive_2016]
+[@ahmed_knowing_2018]
+[@blair_modulation_2007]
+[@muraven_self-control_1998]
+[@van_dillen_tuning_2009]
+[@mattek_differential_2016]
+[@egner_dissociable_2008]
+[@tottenham_nimstim_2009-1]
+[@lundqvist_karolinska_1998]
+[@lang_international_2008]
+[@freeman_mousetracker: 2010]
+[@flexas_affective_2013]
+[@lavie_role_2005]
+[@bundt_early_2018]
+[@burnham_cognitive_2010]
+[@etkin_resolving_2006]
+[@kujawa_altered_2016]
+[@calcagni_analyzing_2017]
+[@freeman_hand_2011]
+[@hehman_advanced_2015]
+[@spivey_continuous_2005]
+[@lavie_load_2004]
+[@neta_separable_2014]
+[@sterzer_neural_2002]
+[@thompson-schill_role_1997]
+[@duncan_common_2000]
+[@nee_interference_2007]
+
 
 \newpage
 

@@ -1,0 +1,24 @@
+#HLM2 MDM CREATION TEMPLATE
+vknown:n
+mdmtype:2
+rawdattype:spss
+l1fname:C:\Users\nharp2\Desktop\WM_MLM\l1.sav
+l2fname:C:\Users\nharp2\Desktop\WM_MLM\l2.sav
+hasmissing:y
+timeofdeletion:analysis
+mdmname:wm_int
+*begin l1vars
+level2id:SUBJID
+      MD    
+     DOM    
+    LOAD    
+    RATE    
+DOMXLOAD    
+DOMXRATE    
+LOADXRAT    
+   THREE    
+*end l1vars
+*begin l2vars
+level2id:SUBJID
+LO.EMO.A    
+*end l2vars

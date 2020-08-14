@@ -28,6 +28,7 @@ if (!require("processx")) install.packages("processx")
   suppressPackageStartupMessages(library(fields))
   suppressPackageStartupMessages(library(readxl))
   suppressPackageStartupMessages(library(yarrr))
+  suppressPackageStartupMessages(library(stringr))
 }
 
 ### import session two files ###
@@ -264,6 +265,30 @@ MT.data <- mt_import_wide(MT.data)
   ### factor ###
   MT.data$data$factor <- paste(MT.data$data$type, MT.data$data$load)
   
+  
+  ### add counts of pos and neg ratings for accurate and inaccurate trials ###
+  MT.data$data$ChiCounts <- ifelse(MT.data$data$rate == 0 & 
+                                        MT.data$data$mem.cor == 1 &
+                                        MT.data$data$type == "EMO", 1,
+                                      ifelse(MT.data$data$rate == 0 & 
+                                               MT.data$data$mem.cor == 0 &
+                                               MT.data$data$type == "EMO",2,
+                                             ifelse(MT.data$data$rate == 1 & 
+                                                      MT.data$data$mem.cor == 1 &
+                                                      MT.data$data$type == "EMO", 3,
+                                                    ifelse(MT.data$data$rate == 1 & 
+                                                             MT.data$data$mem.cor == 0 &
+                                                             MT.data$data$type == "EMO", 4, ""))))
+  
+  # MT.data$data$PosCount_Ina <- ifelse(MT.data$data$rate == 0 & 
+  #                                       MT.data$data$mem.cor == 0 &
+  #                                       MT.data$data$type == "EMO",1, "")
+  # MT.data$data$NegCount_Acc <- ifelse(MT.data$data$rate == 1 & 
+  #                                       MT.data$data$mem.cor == 1 &
+  #                                       MT.data$data$type == "EMO", 1, "")
+  # MT.data$data$NegCount_Ina <- ifelse(MT.data$data$rate == 1 & 
+  #                                       MT.data$data$mem.cor == 0 &
+  #                                       MT.data$data$type == "EMO", 1, "")
 }
   
   ###  MT Measures ###
@@ -286,6 +311,46 @@ MT.data <- mt_import_wide(MT.data)
     MT.data <- mt_measures(MT.data)
   }}
 
+
+### count face identities and expression ###
+temp <- subset(MT.data$data, MT.data$data$subjID == "71065")
+faces <- as.data.frame(temp$stim)
+faces <- str_split_fixed(faces$`temp$stim`, "/", 9)
+faces <- as.data.frame(faces)
+
+count(faces$V6)
+faces <- as.data.frame(unique(faces$V6))
+unique(faces$`unique(faces$V6)`)
+sum(str_count(faces$`unique(faces$V6)`, "AN"))
+
+### You can count the IAPS images and check their
+### stimulus properties in the CheckingStimulusProperties.R script
+### !!!!!!!!!!!!!!!!
+
+### count # trials per subj ###
+trials <- as.data.frame(table(count(MT.data$data$subjID)))
+
+trials2 <- subset(trials, trials$Freq == 1)
+
+count(trials2$freq)
+View(MT.data$data)
+
+### mean correct memory probe responses ###
+mean(MT.data$data$mem.cor, na.rm = T)
+MT.data$data$mem.cor <- as.numeric(MT.data$data$mem.cor)
+data2 <- MT.data$data
+data$cond.load
+
+data <- subset(data2, data$cond.correct == "Surprise")
+res <- data %>% dplyr::count(subjID, cond.load, type, load, sort = T)
+
+surp <- subset(res, res$cond.load == "Surprise")
+ang <- subset(res, res$cond.load == "Angry")
+hap <- subset(res, res$cond.load == "Happy")
+
+#%>% count(data$cond.correct)
+
+View(temp)
 ### check RT min / max for outliers ###
 meanrt <- mean(MT.data$data$RT[which(MT.data$data$trialtype == "face")])
 sdrt <- sd(MT.data$data$RT[which(MT.data$data$trialtype == "face")])
@@ -295,7 +360,7 @@ outlier <- meanrt + (3*sdrt)
 ### remove trials > outlierRT ###
 MT.data$data <-MT.data$data[!(MT.data$data$RT >= outlier),]
 
-### flag trials before incorrect memory probes ###
+## flag trials before incorrect memory probes ###
 for(i in 2:nrow(MT.data$data)) {
   MT.data$data$flag[i-1] <- ifelse(MT.data$data$mem.cor[i] == 0, 0, 1)
 }
@@ -308,6 +373,8 @@ MT.results2 <- dplyr::inner_join(
   MT.data$data, MT.data$measures,
   by="mt_id")
 
+MT.results2$mem.cor <- as.numeric(MT.results2$mem.cor)
+View(MT.data$data)
 ### is surprise ratings different from low vs high trials? ###
 MT.data.rating.table2 <- (ddply(MT.results2, "subjID", summarise, 
                                 lo.emo.ang_rate = mean(rate[which(cond.correct == "Angry" & type == "EMO" & load == "LOW" & trialtype == "face")], na.rm = TRUE),
@@ -322,6 +389,7 @@ MT.data.rating.table2 <- (ddply(MT.results2, "subjID", summarise,
                                 hi.emo.sur_rate = mean(rate[which(cond.correct == "Surprise" & type == "EMO" & load == "HIGH" & trialtype == "face")], na.rm = TRUE),
                                 lo.neu.sur_rate = mean(rate[which(cond.correct == "Surprise" & type == "NEU" & load == "LOW" & trialtype == "face")], na.rm = TRUE),
                                 hi.neu.sur_rate = mean(rate[which(cond.correct == "Surprise" & type == "NEU" & load == "HIGH" & trialtype == "face")], na.rm = TRUE),
+                                emo.sur_rate = mean(rate[which(cond.correct == "Surprise" & type == "EMO" & trialtype == "face")], na.rm = TRUE),
                                 lo.emo.ang_RT = mean(RT.x[which(cond.correct == "Angry" & type == "EMO" & load == "LOW" & trialtype == "face")], na.rm = TRUE),
                                 hi.emo.ang_RT = mean(RT.x[which(cond.correct == "Angry" & type == "EMO" & load == "HIGH" & trialtype == "face")], na.rm = TRUE),
                                 lo.neu.ang_RT = mean(RT.x[which(cond.correct == "Angry" & type == "NEU" & load == "LOW" & trialtype == "face")], na.rm = TRUE),
@@ -360,6 +428,8 @@ MT.data.rating.table2 <- (ddply(MT.results2, "subjID", summarise,
                                 neu.mem = mean(neu.mem, na.rm = TRUE),
                                 lo.mem = mean(lo.mem, na.rm = TRUE),
                                 hi.mem = mean(hi.mem, na.rm = TRUE),
+                                RT.inaccuracte.surp = mean(RT.x[which(cond.correct == "Surprise" & flag == 0)], na.rm = T),
+                                RT.accuracte.surp = mean(RT.x[which(cond.correct == "Surprise" & flag == 1)], na.rm = T),
                                 lo.emo.sur_MAD = mean(MAD[which(cond.load == "LoEmoSurprise")], na.rm = TRUE),
                                 hi.emo.sur_MAD = mean(MAD[which(cond.load == "HiEmoSurprise")], na.rm = TRUE),
                                 lo.neu.sur_MAD = mean(MAD[which(cond.load == "LoNeuSurprise")], na.rm = TRUE),
@@ -395,8 +465,63 @@ MT.data.rating.table2 <- (ddply(MT.results2, "subjID", summarise,
                                 lo.neu.RTz = mean(RTz[which(factor == "NEU LOW" & trialtype == "face")], na.rm = TRUE),
                                 hi.neu.RTz = mean(RTz[which(factor == "NEU HIGH" & trialtype == "face")], na.rm = TRUE),
                                 lo.emo.RTz = mean(RTz[which(factor == "EMO LOW" & trialtype == "face")], na.rm = TRUE),
-                                hi.emo.RTz = mean(RTz[which(factor == "EMO HIGH" & trialtype == "face")], na.rm = TRUE)))
+                                hi.emo.RTz = mean(RTz[which(factor == "EMO HIGH" & trialtype == "face")], na.rm = TRUE),
+                                lo.neu.MAD = mean(MAD[which(factor == "NEU LOW" & trialtype == "memory")], na.rm = TRUE),
+                                hi.neu.MAD = mean(MAD[which(factor == "NEU HIGH" & trialtype == "memory")], na.rm = TRUE),
+                                lo.emo.MAD = mean(MAD[which(factor == "EMO LOW" & trialtype == "memory")], na.rm = TRUE),
+                                hi.emo.MAD = mean(MAD[which(factor == "EMO HIGH" & trialtype == "memory")], na.rm = TRUE),
+                                lo.emo.mem = mean(mem.cor[which(cond.load %in% c("LoEmoSurpriseNo",
+                                                                                 "LoEmoSurpriseYes")
+                                                                & trialtype == "memory" & 
+                                                                  type == "EMO" & load == "LOW")], na.rm = TRUE),
+                                hi.emo.mem = mean(mem.cor[which(cond.load %in% c("HiEmoSurpriseNo",
+                                                                                 "HiEmoSurpriseYes")
+                                                                & type == "EMO" & load == "HIGH" 
+                                                                & trialtype == "memory")], na.rm = TRUE),
+                                lo.neu.mem = mean(mem.cor[which(cond.load %in% c("LoNeuSurpriseNo",
+                                                                                 "LoNeuSurpriseYes")
+                                                                & type == "NEU" & load == "LOW" & 
+                                                                  trialtype == "memory")], na.rm = TRUE),
+                                hi.neu.mem = mean(mem.cor[which(cond.load %in% c("HiNeuSurpriseNo",
+                                                                                 "HiNeuSurpriseYes")
+                                                                & type == "NEU" & load == "HIGH"
+                                                                & trialtype == "memory")], na.rm = TRUE)))
+t.test(MT.data.rating.table2$RT.accuracte.surp,
+       MT.data.rating.table2$RT.inaccuracte.surp, paired = T)
 
+long.temp <- gather(MT.data.rating.table2, condition, RT,
+                    RT.accuracte.surp, RT.inaccuracte.surp)
+library(lme4)
+library(lmerTest)
+long.temp$condition <- (as.factor(long.temp$condition))
+summary(lmer(RT ~ as.factor(condition) + (1 | subjID), long.temp, REML = F))
+long.temp$condition <- relevel(long.temp$condition, ref = "RT.inaccuracte.surp")
+### Chi sqaure on accuracy x categorization ###
+tab1 <-count(MT.data$data$ChiCounts)
+
+tab1$x <- dplyr::recode(tab1$x,
+                        "1" = "PosAcc",
+                        "2" = "PosIna",
+                        "3" = "NegAcc",
+                        "4" = "NegIna")
+Performance <-
+  matrix(c(803, 882, 40, 100),
+         nrow = 2,
+         dimnames = list("1" = c("Positive", "Negative"),
+                         "2" = c("Accurate", "Inaccurate")))
+Performance
+mcnemar.test(Performance)
+chisq.test(Performance)
+## => significant change (in fact, drop) in approval ratings
+
+
+### drop trash row ###
+tab1 <- tab1[c(2:5), ]
+mcnemar.test()
+cor.test(MT.data.rating.table2$emo.sur_rate, MT.data.rating.table2$emo.mem,
+         method = "spearman")
+
+View(MT.data$data)
 dem <- read.csv("Data/qualtrics_data_20190607.csv")
 questions <- c("Q2", "Q3", "Q4", "Q5", "Q6",
                "Q7", "Q8", "Q9", "Q12")
@@ -412,8 +537,24 @@ dem[38,1] <- "71039"
 
 MT.data.rating.table2 <- merge(MT.data.rating.table2, dem, by = "subjID")
 
-#write.csv(MT.data.rating.table2, paste("Data/Cleaned_Data/Final.Data.csv",format(Sys.time(),'_%Y-%m-%d_%H-%M-%S'),
- #                                      '.csv',sep = ''))
+#write.csv(MT.data.rating.table2, paste("Data/Cleaned_Data/Final_Data_NoExclusions",#format(Sys.time(),'_%Y-%m-%d_%H-%M-%S'),
+ #                                     '.csv',sep = ''))
 
-nrow
+MT.face <- mt_subset(MT.data, trialtype == "face" & condition.rating %in% c("Sur.Pos", "Sur.Neg"))
+mousetrap::mt_plot_aggregate(MT.face, use = "tn_trajectories", color = "load",
+                             size =1.5) +
+  ggplot2::scale_color_brewer(type=c("qual"))
+View(MT.data$data)
+View(MT.data$data)
+
+### plot ###
+MT.surp <- mt_subset(MT.data, cond.correct == "Surprise")
+MT.surp$data$loadRate <- paste(MT.surp$data$load, MT.surp$data$rate)
+mt_plot_aggregate(MT.surp, use = "tn_trajectories",
+                  color = "loadRate", y = "xpos",
+                  x = "steps", only_ggplot = T) +
+  geom_point(shape = 2)
+
+
+View(MT.surp$tn_trajectories)
 

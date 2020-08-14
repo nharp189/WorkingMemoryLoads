@@ -1,0 +1,23 @@
+
+                      LEVEL-1 DESCRIPTIVE STATISTICS
+
+ VARIABLE NAME       N       MEAN         SD         MINIMUM      MAXIMUM
+        MD           358       0.40       0.37        -0.31         1.47
+       DOM           400       0.50       0.50         0.00         1.00
+      LOAD           400       0.50       0.50         0.00         1.00
+      RATE           400       0.50       0.50         0.00         1.00
+  DOMXLOAD           400       0.25       0.43         0.00         1.00
+  DOMXRATE           400       0.25       0.43         0.00         1.00
+  LOADXRAT           400       0.25       0.43         0.00         1.00
+     THREE           400       0.13       0.33         0.00         1.00
+
+
+                      LEVEL-2 DESCRIPTIVE STATISTICS
+
+ VARIABLE NAME       N       MEAN         SD         MINIMUM      MAXIMUM
+  LO.EMO.A            50       0.98       0.06         0.67         1.00
+
+MDM template:  C:\Users\nharp2\Desktop\WM_MLM\wm_int.mdmt
+MDM file name: wm_int
+Date:          Jan 16, 2020
+Time:          09:49:00
